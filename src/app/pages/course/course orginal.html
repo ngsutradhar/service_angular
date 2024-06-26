@@ -1,0 +1,279 @@
+<div class="container-fluid page">
+    <div class="page__box p-3 mt-1 ml-1">Course Entry Form</div>
+    <div class="page__content shadow p-3 position-relative">
+      <!-- <div class="container-fluid"> -->
+      <div class="card-deck row">
+        <!-- Tab -------------------------------------- -->
+        <div class="main-div">
+          <mat-tab-group (selectedIndexChange)="onTabChanged($event)" [(selectedIndex)]="selectedIndex"
+            animationDuration="200ms" style="background-color:  rgb(90, 90, 94);">
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">trending_up</mat-icon>
+                Course Entry
+              </ng-template>
+  
+              <!--  ---- 1st Tab setting start---- -->
+              <!-- Card 1 start-->
+              <div class="col-xs-8 col-sm-8 col-md-8" style="width:100% ; background-color: white; float: left;">
+  
+                <div class="card" style="width:100% ; background-color: white; font-size: medium;">
+                  <!--Card content-->
+                  <div class="card-body">
+                    <div class="container">
+                      <form [formGroup]="courseNameFormGroup">
+                        <div class="row">
+                          <div class="col-sm-5">
+                            <ng-select [items]="feeModeType" fxFlex="100" bindLabel="name" class="custom"
+                              bindValue="value" appendTo="body" formControlName="feesModeTypeId" placeholder="Fees Mode">
+                            </ng-select>
+                          </div>
+                          <div class="col-sm-4">
+                            <mat-form-field style="width:100%">
+                              <mat-label>Course Code</mat-label>
+                              <input matInput formControlName="courseCode" placeholder="C0001" required>
+                              <div
+                                *ngIf="courseNameFormGroup.controls['courseCode'].errors && courseNameFormGroup.controls['courseCode'].touched">
+                                <mat-error class="text-right"
+                                  *ngIf="courseNameFormGroup.controls['courseCode'].errors['required']">
+                                  Course Code is required</mat-error>
+                              </div>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-sm-3">
+                            <mat-label>Last Code:<span style="font-size:larger; color:blue">{{lastCourseCode}}</span>
+                            </mat-label>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-4">
+                            <mat-form-field style="width:100%">
+                              <mat-label>Short Name</mat-label>
+                              <input matInput formControlName="shortName" placeholder="Short Name" required>
+                              <div
+                                *ngIf="courseNameFormGroup.controls['shortName'].errors && courseNameFormGroup.controls['shortName'].touched">
+                                <mat-error class="text-right"
+                                  *ngIf="courseNameFormGroup.controls['shortName'].errors['required']">
+                                  Short Name is required</mat-error>
+                              </div>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-sm-8">
+                            <mat-form-field style="width:100%">
+                              <input matInput placeholder="Course Full Name" formControlName="fullName">
+                              <div
+                                *ngIf="courseNameFormGroup.controls['fullName'].errors && courseNameFormGroup.controls['fullName'].touched">
+                                <mat-error class="text-right"
+                                  *ngIf="courseNameFormGroup.controls['fullName'].errors['required']">
+                                  Course Name is required</mat-error>
+                              </div>
+                            </mat-form-field>
+                          </div>
+  
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-4">
+                            <mat-form-field style="width:100%">
+                              <mat-label>Duration:</mat-label>
+                              <input matInput formControlName="courseDuration" placeholder="100" required>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-sm-4">
+                            <ng-select [items]="durationTypes" bindLabel="durationName" class="custom"
+                              bindValue="durationTypeId" formControlName="durationTypeId" autofocus appendTo="body"
+                              placeholder="Duration Type" style="width:100%">
+                            </ng-select>
+                          </div>
+                          <div class="col-sm-4">
+                            <div class="form-group" *ngIf="hiddenInput">
+                              <mat-form-field class="col-4">
+                                <input matInput placeholder="Course ID" formControlName="courseId">
+                              </mat-form-field>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-6" style="width:100%">
+                            <h3>Description: &nbsp; Count:&nbsp;{{descriptionLen.length}} /{{maxLength}}</h3>
+                            <textarea class="col-12" formControlName="description" [(ngModel)]="descriptionLen"
+                              [maxlength]="maxLength" [style]="{'height':'120px'}">
+                            </textarea>
+                          </div>
+  
+                        </div>
+                        <div align="right">
+                          <button pButton (click)="clearCourse()"
+                            class="p-button-rounded p-button-info p-button-outlined">
+                            <i class="bi bi-clear" style="font-size: 1rem"> Clear </i>
+                          </button>&nbsp;&nbsp;&nbsp;
+  
+                          <button pButton (click)="saveCourse()" [disabled]="!courseNameFormGroup.valid" *ngIf="!isShown"
+                            class="p-button-rounded p-button-info">
+                            <i class="bi bi-save" style="font-size: 1rem"> Save </i>
+                          </button>
+  
+                          <button pButton (click)="updateCourse()" *ngIf="isShown" class="p-button-rounded p-button-info">
+                            <i class="bi bi-save" style="font-size: 1rem"> Update </i>
+                          </button>
+                        </div>
+                      </form>
+  
+  
+  
+  
+                    </div>
+                    <!--End Card content-->
+                  </div>
+  
+                  <!-- ---- PMessage for Confirmation ----  -->
+                  <p-confirmDialog #cd [style]="{width: '30vw'}" header="Confirmation" icon="pi pi-exclamation-triangle"
+                    [transitionOptions]="'0.8ms'">
+                    <ng-template pTemplate="header">
+                      <h3>Header Content</h3>
+                    </ng-template>
+                    <ng-template pTemplate="footer">
+                      <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+                      <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
+                    </ng-template>
+                  </p-confirmDialog>
+                </div>
+                <!-- ---- End PMessage for Confirmation ----  -->
+                <!-- Card 1 end-->
+  
+                <!--  ---- 1st Tab setting End---- -->
+  
+              </div>
+  
+            </mat-tab>
+  
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">list</mat-icon>
+                View Course
+              </ng-template>
+              <!--  ---- 2nd Tab setting Start---- -->
+              <div class="col-xs-12 col-sm-6 col-md-6" style="width:100% ;">
+                <!-- Card 2 start-->
+                <div class="card mb-6">
+  
+  
+                  <!--Card content-->
+                  <div class="card-body">
+  
+                    <p-table #course [value]="courses" selectionMode="multiple" [columns]="cols"
+                      [(selection)]="selectedCourses" dataKey="courseId" [paginator]="true" [rows]="5"
+                      [showCurrentPageReport]="true" [loading]="loading" responsiveLayout="scroll"
+                      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                      [rowsPerPageOptions]="[5,10,25,50]" styleClass="p-datatable-striped"
+                      [globalFilterFields]="['courseId','courseCode','shortName','fullName']">
+                      <ng-template pTemplate="caption">
+                        <div class="flex">
+                          <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                            (click)="clear(course)"></button>
+                          <span class="p-input-icon-left ml-auto">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="course.filterGlobal(getEventValue($event), 'contains')"
+                              placeholder="Search keyword" />
+                          </span>
+  
+                        </div>
+                      </ng-template>
+                     
+                      <ng-template pTemplate="header">
+                        <tr>
+                          <th>ID</th>
+  
+                          <th pSortableColumn="fullName">Full Name <p-sortIcon field="fullName"></p-sortIcon>
+                          </th>
+                          <th pSortableColumn="edit">Edit <p-sortIcon field="edit"></p-sortIcon>
+                          </th>
+                          <th pSortableColumn="delete">Delete <p-sortIcon field="delete"></p-sortIcon>
+                          </th>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-course>
+                        <tr>
+                          <td>{{course.courseId}}</td>
+                          <td>{{course.fullName}}</td>
+  
+                          <td>
+                            <p-button type="button" icon="pi pi-pencil" (click)="editCourse(course)"
+                              styleClass="p-button-text">
+                            </p-button>
+                          </td>
+                          <td>
+                            <p-button type="button" icon="pi pi-trash" (click)="deleteCourse(course)"
+                              styleClass="p-button-text"></p-button>
+                          </td>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="paginatorleft">
+                        <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+                      </ng-template>
+                    </p-table>
+  
+  
+                  </div>
+  
+                </div>
+                <!-- Card -->
+              </div>
+  
+              <!--  ---- 2nd Tab setting End---- -->
+            </mat-tab>
+  
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+                Upcoming Birthday
+              </ng-template>
+  
+              Content 3
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+        <!-- end tab---------------------------------------------- -->
+        <!-- ------ Start of container-fluid----- -->
+        <!-- Card deck -->
+  
+  
+        <div class="col-xs-4 col-sm-4 col-md-4 details">
+          <div class="card" style="background-color:rgb(249, 249, 249) ;">
+            <div class="card-body">
+              <h1 class="card-title"
+                style="background-image: linear-gradient(to bottom right, rgb(8, 2, 68), rgb(7, 32, 146)); color: aliceblue; padding: 12px;">
+                Dash Board</h1>
+              <hr />
+              <div class="container">
+                <table class="table">
+                  <thead>
+                    <tr class="table-secondary">
+                      <th scope="col">Total Course</th>
+                      <th scope="col">:</th>
+                      <th scope="col" class="text-right">{{totalNoCourse}}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="col">Monthly Course</th>
+                      <th scope="col">:</th>
+                      <th scope="col" class="text-right">{{totalMonthlyCourse}}</th>
+                    </tr>
+                    <tr>
+                      <th scope="col">Full Course</th>
+                      <th scope="col">:</th>
+                      <th scope="col" class="text-right">{{totalFullCourse}}</th>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+  
+  
+      </div>
+      <!-- ------ end of container-fluid----- -->
+    </div>
+  </div>

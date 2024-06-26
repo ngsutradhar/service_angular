@@ -1,0 +1,346 @@
+<div class="container-fluid page">
+    <div class="header">
+      <div class="row d-flex align-items-center justify-content-between">
+        <div class="col-md-8 dash"
+          style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: xx-large;">
+          &nbsp;&nbsp; <i class="bi bi-speedometer2"></i>&nbsp;Online Payment</div>
+      </div>
+    </div>
+    <div class="col-12 report">
+        <mat-tab-group (selectedIndexChange)="onTabChanged($event)" [(selectedIndex)]="selectedIndex"
+          animationDuration="200ms" style="border-radius:20px ; background-color: cadetblue;">
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+              Your Course & Payment Details
+            </ng-template>
+  
+            <p-table #studentCourseHistory [value]="studentCourseHistoryArray" dataKey="id" [paginator]="true" [rows]="5"
+            [showCurrentPageReport]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [rowsPerPageOptions]="[5,10,25,50]" [globalFilterFields]="['ledger_name','full_name','effective_date']">
+
+            <ng-template pTemplate="caption">
+              <div class="flex">
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                  (click)="clear(studentCourseHistory)"></button>
+                <span class="p-input-icon-left ml-auto">
+                  <i class="pi pi-search"></i>
+                  <input pInputText type="text"
+                    (input)="studentCourseHistory.filterGlobal(getEventValue($event), 'contains')"
+                    placeholder="Search keyword" />
+                </span>
+
+              </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                <th>ID</th>
+                <!--  <th pSortableColumn="ledger_id">Student Name <p-sortIcon field="ledger_name"></p-sortIcon>
+            </th> -->
+                <th pSortableColumn="course_id">Course Name <p-sortIcon field="full_name"></p-sortIcon>
+                </th>
+
+                <th pSortableColumn="effective_date">Admission Date <p-sortIcon field="effective_date"></p-sortIcon>
+                </th>
+                <th pSortableColumn="is_completed">Status<p-sortIcon field="is_completed"></p-sortIcon>
+                </th>
+                <th>Total Course Fees</th>
+                <th>Total Received</th>
+                <th>Total Due</th>
+                <th>Pay Now</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-course>
+
+              <tr>
+                <td><button pButton class="p-button-rounded p-button-info p-button-outlined"
+                    (click)="onClickedPaymentVoucher(course.id)">
+                    <i class="bi bi-printer"> </i>
+                  </button></td>
+                <!--  <td>{{course.ledger_name}}</td> -->
+                <td>{{course.full_name}}</td>
+
+                <td>{{course.effective_date | date: 'dd/MM/yyyy'}}</td>
+                <td>{{course.is_completed}}</td>
+                <!-- <a [routerLink]="['/FeesCharge']" style="text-decoration:none ; color: black; text-align:center;"><td>{{course.total_course_fees | currency:'INR'}}</td></a> -->
+                <td>{{course.total_course_fees | currency:'INR'}}</td>
+                <td>{{course.total_received | currency:'INR'}}</td>
+                <td>{{course.total_due | currency:'INR'}}</td>
+                <td><button type="button" class="btn btn-outline-success" (click)="btnPayNow(course)"><i
+                      class="bi bi-credit-card-2-back"></i> &nbsp; Pay</button></td>
+              </tr>
+            </ng-template>
+
+          </p-table>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="example-tab-icon">list</mat-icon>
+              Payment Receipt
+            </ng-template>
+            <!-------------------------------start show Receipt bill voucher------------------------------------- -->
+            <div class="container" *ngIf="showReceipt">
+  
+              <div id="print-AllReceiptBill-student" style="background-color: white; padding: 10px; color: black;">
+                <div style="border: 2px dotted rgb(1, 1, 19);">
+                  <div class="row">
+                    <!-- <div class="col-2 ">
+                      <img src="assets/img/baitLogo.png" width="100px" alt="AdminLTE Logo" style="opacity: .8">
+                    </div> -->
+                    <div class="col-12" align="center">
+  
+                      <p
+                        style="margin-bottom: 0 ;margin-top: 0 ; font-size: large; font-family: 'Cooper Black'; font-weight: bolder;">
+                        <!-- Barrackpore Academy Of Information Technology -->{{organisationName}}
+                      </p>
+                      <p style="margin-bottom: 0 ;margin-top: 0 ; font-size: medium;">{{organisationAddress}},
+                        Pin:{{organisationPin}}</p>
+                      <p style="margin-bottom: 0 ;margin-top: 0 ; font-size: medium;">
+                        E-mail: &nbsp;{{organisationEmail}} | Contact: {{organisationContact}}</p>
+  
+                      <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+                    </div>
+  
+                  </div>
+  
+                </div>
+                <div class="row">
+                  <div class="col-7">
+                    <table>
+                      <tr>
+                        <td>Student Name</td>
+                        <td>:</td>
+                        <th>{{billing_name}}</th>
+                      </tr>
+                      <tr>
+                        <td>Contact No</td>
+                        <td>:</td>
+                        <th>{{whatsapp_number}}</th>
+                      </tr>
+                      <tr>
+                        <td>Course Name</td>
+                        <td>:</td>
+                        <th>{{full_name}}</th>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="col-5">
+                    <table>
+                      <tr>
+                        <td>Total Course Fees</td>
+                        <td>:</td>
+                        <th>{{total_course_fees | currency: 'INR'}}</th>
+                      </tr>
+  
+                    </table>
+                  </div>
+                  <div class="row">
+                    <div class="col-md text-center">
+                      <table style="border-collapse: collapse; width: 100%; margin:0 auto;">
+                        <thead>
+                          <tr
+                            style="border-top: 3px dotted rgb(1, 1, 19);border-bottom: 3px dotted rgb(116, 114, 114);background-color:rgb(196, 190, 190);padding: 0.5;">
+                            <th>Sl No</th>
+                            <th>Date</th>
+                            <!--  <th>Receipt No</th> -->
+                            <th>Fees Name</th>
+                            <th>Comments</th>
+                            <th class="text-right">Amount</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let receipt of allBillReceiptArray; let i = index">
+  
+                            <td>{{i+1}}</td>
+                            <td>{{receipt.transaction_date | date:'dd/MM/yyyy'}}</td>
+                            <!-- <td>{{receipt.transaction_number }}</td> -->
+                            <td>{{receipt.ledger_name}}</td>
+                            <td>{{receipt.comment}}</td>
+                            <td class="text-right">{{receipt.temp_total_received | currency: 'INR'}}</td>
+                          </tr>
+  
+                        </tbody>
+                        <tfoot>
+  
+                          <tr style="background-color: lightgrey; border-top: 1px solid rgb(1, 1, 19);">
+                            <th colspan="3">&nbsp;</th>
+                            <td class="text-right">Grand Total:</td>
+                            <th class="text-right">{{totalRecepitAmount | currency: 'INR'}}</th>
+                            <th>&nbsp;</th>
+                          </tr>
+                          <tr style="background-color: lightgrey; border-top: 1px solid rgb(1, 1, 19);">
+                            <th colspan="3">&nbsp;</th>
+                            <td class="text-right">Total Discount:</td>
+                            <th class="text-right">- &nbsp;{{total_discount | currency:
+                              'INR'}}
+                            </th>
+                            <th>&nbsp;</th>
+                          </tr>
+                          <tr>
+                            <th>In Words:</th>
+                            <td>:</td>
+                            <th colspan="3" class="text-left">{{rupeeInWords}}</th>
+                          </tr>
+                          <tr style="background-color: lightgrey; border: 1px solid rgb(1, 1, 19);">
+                            <th colspan="3">&nbsp;</th>
+                            <td class="text-right">Current Due</td>
+                            <th class="text-right">{{(total_course_fees - totalRecepitAmount)-total_discount |
+                              currency: 'INR'}}</th>
+                            <th>&nbsp;</th>
+  
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="row" style="font-size: small;">
+                    <div class="col-7">
+                      Notice:<p style="margin-bottom: 0 ;margin-top: 0 ; font-style: oblique; font-size: small;">1)
+                        It
+                        is Computer Generated Bill</p>
+                      <p style="margin-bottom: 0 ;margin-top: 0 ;font-style: oblique;">2) Advanced Fees Cannot be
+                        Refund.</p>
+  
+                    </div>
+                    <div class="col-3 ">
+                      <p class="text-right">Signature</p>
+                      <p class="text-right">-----------------</p>
+                    </div>
+                  </div>
+  
+                </div>
+              </div>
+              <div mat-dialog-actions>
+                <button class="btn btn-danger" (click)="onClickedClosed()">Close</button>
+                <button class="btn btn-success" printSectionId="print-AllReceiptBill-student" printTitle="Develop By BAIT"
+                  ngxPrint>Print</button>
+  
+              </div>
+            </div>
+            <!-------------------------------end show Receipt bill voucher------------------------------------- -->
+          </mat-tab>
+          <mat-tab id="payment">
+            <ng-template mat-tab-label>
+              <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+              Payment Gatway
+            </ng-template>
+            <div class="container-fluid" style="background-color:white ;color:black">
+              <h1 class="text-center">{{fullCourseName}}</h1>
+              <div class="row">
+                <div class="col-sm-12">
+  
+                  <table class="table table-bordered table-hover">
+                    <thead>
+                      <tr style="background-color:rgb(2, 93, 93) ;color:white">
+                        <th>Sl No</th>
+                        <th>Date</th>
+                        <!-- <th>Receipt No</th> -->
+                        <th>Fees Name</th>
+                        <th class="text-right">Total Due</th>
+                        <th>Pay Now</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let receipt of tranMasterIdArray; let i = index">
+  
+                        <td>{{i+1}}</td>
+                        <td>{{receipt.transaction_date | date:'dd/MM/yyyy'}}</td>
+                        <!-- <td>{{receipt.transaction_number }}</td> -->
+                        <td>{{receipt.ledger_name}}</td>
+  
+                        <td class="text-right">{{receipt.total_due | currency: 'INR'}}</td>
+                        <td><button type="button" class="btn btn-outline-success" (click)="onPayment(receipt)"><i
+                              class="bi bi-credit-card-2-back"></i> &nbsp;Pay </button>
+  
+                        </td>
+                      </tr>
+  
+                    </tbody>
+  
+                  </table>
+                  <div mat-dialog-actions>
+                    <button class="btn btn-danger" (click)="onClickedClosed()">Close</button>
+                  </div>
+                </div>
+  
+              </div>
+  
+            </div>
+  
+          </mat-tab>
+            <!-- Final Payment Made -->
+        <mat-tab id="final-payment">
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+            Final Payment
+          </ng-template>
+          <div id="div-final-payment">
+            <div class="container-fluid" style="background-color:white ;color:black">
+              <h1 style="text-align: center;">{{fullCourseName}}</h1>
+              <h2 style="color:red ; text-decoration:underline ;text-align: center;">Please Do Not Refresh This Page
+                While You Make Payment</h2>
+              <h3 style="text-align: center;">Your Payment ID: {{autoGenerateId}}</h3>
+              <div class="row">
+                <div class="col-sm-6">
+                  <form [formGroup]="FinalPayFormGroup">
+                    <table class="text-center table table-bordered table-hover">
+                      <thead>
+                        <tr style="background-color:rgba(235, 235, 235, 0.945) ;color:rgb(8, 8, 8)">
+
+                          <th>Fees Name</th>
+                          <th class="text-left">{{feesName}}</th>
+
+                        </tr>
+                        <tr style="background-color:rgba(235, 235, 235, 0.945) ;color:rgb(8, 8, 8)">
+
+                          <th>Amount</th>
+                          <th class="text-right">
+                            <div class="input-group mb-3">
+                              <span class="input-group-text">₹</span>
+                              <input type="text" class="form-control" [(ngModel)]="payAmountNgModel"
+                                formControlName="payAmount" aria-label="Amount (to the nearest dollar)">
+                              <span class="input-group-text">.00</span>
+                            </div>
+
+                          </th>
+
+                        </tr>
+                        <tr style="background-color:rgba(235, 235, 235, 0.945) ;color:rgb(8, 8, 8)">
+
+                          <th>Net Due</th>
+                          <th class="text-left">
+                            {{paymentAmount | currency:'INR'}}
+                          </th>
+
+                        </tr>
+                      </thead>
+
+
+                    </table>
+                  </form>
+                  <div style="display: flex;">
+                    <div mat-dialog-actions>
+                      <button class="btn btn-danger" (click)="onClickedClosed()">Close</button>
+                    </div> &nbsp; &nbsp; &nbsp;
+                    <div>
+                      <button type="button" class="btn btn-outline-success" (click)="onFinalPayNow()"><i
+                          class="bi bi-credit-card-2-back"></i> &nbsp;Pay Now</button>
+
+                      &nbsp; &nbsp; <span style="font-size: medium;">Time Limit: &nbsp; {{counter}} &nbsp; [180
+                        sec.]</span>
+
+
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+<div class="container-fluid page">
+    <div class="row d-flex align-items-center justify-content-between">
+        <div class="col-12 header"><i class="bi bi-cash"></i>&nbsp; View All Upcoming Due List</div>
+    </div>
+    <div class="page__content">
+        <p-table #upcomingDueList [value]="upcomingDueListArray"
+            [globalFilterFields]="['student_name','full_name','received_amount','comment','ledger_name']">
+            <ng-template pTemplate="caption">
+                <div class="p-d-flex">
+                    <span class="p-input-icon-left p-ml-auto">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text"
+                            (input)="upcomingDueList.filterGlobal(getEventValue($event), 'contains')"
+                            placeholder="Search keyword" />
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <td>SL No</td>
+                    <th pSortableColumn="student_name">Student Name <p-sortIcon field="student_name"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="full_name">Course Name <p-sortIcon field="full_name"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="transaction_date">Transaction Date <p-sortIcon field="transaction_date">
+                        </p-sortIcon>
+                    </th>
+                    <th pSortableColumn="whatsapp_number">What's No <p-sortIcon field="whatsapp_number"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="date_Diff">Days <p-sortIcon field="date_Diff"></p-sortIcon>
+                    </th>
+                    <th class="text-right" pSortableColumn="total_due">Fees Amount <p-sortIcon field="total_due">
+                        </p-sortIcon>
+                    </th>
+                    <th>Send Msg</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+                <tr>
+                    <td>{{rowIndex+1}}</td>
+                    <td>{{item.student_name}}</td>
+                    <td>{{item.full_name}}</td>
+                    <td>{{item.transaction_date | date: 'dd/MM/yyyy'}}</td>
+                    <td>{{item.whatsapp_number}}</td>
+                    <td>{{item.date_Diff}}</td>
+                    <td class="text-right">{{item.total_due | currency : 'INR'}}</td>
+                    <td ><button type="button" class="btn btn-success"><i class="bi bi-send-fill"></i></button></td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <!-- <tr>
+          <th colspan="5">Gross Total</th>
+          <th class="text-right">{{totalIncome | currency : 'INR'}}</th>
+        </tr> -->
+            </ng-template>
+        </p-table>
+    </div>
+</div>

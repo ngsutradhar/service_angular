@@ -1,0 +1,23 @@
+.bg {
+    background-image: linear-gradient(to right, rgba(146, 127, 127, 0.522), rgba(85, 85, 72, 0.481));
+}
+
+
+.container {
+    position: relative;
+    font-family: Arial;
+}
+
+.text-block {
+
+
+
+    position: absolute;
+    bottom: 50px;
+    right: 100px;
+    // background-color: black;
+    color: white;
+    padding-left: 10px;
+    padding-right: 50px;
+    font-size: xx-small;
+}

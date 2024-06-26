@@ -1,0 +1,520 @@
+<div class="container-fluid page">
+  <div class="header">
+    <div class="row d-flex align-items-center justify-content-between">
+      <div class="col-md-8 dash"> <i class="bi bi-speedometer2"></i>&nbsp;Developer Dashboard</div>
+      <div class="col-md-4 comdtl">
+        <span class="comname">{{organisationName}} <br></span>
+        <hr>
+        <i class="bi bi-envelope-fill"></i>&nbsp; Email : {{organisationEmail}} <br>
+        <i class="bi bi-telephone-fill"></i>&nbsp; Contact Number : {{organisationContact}}<br>
+        <i class="bi bi-geo-alt-fill"></i>&nbsp; Address : {{organisationAddress}}, Pin - {{organisationPin}}
+      </div>
+    </div>
+  </div>
+
+  <!-- maincontent -->
+  <div class="main p-5">
+    <div class="row">
+      <div class="col-8 dashbox">
+        <div class="row">
+          <div class="col-3 active act me-2">
+            <i class="bi bi-person-fill botic"></i>
+            <h3>Total Organisation</h3>
+            <hr class="rule">
+            <a [routerLink]="['/StudentCourseRegistration']">
+              <h1><b>
+                  {{totalNoActiveOrganisation}}
+                </b></h1>
+            </a>
+          </div>
+          <div class="col-3 active act1 me-2">
+            <i class="bi bi-book-fill botic"></i>
+            <h3>Total Student</h3>
+            <hr class="rule">
+            <a [routerLink]="['/course']">
+              <h1><b>
+                  {{totalNoStudent}}
+                </b></h1>
+            </a>
+          </div>
+          <div class="col-3 active act2 me-2">
+            <i class="bi bi-wallet-fill botic"></i>
+            <h3>Cash Received (Year)</h3>
+            <hr class="rule">
+            <a [routerLink]="['/AllIncomeReport']">
+              <h1><b>
+                  {{totalCashYear | currency:'INR'}}
+                </b></h1>
+            </a>
+          </div>
+          <div class="col-3 active act3 me-2">
+
+            <i class="bi bi-bank2 botic"></i>
+            <h3>Bank Received (Year)</h3>
+            <hr class="rule">
+            <a [routerLink]="['/AllIncomeReport']">
+              <h1><b>
+                  {{totalBankYear | currency:'INR'}}
+                </b></h1>
+            </a>
+          </div>
+
+        </div>
+
+        <!-- tabhere 
+      <a href="#top">Back to top of page</a>-->
+        <div class="thtab upcom mt-4">
+          <div class="lefttabs">
+            <i class="bi bi-bell-fill"></i>&nbsp; All Reports
+            <mat-tab-group (selectedIndexChange)="onTabChanged($event)" [(selectedIndex)]="selectedIndex"
+              animationDuration="200ms">
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <i class="bi bi-bar-chart-fill"></i> &nbsp;
+                  All organisations Details
+                </ng-template>
+                <div class="card mb-3">
+                  <!-- <div class="card-header" style="color:black ;">
+                          <i class="bi bi-bar-chart-fill"></i> Bar Chart Example
+                        </div> -->
+                  <div class="card-body">
+
+                    <div class="stutable">
+
+
+                      <p-table #AllOrgDetails [value]="AllOrgDetailsArray" dataKey="organisation_id" [paginator]="true"
+                        [rows]="5" [showCurrentPageReport]="true"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                        [rowsPerPageOptions]="[5,10,25,50]"
+                        [globalFilterFields]="['organisation_name','whatsapp_number','email_id']">
+
+                        <ng-template pTemplate="caption">
+                          <div class="flex">
+                            <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                              (click)="clear(AllOrgDetails)"></button>
+                            <span class="p-input-icon-left ml-auto">
+                              <i class="pi pi-search"></i>
+                              <input pInputText type="text"
+                                (input)="AllOrgDetails.filterGlobal(getEventValue($event), 'contains')"
+                                placeholder="Search keyword" />
+                            </span>
+
+                          </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                          <tr>
+                            <th>ID</th>
+                            <th pSortableColumn="organisation_name">Organisation Name <p-sortIcon
+                                field="organisation_name"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="email_id">Email ID <p-sortIcon field="email_id"></p-sortIcon>
+                            </th>
+                            <th>Whatsapp Number</th>
+                            <th pSortableColumn="total_student">Total Student <p-sortIcon field="total_student">
+                              </p-sortIcon>
+                            </th>
+                            <th pSortableColumn="total_yearly_income">Total Income<p-sortIcon
+                                field="total_yearly_income"></p-sortIcon>
+                            </th>
+                          </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-organisation>
+
+                          <tr>
+                            <td><button pButton class="p-button-rounded p-button-info p-button-outlined">
+                                <i class="bi bi-printer"> </i>
+                              </button></td>
+                            <td>{{organisation.organisation_name}}</td>
+                            <td>{{organisation.email_id}}</td>
+                            <td>{{organisation.whatsapp_number}}</td>
+                            <td>{{organisation.total_student}}</td>
+                            <td class="text-right">{{organisation.total_yearly_income | currency:'INR'}}</td>
+                          </tr>
+                        </ng-template>
+                        <ng-template pTemplate="paginatorleft">
+                          <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+                        </ng-template>
+                      </p-table>
+
+                    </div>
+
+                  </div>
+
+                </div>
+              </mat-tab>
+
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <mat-icon class="example-tab-icon">list</mat-icon>
+                  All Organisation Fees Charged
+                </ng-template>
+                <p-table #feesCharged [value]="AllOrgFeesChargedArray" dataKey="studentName" [paginator]="true"
+                  [rows]="5" [showCurrentPageReport]="true"
+                  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                  [rowsPerPageOptions]="[5,10,25,50]" styleClass="p-datatable-striped"
+                  [globalFilterFields]="['organisationName','studentName','courseName','feesTotal']">
+                  <!-- ----------------------------------- -->
+                  <ng-template pTemplate="caption">
+                    <div class="flex">
+                      <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                        (click)="clear(feesCharged)"></button>
+                      <span class="p-input-icon-left ml-auto">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text"
+                          (input)="feesCharged.filterGlobal(getEventValue($event), 'contains')"
+                          placeholder="Search keyword" />
+                      </span>
+
+                    </div>
+                  </ng-template>
+                  <!--  --------------------------------------------- -->
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th style="width: 3rem"></th>
+                      <th>SL</th>
+                      <th pSortableColumn="organisationName">Organisation Name <p-sortIcon field="organisationName">
+                        </p-sortIcon>
+                      <th pSortableColumn="studentName">Name <p-sortIcon field="studentName"></p-sortIcon>
+                      </th>
+                      <th>Course</th>
+                      <th pSortableColumn="feesTotal">Total Charged <p-sortIcon field="feesTotal"></p-sortIcon>
+                      </th>
+                      <th>Delete</th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-fees let-expanded="expanded" let-IndexRow="rowIndex">
+                    <tr>
+                      <td>
+                        <button type="button" pButton pRipple [pRowToggler]="fees"
+                          class="p-button-text p-button-rounded p-button-plain"
+                          [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                      </td>
+                      <td>{{IndexRow+1}}</td>
+                      <td>{{fees.organisationName}}</td>
+                      <td>{{fees.studentName}}</td>
+                      <td>{{fees.courseName}}</td>
+                      <td>{{fees.feesTotal | currency: 'INR'}}</td>
+                      <td><button type="button" class="btn btn-outline-danger" (click)="deleteAllFeesChargedAndReceived(fees)"
+                        ><i class="bi bi-trash"></i></button></td>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="rowexpansion" let-fee class="col-12" let-rowIndex="rowIndex">
+                    <tr>
+                      <td colspan="7">
+                        <div class="p-3">
+                          <!--Inner table-->
+                          <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th scope="col">sl No</th>
+                                <th scope="col">Date</th>
+                                <!-- <th scope="col">Transaction Number</th> -->
+                                <th scope="col">Particulars</th>
+                                <th scope="col">Amount</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let feeDetail of fee.feesDetails" >
+                                <td>{{rowIndex+1}}</td>
+                                <td>{{feeDetail.transaction_date | date:'dd/MM/yyyy'}}</td>
+                                <!--  <td>{{feeDetail.transaction_number}}</td> -->
+                                <td>{{feeDetail.ledger_name}}</td>
+                                <td>{{feeDetail.amount | currency: 'INR'}}</td>
+                                <td><button type="button" class="btn btn-outline-danger"
+                                    (click)="deleteFeesCharged(feeDetail)"><i class="bi bi-trash"></i></button></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <!--inner table end-->
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </mat-tab>
+
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+                  All Organisation Fees Received
+                </ng-template>
+                <p-table #feesReceived [value]="AllOrgFeesReceivedArray" dataKey="student_course_registration_id"
+                  [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
+                  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                  [rowsPerPageOptions]="[5,10,25,50]" styleClass="p-datatable-striped"
+                  [globalFilterFields]="['organisation_name','ledger_name','full_name','total_received']">
+                  <!-- ----------------------------------- -->
+                  <ng-template pTemplate="caption">
+                    <div class="flex">
+                      <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                        (click)="clear(feesReceived)"></button>
+                      <span class="p-input-icon-left ml-auto">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text"
+                          (input)="feesReceived.filterGlobal(getEventValue($event), 'contains')"
+                          placeholder="Search keyword" />
+                      </span>
+
+                    </div>
+                  </ng-template>
+                  <!--  --------------------------------------------- -->
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th style="width: 2rem"></th>
+                      <th>SL</th>
+                      <th pSortableColumn="organisation_name">Organisation Name <p-sortIcon
+                        field="organisation_name"></p-sortIcon>
+                    </th>
+                      <th pSortableColumn="ledger_name">Name <p-sortIcon field="ledger_name"></p-sortIcon>
+                      </th>
+                      <th>Course</th>
+                      <th pSortableColumn="total_received">Total Received <p-sortIcon field="total_received">
+                        </p-sortIcon>
+                      </th>
+                      <th>Delete</th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-fees let-expanded="expanded" let-rowIndex="rowIndex">
+                    <tr>
+                      <td>
+                        <button type="button" pButton pRipple [pRowToggler]="fees"
+                          class="p-button-text p-button-rounded p-button-plain"
+                          [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                      </td>
+                      <td>{{rowIndex+1}}</td>
+                      <td>{{fees.organisation_name}}</td>
+                      <td>{{fees.ledger_name}}</td>
+                      <td>{{fees.full_name}}</td>
+                      <td>{{fees.total_received | currency: 'INR'}}</td>
+                      <td><button type="button" class="btn btn-outline-danger"
+                        ><i class="bi bi-trash"></i></button></td>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="rowexpansion" let-fee class="col-12">
+                    <tr>
+                      <td colspan="7">
+                        <div class="p-3">
+                          <!--Inner table-->
+                          <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th scope="col">Date</th>
+                                <!-- <th scope="col">Transaction Number</th> -->
+                                <th scope="col">Particulars</th>
+                                <th scope="col">Comments</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let feeDetail of fee.fees_received_details ">
+                                <td>{{feeDetail.transaction_date | date:'dd/MM/yyyy'}}</td>
+                                <!--  <td>{{feeDetail.transaction_number}}</td> -->
+                                <td>{{feeDetail.ledger_name}}</td>
+                                <td>{{feeDetail.comment}}</td>
+                                <td class="text-right">{{feeDetail.temp_total_received | currency: 'INR'}}</td>
+                                <td><button type="button" class="btn btn-outline-danger"
+                                  (click)="deleteFeesCharged(feeDetail)"><i class="bi bi-trash"></i></button></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <!--inner table end-->
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+        </div>
+      </div>
+      <!-- bdaytable -->
+      <div class="col-4 bday">
+
+        <!-- Duelist -->
+        <div class="upcom-2 mt-0">
+          <div class="upbday">
+            <i class="bi bi-bell-fill"></i>&nbsp; Upcoming Woking Days
+          </div>
+          <div class="upcom-2-scroll">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">What's No</th>
+                  <th scope="col">Tran Date</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Days</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- <tr *ngFor="let item of upcomingDueListArray; let indexOfelement=index;">
+                  <th scope="row">{{indexOfelement+1}}</th>
+                  <td>{{item.student_name}}</td>
+                  <td>{{item.whatsapp_number}}</td>
+                  <td>{{item.transaction_date | date: 'dd/MM/yyyy'}}</td>
+                  <td>{{item.total_due | currency:'INR'}}</td>
+                  <td>{{item.date_Diff}}</td> 
+                </tr>-->
+                <!-- <tr>
+                  <td scope="col">1</td>
+                  <td scope="col">Binod</td>
+                  <td scope="col">95465485144</td>
+                  <td scope="col">01/07/1986</td>
+                  <td scope="col">$500</td>
+                  <td scope="col">2</td>
+                </tr>
+                <tr>
+                  <td scope="col">1</td>
+                  <td scope="col">Binod</td>
+                  <td scope="col">95465485144</td>
+                  <td scope="col">01/07/1986</td>
+                  <td scope="col">$500</td>
+                  <td scope="col">2</td>
+                </tr>
+                <tr>
+                  <td scope="col">1</td>
+                  <td scope="col">Binod</td>
+                  <td scope="col">95465485144</td>
+                  <td scope="col">01/07/1986</td>
+                  <td scope="col">$500</td>
+                  <td scope="col">2</td>
+                </tr>
+                <tr>
+                  <td scope="col">1</td>
+                  <td scope="col">Binod</td>
+                  <td scope="col">95465485144</td>
+                  <td scope="col">01/07/1986</td>
+                  <td scope="col">$500</td>
+                  <td scope="col">2</td>
+                </tr>
+                <tr>
+                  <td scope="col">1</td>
+                  <td scope="col">Binod</td>
+                  <td scope="col">95465485144</td>
+                  <td scope="col">01/07/1986</td>
+                  <td scope="col">$500</td>
+                  <td scope="col">2</td>
+                </tr>
+                <tr>
+                  <td scope="col">1</td>
+                  <td scope="col">Binod</td>
+                  <td scope="col">95465485144</td>
+                  <td scope="col">01/07/1986</td>
+                  <td scope="col">$500</td>
+                  <td scope="col">2</td>
+                </tr>
+                <tr>
+                  <td scope="col">1</td>
+                  <td scope="col">Binod</td>
+                  <td scope="col">95465485144</td>
+                  <td scope="col">01/07/1986</td>
+                  <td scope="col">$500</td>
+                  <td scope="col">2</td>
+                </tr>
+                <tr>
+                  <td scope="col">1</td>
+                  <td scope="col">Binod</td>
+                  <td scope="col">95465485144</td>
+                  <td scope="col">01/07/1986</td>
+                  <td scope="col">$500</td>
+                  <td scope="col">2</td>
+                </tr>
+                <tr>
+                  <td scope="col">1</td>
+                  <td scope="col">Binod</td>
+                  <td scope="col">95465485144</td>
+                  <td scope="col">01/07/1986</td>
+                  <td scope="col">$500</td>
+                  <td scope="col">2</td>
+                </tr>
+                <tr>
+                  <td scope="col">1</td>
+                  <td scope="col">Binod</td>
+                  <td scope="col">95465485144</td>
+                  <td scope="col">01/07/1986</td>
+                  <td scope="col">$500</td>
+                  <td scope="col">2</td>
+                </tr> -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- student history details -->
+    <div class="row mt-4 upcom">
+      <div class="stuhisdtl">
+        <i class="bi bi-person-video"></i>
+        &nbsp; Student History Details
+      </div>
+      <div class="stutable">
+
+
+        <!--  <p-table #studentRegistrationHistory [value]="studentRegistrationHistoryArray" dataKey="id" [paginator]="true"
+          [rows]="5" [showCurrentPageReport]="true"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          [rowsPerPageOptions]="[5,10,25,50]" [globalFilterFields]="['ledger_name','full_name','effective_date']">
+
+          <ng-template pTemplate="caption">
+            <div class="flex">
+              <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                (click)="clear(studentRegistrationHistory)"></button>
+              <span class="p-input-icon-left ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text"
+                  (input)="studentRegistrationHistory.filterGlobal(getEventValue($event), 'contains')"
+                  placeholder="Search keyword" />
+              </span>
+
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th>ID</th>
+              <th pSortableColumn="ledger_id">Student Name <p-sortIcon field="ledger_name"></p-sortIcon>
+              </th>
+              <th pSortableColumn="course_id">Course Name <p-sortIcon field="full_name"></p-sortIcon>
+              </th>
+              <th>Contact No</th>
+              <th pSortableColumn="effective_date">Admission Date <p-sortIcon field="effective_date"></p-sortIcon>
+              </th>
+              <th pSortableColumn="is_completed">Status<p-sortIcon field="is_completed"></p-sortIcon>
+              </th>
+              <th>Total Course Fees</th>
+              <th>Total Received</th>
+              <th>Total Due</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-course>
+
+            <tr>
+              <td><button pButton class="p-button-rounded p-button-info p-button-outlined"
+                  (click)="onClickedReceiptVoucher(course.id)">
+                  <i class="bi bi-printer"> </i>
+                </button></td>
+              <td>{{course.ledger_name}}</td>
+              <td>{{course.full_name}}</td>
+              <td>{{course.whatsapp_number}}</td>
+              <td>{{course.effective_date | date: 'dd/MM/yyyy'}}</td>
+              <td>{{course.is_completed}}</td>
+               <a [routerLink]="['/FeesCharge']" style="text-decoration:none ; color: black; text-align:center;"><td>{{course.total_course_fees | currency:'INR'}}</td></a> 
+              <td>{{course.total_course_fees | currency:'INR'}}</td>
+              <td>{{course.total_received | currency:'INR'}}</td>
+              <td>{{course.total_due | currency:'INR'}}</td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="paginatorleft">
+            <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+          </ng-template>
+        </p-table>
+ -->
+      </div>
+    </div>
+  </div>
+</div>

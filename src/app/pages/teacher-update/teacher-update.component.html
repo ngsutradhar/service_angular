@@ -1,0 +1,280 @@
+<div class="container-fluid page">
+    <div class="row d-flex align-items-center justify-content-between">
+        <div class="col-12 header"><i class="bi bi-cash"></i>&nbsp; Teacher / Staff Registration</div>
+    </div>
+    <div class="row">
+        <div class="col-12 mt-3 feeleft ">
+            <mat-tab-group (selectedTabChange)="onTabChanged($event)" [(selectedIndex)]="selectedIndex"
+                animationDuration="200ms"
+                style="background-image: linear-gradient(to bottom right, rgb(8, 2, 68), rgb(7, 32, 146)); color: aliceblue; padding: 12px; border-radius: 5px; padding:0px;">
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <mat-icon class="example-tab-icon">trending_up</mat-icon>
+                        View Teacher / Staff &nbsp; <span style="height: 20px;width: 20px;border-radius: 50%;background-color: red; border: 1px solid red; font-weight: bolder;"> {{teacherList.length}}</span>
+                    </ng-template>
+                    <p-table #teachers [value]="teacherList" dataKey="studentId" [paginator]="true" [rows]="5"
+                    [showCurrentPageReport]="true"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                    [rowsPerPageOptions]="[5,10,25,50]" styleClass="p-datatable-gridlines"
+                    [globalFilterFields]="['studentId','episodeId','studentName','motherName']">
+                    <ng-template pTemplate="caption">
+                        <div class="flex">
+                            <p-button type="button" icon="pi pi-plus" label="ADD" class="p-button-outlined" (click)="onClickAdd();"> </p-button>
+                            <span class="p-input-icon-left ml-auto">
+                                <i class="pi pi-search"></i>
+                                <input pInputText type="text"
+                                    (input)="teachers.filterGlobal(getEventValue($event), 'contains')"
+                                    placeholder="Search keyword" />
+                            </span>
+    
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>ID</th>
+                            <th pSortableColumn="studentName">Name <p-sortIcon field="studentName"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="guardianName">Guardain Name <p-sortIcon field="guardianName"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="address">Address <p-sortIcon field="address"></p-sortIcon>
+                            </th>
+                            <th>WhatsApp No </th>
+                            <th>Qualification </th>
+                            <th>Entry Date </th>
+                            <th pSortableColumn="edit">Edit <p-sortIcon field="edit"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="delete">Delete <p-sortIcon field="delete"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-student>
+                        <tr>
+                            <td>{{student.studentId}}</td>
+                            <td>{{student.studentName}}</td>
+                            <td>{{student.guardianName}}</td>
+                            <td>{{student.address}}</td>
+                            <td>{{student.whatsappNumber}}</td>
+                            <td>{{student.qualification}}</td>
+                            <td>{{student.entryDate | date: 'dd/MM/yyyy'}}</td>
+                            <td>
+                                 <p-button type="button" (click)="editTeacher(student)" icon="pi pi-pencil"
+                                    styleClass="p-button-text">
+                                </p-button> 
+                            </td>
+                            <td>
+                               <p-button type="button" (click)="deleteTeacher(student)" icon="pi pi-trash"
+                                    styleClass="p-button-text">
+                                </p-button> 
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="paginatorleft">
+                        <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                        (click)="clear(teachers)"></button>
+                        
+                    </ng-template>
+                </p-table>
+                </mat-tab>
+              
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <mat-icon class="example-tab-icon">trending_up</mat-icon>
+                        Teacher / Staff Entry
+                    </ng-template>
+                    <form [formGroup]="teacherRegistrationFormGroup">
+                        <div style="background-color:whitesmoke; padding: 20px;">
+                            <div class="" style="background-color:white">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <mat-form-field appearance="outline" style="width:100% ;">
+                                            <mat-label> <i class="bi bi-person-fill"></i> &nbsp; Teacher
+                                                Name</mat-label>
+                                            <input matInput placeholder="Student Name" formControlName="studentName"
+                                                class="custom">
+                                            <div
+                                                *ngIf="teacherRegistrationFormGroup.controls['studentName'].errors && teacherRegistrationFormGroup.controls['studentName'].touched">
+                                                <mat-error class="text-right"
+                                                    *ngIf="teacherRegistrationFormGroup.controls['studentName'].errors['required']">
+                                                    Student Name is required
+                                                </mat-error>
+                                            </div>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <!-- //--------------- -->
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                        <mat-form-field appearance="outline" style="width:100% ;">
+                                            <mat-label> <i class="bi bi-person-fill"></i> &nbsp;Guardain
+                                                Name</mat-label>
+                                            <input matInput placeholder="Guardain's Name" formControlName="guardainName"
+                                                class="custom">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <mat-form-field appearance="outline" style="width:100% ;">
+                                            <mat-label>Relation (Like e.g: Father / Mother)</mat-label>
+                                            <input matInput placeholder="Father" formControlName="relation"
+                                                class="custom">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <mat-form-field appearance="outline" style="width:100% ;">
+                                            <mat-label><i class="bi bi-geo-alt-fill"></i> &nbsp; Address
+                                            </mat-label>
+                                            <input matInput placeholder="Teacher Address" formControlName="address"
+                                                class="custom">
+                                            <div
+                                                *ngIf="teacherRegistrationFormGroup.controls['address'].errors && teacherRegistrationFormGroup.controls['address'].touched">
+                                                <mat-error class="text-right"
+                                                    *ngIf="teacherRegistrationFormGroup.controls['address'].errors['required']">
+                                                    Student Address is
+                                                    required</mat-error>
+                                            </div>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <mat-form-field appearance="outline" style="width:100%">
+                                            <mat-label>Date of Birth</mat-label>
+                                            <input class="col-9" matInput #ref [matDatepicker]="dob"
+                                                formControlName="dob" (dateInput)="setDOBSQL(ref.value)">
+                                            <div
+                                                *ngIf="teacherRegistrationFormGroup.controls['dob'].errors && teacherRegistrationFormGroup.controls['dob'].touched">
+                                                <mat-error class="text-right"
+                                                    *ngIf="teacherRegistrationFormGroup.controls['dob'].errors['required']">DOB
+                                                    is
+                                                    required</mat-error>
+                                            </div>
+                                            <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+                                            <mat-datepicker #dob></mat-datepicker>
+
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <mat-form-field appearance="outline" style="width:100% ;">
+                                            <mat-label>City</mat-label>
+                                            <input matInput placeholder="City" formControlName="city" class="custom">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <mat-form-field appearance="outline" style="width:100% ;">
+                                            <mat-label>Pin</mat-label>
+                                            <input matInput placeholder="Pin" formControlName="pin" class="custom">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <mat-form-field appearance="outline" style="width:100% ;">
+                                            <mat-label>District</mat-label>
+                                            <input matInput placeholder="District" formControlName="district"
+                                                class="custom">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <ng-select [items]="stateList" bindLabel="state_name" class="custom"
+                                            bindValue="id" formControlName="stateId" autofocus appendTo="body"
+                                            placeholder="State">
+                                        </ng-select>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <mat-form-field appearance="outline" style="width:100% ;">
+                                            <mat-label>WhatsApp No</mat-label>
+                                            <input matInput placeholder="Pin" formControlName="whatsappNumber"
+                                                (blur)="sameAsWhatsAppNo()" class="custom">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <mat-form-field appearance="outline" style="width:100% ;">
+                                            <mat-label>Contact No</mat-label>
+                                            <input matInput placeholder="Pin" formControlName="guardianContactNumber"
+                                                class="custom">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <mat-form-field appearance="outline" style="width:100% ;">
+                                            <mat-label><i class="bi bi-envelope-fill mr-1"></i> &nbsp; Email
+                                                ID</mat-label>
+                                            <input matInput="email" placeholder="Email ID" formControlName="emailId"
+                                                class="custom">
+                                            <div
+                                                *ngIf="teacherRegistrationFormGroup.controls['emailId'].errors && teacherRegistrationFormGroup.controls['emailId'].touched">
+                                                <mat-error class="text-right"
+                                                    *ngIf="teacherRegistrationFormGroup.controls['emailId'].errors['required']">
+                                                    Student Email is
+                                                    required</mat-error>
+                                            </div>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <mat-form-field appearance="outline" style="width:100% ;">
+                                            <mat-label>Qualification</mat-label>
+                                            <select matNativeControl formControlName="qualification">
+                                                <option value="Class-I">Class-I</option>
+                                                <option value="Class-II">Class-II</option>
+                                                <option value="Class-III">Class-III</option>
+                                                <option value="Class-IV">Class-IV</option>
+                                                <option value="Class-V">Class-V</option>
+                                                <option value="Class-VI">Class-VI</option>
+                                                <option value="Class-VII">Class-VII</option>
+                                                <option value="Class-VIII">Class-VIII</option>
+                                                <option value="Class-IX">Class-IX</option>
+                                                <option value="Class-X">Class-X</option>
+                                                <option value="Class-XI">Class-XI</option>
+                                                <option value="Class-XII">H.S</option>
+                                                <option value="B.A">B.A</option>
+                                                <option value="M.A">M.A</option>
+                                                <option value="B.COM">B.COM</option>
+                                                <option value="M.COM">M.COM</option>
+                                                <option value="B.SC">B.SC</option>
+                                                <option value="M.SC">M.SC</option>
+                                                <option value="B.sc(IT)">B.sc(IT)</option>
+                                                <option value="BCA">BCA</option>
+                                                <option value="MCA">MCA</option>
+                                                <option value="B.TECH">B.TECH</option>
+                                                <option value="M.TECH">M.TECH</option>
+                                                <option value="DIPLOMA">DIPLOMA</option>
+                                                <option value="PhD">PhD</option>
+                                                <option value="B.ED">B.ED</option>
+                                                <option value="M.ED">M.ED</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <mat-form-field appearance="outline" style="width:100% ;">
+                                            <mat-label>Gender</mat-label>
+                                            <select matNativeControl required formControlName="sex">
+                                                <option value="M">Male</option>
+                                                <option value="F">Female</option>
+                                                <option value="O">Other</option>
+
+                                            </select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <button *ngIf="(this.teacherRegistrationFormGroup.valid) " type="button"
+                                        class="btn btn-success" (click)="onTeacherSave();"><i
+                                            class="bi bi-save"></i>&nbsp;
+                                        Save</button>&nbsp;&nbsp;
+                                    <button type="button" class="btn btn-info" (click)="onClearTeacher();">&nbsp;
+                                        Clear</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </mat-tab>
+            </mat-tab-group>
+                    <!--  <pre style="background-color:yellow ; color: black;">
+                userFormGroup = {{this.teacherRegistrationFormGroup.value | json}}
+            </pre> -->
+        </div>
+    </div>
+</div>

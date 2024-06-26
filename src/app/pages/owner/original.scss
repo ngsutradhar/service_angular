@@ -1,0 +1,79 @@
+.page{
+  color: white;
+  padding: 0 1rem;
+  background: #f1f5f9;
+  &__box{
+    min-height: 100px;
+    background: #a9aaab;
+    margin: 0 -1rem;
+    font-size: 36px;
+  }
+  &__content{
+    min-height: calc(100vh - 160px);
+    border-radius: 10px;
+    margin-top: -3rem;
+    background: white;
+    color: black;
+    font-size: 20px;
+    &-data{
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+    }
+  }
+}
+::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
+  color:rgb(7, 7, 7);
+  background-color: rgb(246, 249, 246);
+  font-weight: bolder;
+  }
+  
+  ::ng-deep .mat-tab-list .mat-tab-labels {
+  color:rgb(246, 13, 13);
+  background-image: linear-gradient(to bottom right, rgb(8, 2, 68), rgb(10, 39, 168));
+  font-weight: bolder;
+  }
+  .mat-tab-label{
+    background:aqua;
+    color: blue;
+    width: 60px;
+    height: 50px;
+    font-size: 20px;
+  }
+ 
+  $speed: 25s;
+
+  .marquee {
+    height: 25px;
+    width: 420px;
+  
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .marquee div {
+    display: block;
+    width: 200%;
+    height: 30px;
+    overflow-x: marquee-line;
+    marquee-style: scroll;
+    marquee-direction: backward;
+
+    position: absolute;
+    overflow: hidden;
+  
+    animation: marquee 5s linear infinite;
+  }
+  
+  .marquee span {
+    float: left;
+    width: 100%;
+  }
+  
+  @keyframes marquee {
+    0% { left: 0; }
+    100% { left: -100%; }
+  }
+
+
+// Styling

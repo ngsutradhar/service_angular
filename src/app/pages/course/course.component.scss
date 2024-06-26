@@ -1,0 +1,137 @@
+.page{
+  color: rgb(12, 12, 12);
+  background: whitesmoke;
+  &__box{
+    min-height: 100px;
+    background: whitesmoke;
+    margin: 0 -3rem;
+    font-size: 24px;
+  }
+  &__content{
+    min-height: 100vh;
+    border-radius: 10px;
+    margin-top: -3rem;
+    background:  rgb(159, 159, 162);
+    border:2px solid black;
+    color: black;
+    font-size: 20px;
+    &-data{
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+    }
+  }
+}
+::ng-deep .mat-form-field {
+  .mat-input-element {
+      color: rgb(8, 8, 8);
+      font-size: medium;
+      font-family: 'Roboto', sans-serif;
+  }
+  .mat-form-field-label {
+      color: rgb(10, 10, 10);
+      font-family: 'Roboto', sans-serif;
+      font-size: medium;
+  }
+  .mat-form-field-underline {
+      background-color: rgb(4, 32, 59);
+  }
+  .mat-form-field-ripple {
+      background-color: slategray;
+  }
+  .mat-form-field-required-marker {
+      color: rgb(190, 21, 9);
+  } 
+}
+mat-form-field{
+  margin-bottom: -1em
+}
+.p-input-icon-left,
+.p-input-icon-right{
+  float: right;
+}
+span .p-input-icon-left input[type="text"]{
+  padding:0px 25px;
+}
+.text-on-pannel {
+  background: #fff none repeat scroll 0 0;
+  height: auto;
+  margin-left: 20px;
+  padding: 3px 5px;
+  position: absolute;
+  margin-top: -47px;
+  border: 1px solid #337ab7;
+  border-radius: 8px;
+}
+
+.panel {
+  /* for text on pannel */
+  margin-top: 27px !important;
+}
+
+.panel-body {
+  padding-top: 30px !important;
+}
+.bg{
+  background-image: linear-gradient(to right, rgba(146, 127, 127, 0.522) , rgba(85, 85, 72, 0.481));
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+  text-align: left;
+  border: 1px solid #e9ecef;
+  border-width: 0 0 1px 0;
+  padding: 0px 0px;
+}
+
+.main-div{
+   width:100%;
+}
+.details-div{
+  width:100%;
+}
+// media querry 
+@media(max-width:480px){
+
+  .main-div{
+    width:100%;
+ }
+ .details-div{
+   width:100%;
+ }
+  
+}
+
+@media(max-width:768px){
+  .container .row .col-sm-8{
+    width:100%;
+    font-size: medium;
+ }
+ .container .row .col-sm-4{
+  width:100%;
+  font-size: medium;
+}main-div
+ .main-div .card .card-body .col-sm-5{
+  width:100%;
+   font-size: medium;
+ }
+ .main-div .card .card-body .col-sm-4{
+  width:100%;
+   font-size: medium;
+ }
+ .main-div .card .card-body .col-sm-3{
+  width:100%;
+   font-size: medium;
+ }
+ .main-div .card .card-body .col-sm-8{
+  width:100%;
+   font-size: medium;
+ }
+ .col-sm-4 .details-div{
+   width:100%;
+   font-size: small;
+ }
+ .details-div .card{
+  width:100%;
+  font-size: small;
+}
+}

@@ -1,0 +1,50 @@
+<p-table [value]="feesReceivedArray" dataKey="courseName" responsiveLayout="scroll">
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="width: 3rem"></th>
+      <th>SL</th>
+      <th pSortableColumn="studentName">Name <p-sortIcon field="studentName"></p-sortIcon>
+      </th>
+      <th>Course</th>
+      <th pSortableColumn="feesTotal">Total Charged <p-sortIcon field="feesTotal"></p-sortIcon>
+      </th>
+
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-fees let-expanded="expanded" let-rowIndex="rowIndex">
+    <tr>
+      <td>
+        <button type="button" pButton pRipple [pRowToggler]="fees"
+                class="p-button-text p-button-rounded p-button-plain"
+                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+      </td>
+      <td>{{rowIndex+1}}</td>
+      <td>{{fees.studentName}}</td>
+      <td>{{fees.courseName}}</td>
+      <td>{{fees.feesTotal | currency: 'INR'}}</td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="rowexpansion" let-fee>
+    <tr>
+      <td colspan="7">
+        <div class="p-p-3">
+          <p-table [value]="fee.feesDetails" dataKey="id">
+            <ng-template pTemplate="header">
+    <tr>
+      <th>Date </th>
+      <th>Transaction Number </th>
+      <th>Particulars </th>
+      <th>Amount </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-feeDetail>
+    <tr>
+      <td>{{feeDetail.transaction_date | date:'dd/MM/yyyy'}}</td>
+      <td>{{feeDetail.transaction_number}}</td>
+      <td>{{feeDetail.ledger_name}}</td>
+      <td>{{feeDetail.amount | currency: 'INR'}}</td>
+      <td><button type="button" class="btn btn-success" (click)="editFeesReceived(feeDetail)"><i
+        class="bi bi-pen"></i></button> &nbsp;
+    </tr>
+  </ng-template>
+</p-table>

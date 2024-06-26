@@ -1,0 +1,369 @@
+<div class="container-fluid page">
+    <div class="row d-flex align-items-center justify-content-between">
+        <div class="col-12 header"><i class="bi bi-cash"></i>&nbsp; New User</div>
+    </div>
+    <div class="row">
+        <div class="col-12 mt-3 feeleft ">
+            <mat-tab-group (selectedIndexChange)="onTabChanged($event)" [(selectedIndex)]="selectedIndex"
+                animationDuration="200ms"
+                style="background-image: linear-gradient(to bottom right, rgb(8, 2, 68), rgb(7, 32, 146)); color: aliceblue; padding: 12px; border-radius: 5px; padding:0px;">
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <mat-icon class="example-tab-icon">trending_up</mat-icon>
+                        User Entry
+                    </ng-template>
+                    <div style="background-color:white ; padding: 20px;">
+                        <form [formGroup]="userFormGroup">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <mat-label class="custom"><i class="bi bi-building"></i>&nbsp;Organisation Name
+                                    </mat-label>
+                                    <ng-select appearance="outline" style="width:100% ;" [items]="organisationArray"
+                                        bindLabel="organisation_name" class="org-custom" bindValue="id"
+                                        formControlName="organisation_id" autofocus="true" appendTo="body"
+                                        placeholder="Organisation Name" (change)="changeOrganisation($event)">
+                                    </ng-select>
+                                </div>
+                                <div class="col-sm-6 comdtl" *ngIf="companyInfoBoolean">
+                                    <span class="comname">{{organisationName}} <br></span>
+                                    <hr>
+                                    <i class="bi bi-envelope-fill"></i>&nbsp; Email :&nbsp; <b>{{emailId}}</b><br>
+                                    <i class="bi bi-telephone-fill"></i>&nbsp; Contact Number : &nbsp; <b>
+                                        {{contactNumber}}</b><br>
+                                    <i class="bi bi-geo-alt-fill"></i>&nbsp; Address : &nbsp; <b> {{address}}, Pin -
+                                        &nbsp; {{organisationPin}}</b>
+                                </div>
+                                <!--  <hr style="width:40%;height:2px;border-width:0;color:rgb(103, 101, 101);background-color:rgb(104, 103, 103); text-align: center;"> -->
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <mat-form-field appearance="outline" style="width:100% ;">
+                                        <mat-label><i class="bi-person-circle"></i>&nbsp; User Name
+                                        </mat-label>
+                                        <input matInput placeholder="User Name" class="custom"
+                                            formControlName="user_name">
+                                        <div
+                                            *ngIf="userFormGroup.controls['user_name'].errors && userFormGroup.controls['user_name'].touched">
+                                            <mat-error class="text-right"
+                                                *ngIf="userFormGroup.controls['user_name'].errors['required']">
+                                                User Name is required</mat-error>
+                                        </div>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-6">
+                                    <mat-form-field appearance="outline" style="width:100% ;">
+                                        <mat-label><i class="bi bi-envelope-fill mr-1"></i> &nbsp; Email ID</mat-label>
+                                        <input matInput="email" placeholder="Email ID" class="custom"
+                                            formControlName="email">
+                                        <div
+                                            *ngIf="userFormGroup.controls['email'].errors && userFormGroup.controls['email'].touched">
+                                            <mat-error class="text-right"
+                                                *ngIf="userFormGroup.controls['email'].errors['required']">
+                                                User Email is
+                                                required</mat-error>
+                                        </div>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <mat-form-field appearance="outline" style="width:100% ;">
+                                        <mat-label><i class="bi bi-phone-fill"></i>&nbsp;Contact No</mat-label>
+                                        <input matInput placeholder="Contact No" class="custom"
+                                            formControlName="mobile1">
+                                        <div
+                                            *ngIf="userFormGroup.controls['mobile1'].errors && userFormGroup.controls['mobile1'].touched">
+                                            <mat-error class="text-right"
+                                                *ngIf="userFormGroup.controls['mobile1'].errors['required']">
+                                                User Contact Number is
+                                                required</mat-error>
+                                        </div>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-6">
+                                    <!--   <mat-label class="custom"><i class="bi-person-circle"></i>&nbsp;User Type
+                                    </mat-label> -->
+                                    <ng-select appearance="outline" style="width:100% ;" [items]="userRegisterArray"
+                                        bindLabel="user_type_name" class="custom" bindValue="id"
+                                        formControlName="user_type_id" autofocus appendTo="body"
+                                        placeholder="User Type">
+                                    </ng-select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <input class="form-control pass-custom" formControlName="password" type="password"
+                                        placeholder="New Password" />
+                                    <div
+                                        *ngIf="userFormGroup.controls['password'].errors && userFormGroup.controls['password'].touched">
+                                        <mat-error class="text-right"
+                                            *ngIf="userFormGroup.controls['password'].errors['required']">
+                                            User Password is
+                                            required</mat-error>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <input class="form-control pass-custom" formControlName="confirm_password"
+                                        type="password" placeholder="Confirm Password" (blur)='onBlur($event)' />
+                                    <div *ngIf="!comfirmPasswordBoolean">
+                                        <mat-error class="text-right">
+                                            Confirm Password Mismatch
+                                        </mat-error>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row p-2">
+                                <div class="col-sm-2" *ngIf="hiddenInput">
+                                    <div class="form-group">
+                                        <mat-form-field>
+                                            <input matInput placeholder="user ID" formControlName="userId">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 text-right">
+                                    <button type="button" class="btn btn-success" (click)="onClear();"><i
+                                            class="bi bi-save"></i>&nbsp;Clear</button>
+                                    &nbsp; &nbsp;
+                                    <button
+                                        *ngIf="(this.userFormGroup.valid) && (comfirmPasswordBoolean) && (!isBtnVisible) "
+                                        type="button" class="btn btn-info" (click)="onSave();"><i
+                                            class="bi bi-save"></i>&nbsp;
+                                        Save</button>
+                                    <button *ngIf="(this.userFormGroup.valid && isBtnVisible)" type="button"
+                                        class="btn btn-danger" (click)="onUpdate();"><i class="bi bi-save"></i>&nbsp;
+                                        Update</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </mat-tab>
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <mat-icon class="example-tab-icon">trending_up</mat-icon>
+                        Student Entry
+                    </ng-template>
+                    <div style="background-color:white ; padding: 20px;">
+                        <form [formGroup]="studentUserFormGroup">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <mat-label class="custom"><i class="bi bi-building"></i>&nbsp;Student Name
+                                    </mat-label>
+                                    <ng-select appearance="outline" style="width:100% ;" [items]="studentNameArray"
+                                        bindLabel="ledger_name" class="org-custom" bindValue="id"
+                                        formControlName="student_id" autofocus="true" appendTo="body"
+                                        placeholder="student Name"  (change)="changeStudentInfo($event)">
+                                    </ng-select>
+                                </div>
+                                  <div class="col-sm-6 comdtl" *ngIf="studentInfoBoolean">
+                                    <span class="comname">{{organisationName}} <br></span>
+                                    <hr>
+                                    <i class="bi bi-envelope-fill"></i>&nbsp; Email :&nbsp; <b>{{emailId}}</b><br>
+                                    <i class="bi bi-telephone-fill"></i>&nbsp; Contact Number : &nbsp; <b>
+                                        {{contactNumber}}</b> <span style="color: green; font-weight: bolder;"> Status: &nbsp; {{resultString}} </span><br>
+                                    <i class="bi bi-geo-alt-fill"></i>&nbsp; Address : &nbsp; <b> {{address}}, Pin -
+                                        &nbsp; {{organisationPin}}</b>
+                                </div> 
+                                <!--  <hr style="width:40%;height:2px;border-width:0;color:rgb(103, 101, 101);background-color:rgb(104, 103, 103); text-align: center;"> -->
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <mat-form-field appearance="outline" style="width:100% ;">
+                                        <mat-label><i class="bi-person-circle"></i>&nbsp; User Name
+                                        </mat-label>
+                                        <input matInput placeholder="User Name" class="custom"
+                                            formControlName="student_name">
+                                        <div
+                                            *ngIf="studentUserFormGroup.controls['student_name'].errors && studentUserFormGroup.controls['student_name'].touched">
+                                            <mat-error class="text-right"
+                                                *ngIf="studentUserFormGroup.controls['student_name'].errors['required']">
+                                                User Name is required</mat-error>
+                                        </div>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-6">
+                                    <mat-form-field appearance="outline" style="width:100% ;">
+                                        <mat-label><i class="bi bi-envelope-fill mr-1"></i> &nbsp; Email ID</mat-label>
+                                        <input matInput="email" placeholder="Email ID" class="custom"
+                                            formControlName="student_email">
+                                        <div
+                                            *ngIf="studentUserFormGroup.controls['student_email'].errors && studentUserFormGroup.controls['student_email'].touched">
+                                            <mat-error class="text-right"
+                                                *ngIf="studentUserFormGroup.controls['student_email'].errors['required']">
+                                                User Email is
+                                                required</mat-error>
+                                        </div>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <mat-form-field appearance="outline" style="width:100% ;">
+                                        <mat-label><i class="bi bi-phone-fill"></i>&nbsp;Contact No</mat-label>
+                                        <input matInput placeholder="Contact No" class="custom"
+                                            formControlName="student_mobile1">
+                                        <div
+                                            *ngIf="studentUserFormGroup.controls['student_mobile1'].errors && studentUserFormGroup.controls['student_mobile1'].touched">
+                                            <mat-error class="text-right"
+                                                *ngIf="studentUserFormGroup.controls['student_mobile1'].errors['required']">
+                                                User Contact Number is
+                                                required</mat-error>
+                                        </div>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-6">
+                                    <!--   <mat-label class="custom"><i class="bi-person-circle"></i>&nbsp;User Type
+                                    </mat-label> -->
+                                    <ng-select appearance="outline" style="width:100% ;" [items]="userRegisterArray"
+                                        bindLabel="user_type_name" class="custom" bindValue="id"
+                                        formControlName="student_user_type_id" autofocus appendTo="body"
+                                        placeholder="User Type">
+                                    </ng-select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <input class="form-control pass-custom" formControlName="student_password" type="password"
+                                        placeholder="New Password" />
+                                    <div
+                                        *ngIf="studentUserFormGroup.controls['student_password'].errors && studentUserFormGroup.controls['student_password'].touched">
+                                        <mat-error class="text-right"
+                                            *ngIf="studentUserFormGroup.controls['student_password'].errors['required']">
+                                            User Password is
+                                            required</mat-error>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <input class="form-control pass-custom" formControlName="student_confirm_password"
+                                        type="password" placeholder="Confirm Password" (blur)='onStudentBlur($event)' />
+                                    <div *ngIf="!studentComfirmPasswordBoolean">
+                                        <mat-error class="text-right">
+                                            Confirm Password Mismatch
+                                        </mat-error>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row p-2" >
+                                 <div class="col-sm-2" *ngIf="hiddenInput">
+                                    <div class="form-group">
+                                        <mat-form-field>
+                                            <input matInput placeholder="organisation ID" formControlName="org_id">
+                                        </mat-form-field>
+                                    </div>
+                                </div> 
+                                <div class="col-sm-12 text-right">
+                                    <button type="button" class="btn btn-success" (click)="onStudentClear();"><i
+                                            class="bi bi-save"></i>&nbsp;Clear </button>
+                                    &nbsp; &nbsp;
+                                    <button
+                                        *ngIf="(this.studentUserFormGroup.valid) && (studentComfirmPasswordBoolean)  "
+                                        type="button" class="btn btn-info" (click)="onStudentSave();"><i
+                                            class="bi bi-save"></i>&nbsp;
+                                        Save</button>
+                                    <button *ngIf="(this.studentUserFormGroup.valid && isBtnVisible)" type="button"
+                                        class="btn btn-danger" (click)="onUpdate();"><i class="bi bi-save"></i>&nbsp;
+                                        Update</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </mat-tab>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <mat-icon class="example-tab-icon">list</mat-icon>
+                        View User
+                    </ng-template>
+                    <div class="p-2 bd-highlight">
+                        <p-table #user [value]="allUserArray" dataKey="id" [paginator]="true" [rows]="5"
+                            [showCurrentPageReport]="true"
+                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                            [rowsPerPageOptions]="[5,10,25,50]" styleClass="p-datatable-striped"
+                            [globalFilterFields]="['organisation_name','user_name','user_type_name','email']">
+
+                            <ng-template pTemplate="caption">
+                                <div class="flex">
+                                    <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                                        (click)="clear(user)"></button>
+                                    <span class="p-input-icon-left ml-auto">
+                                        <i class="pi pi-search"></i>
+                                        <input pInputText type="text"
+                                            (input)="user.filterGlobal(getEventValue($event), 'contains')"
+                                            placeholder="Search keyword" />
+                                    </span>
+
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>ID</th>
+                                    <th pSortableColumn="user_name">User Name <p-sortIcon field="user_name">
+                                        </p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="organisation_name">Organisation Name <p-sortIcon
+                                            field="organisation_name"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="user_type_name">User Type <p-sortIcon field="user_type_name">
+                                        </p-sortIcon>
+                                    </th>
+                                    <th>Contact Number</th>
+                                    <th>Email</th>
+                                    <!-- <th>Password</th> -->
+                                    <th colspan="2">Action</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-user>
+                                <tr>
+                                    <td>{{user.id}}</td>
+                                    <td>{{user.user_name}}</td>
+                                    <td>{{user.organisation_name}}</td>
+                                    <td>{{user.user_type_name}}</td>
+                                    <td>{{user.mobile1}}</td>
+                                    <td>{{user.email}}</td>
+                                    <!-- <td>{{user.password}}</td> -->
+                                    <td colspan="2">
+                                        <p-button type="button" icon="pi pi-pencil" (click)="onEditUser(user)"
+                                            styleClass="p-button-text"></p-button>
+
+                                        <p-button type="button" icon="pi pi-trash" styleClass="p-button-text">
+                                        </p-button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="paginatorleft">
+                                <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </mat-tab>
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+                        Upcoming Birthday
+                    </ng-template>
+
+                    <pre style="background-color:yellow ; color: black;">
+                        userFormGroup = {{this.userFormGroup.value | json}}
+                        studentUserFormGroup = {{this.studentUserFormGroup.value | json}}
+                        userFormGroup.valid = {{this.userFormGroup.valid }}
+                        comfirmPasswordBoolean = {{comfirmPasswordBoolean}}
+                        userRegisterDataStudent = {{this.studentRegisterData | json}}
+                        studentUserFormGroup ={{(this.studentUserFormGroup.valid) && (studentComfirmPasswordBoolean) }}
+                       <!-- studentData={{studentData | json}}
+                   
+                         test={{studentNameFormGroup.controls['studentName'].errors['required'] | json}}-->
+                      </pre>
+                </mat-tab>
+            </mat-tab-group>
+
+        </div>
+    </div>
+</div>

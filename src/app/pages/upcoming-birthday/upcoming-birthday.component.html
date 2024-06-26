@@ -1,0 +1,49 @@
+<div class="container-fluid page">
+    <div class="row d-flex align-items-center justify-content-between">
+        <div class="col-12 header"><i class="bi bi-cash"></i>&nbsp; View All Upcoming Birthday List</div>
+    </div>
+    <div class="page__content">
+        <p-table #birthdayList [value]="birthdayArray"
+            [globalFilterFields]="['ledger_name']">
+            <ng-template pTemplate="caption">
+                <div class="p-d-flex">
+                    <span class="p-input-icon-left p-ml-auto">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text"
+                            (input)="birthdayList.filterGlobal(getEventValue($event), 'contains')"
+                            placeholder="Search keyword" />
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="ledger_name">Student Name <p-sortIcon field="ledger_name"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="whatsapp_number">What's App No <p-sortIcon field="whatsapp_number"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="dob"> Date of Birthday<p-sortIcon field="dob"></p-sortIcon>
+                    </th>
+                    <th class="text-right" pSortableColumn="PandingDays">Days <p-sortIcon field="PandingDays">
+                        </p-sortIcon>
+                    </th>
+                    <th>Send Wish</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item>
+                <tr>
+                    <td>{{item.ledger_name}}</td>
+                    <td>{{item.whatsapp_number}}</td>
+                    <td>{{item.dob | date: 'dd/MM/yyyy'}}</td>
+                    <td class="text-right">{{item.PandingDays }}</td>
+                    <td ><button type="button" class="btn btn-success"><i class="bi bi-send-fill"></i></button></td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <!-- <tr>
+          <th colspan="5">Gross Total</th>
+          <th class="text-right">{{totalIncome | currency : 'INR'}}</th>
+        </tr> -->
+            </ng-template>
+        </p-table>
+    </div>
+</div>

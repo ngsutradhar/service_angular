@@ -1,0 +1,159 @@
+.page{
+    color: rgb(12, 12, 12);
+    background: whitesmoke;
+    &__box{
+      min-height: 100px;
+      background: whitesmoke;
+      margin: 0 -3rem;
+      font-size: 24px;
+    }
+    &__content{
+      min-height: 100vh;
+      border-radius: 10px;
+      margin-top: -3rem;
+      background:  rgb(159, 159, 162);
+      border:2px solid black;
+      color: black;
+      font-size: 20px;
+      &-data{
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+      }
+    }
+  }
+  mat-form-field{
+    margin-bottom: -1em
+  }
+  .p-input-icon-left,
+  .p-input-icon-right{
+    float: right;
+  }
+  span .p-input-icon-left input[type="text"]{
+    padding:0px 25px;
+  }
+  ::ng-deep .mat-form-field {
+    .mat-input-element {
+        color: rgb(8, 8, 8);
+        font-size: medium;
+        font-family: "Roboto", sans-serif;
+    }
+    .mat-form-field-label {
+        color: rgb(10, 10, 10);
+        font-family: "Roboto", sans-serif;
+        font-size: medium;
+    }
+    .mat-form-field-underline {
+        background-color: rgb(4, 32, 59);
+    }
+    .mat-form-field-ripple {
+        background-color: slategray;
+    }
+    .mat-form-field-required-marker {
+        color: rgb(190, 21, 9);
+    }
+  
+  }
+  ::ng-deep datepicker-value-example .mat-form-field-label{
+    color:#43b2ee;
+  }
+  
+  ::ng-deep .mat-datepicker-toggle{
+    color:#43b2ee;
+  }
+  ::ng-deep .mat-form-field-underline{
+  background: #43b2ee;
+  }
+  ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar {
+    background-color: #fec61f !important;
+  }
+  mat-form-field{
+    margin-bottom: -1em
+  }
+    .text-on-pannel {
+      background: #fff none repeat scroll 0 0;
+      height: auto;
+      margin-left: 20px;
+      padding: 3px 5px;
+      position: absolute;
+      margin-top: -47px;
+      border: 1px solid #337ab7;
+      border-radius: 8px;
+    }
+  
+    .panel {
+      /* for text on pannel */
+      margin-top: 27px !important;
+    }
+  
+    .panel-body {
+      padding-top: 30px !important;
+    }
+    .transaction-master-form{
+      /*min-height: 50vh;
+      min-width:100vh;*/
+      font-size: large;
+      background-color:white;
+  
+     /*  background-image: linear-gradient(to right, rgb(114, 110, 110) , rgb(255, 255, 250));
+      border-radius: 25px 25px;
+      -webkit-box-shadow: 0 10px 6px -6px #777;
+      -moz-box-shadow: 0 10px 6px -6px #777; */
+      box-shadow: 0 10px 6px -6px #777;
+    }
+    .transaction-details-form{
+      min-height: 10vh;
+      min-width:70vh;
+      font-size:medium;
+      /* background-color:
+      rgb(207, 202, 202);
+      background-image: linear-gradient(to right, rgb(114, 110, 110) , rgb(255, 255, 250));
+      border-radius: 25px 25px;*/
+      -webkit-box-shadow: 0 10px 6px -6px #777;
+      -moz-box-shadow: 0 10px 6px -6px #777;
+      box-shadow: 0 10px 6px -6px #777;
+    }
+  
+    .btn-space {
+      margin-right: 5px;
+  }
+  //Media query
+  @media(max-width:480px){
+    .page__content .container-fluid .main-div{
+      width: 100%;
+      font-size: medium;
+    }
+  }
+  // Debjitcss
+  .header{
+    background-color: #383838;
+    padding: .5em 1em;
+    font-size: 1.5em;
+    margin: 0;
+    color: #fff;
+  }
+  .feeleft{
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  
+  }
+  .feeright{
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  
+  }
+  .tableb{
+    background-color: #000ba0;
+  }
+  @media(max-width:480px){
+    .feeleft{
+      width: 100%;
+    }
+    .feeright{
+      width: 100%;
+    }
+  }
+  
+  
+  
+  

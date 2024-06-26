@@ -1,0 +1,105 @@
+.page{
+    color: rgb(12, 12, 12);
+    background: whitesmoke;
+    
+  }
+  .header{
+    background-color: #383838;
+    padding: .5em 1em;
+    font-size: 1.5em;
+    margin: 0;
+    color: #fff;
+  }
+  .feeleft{
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    background-color: #fafafb;
+ 
+  
+  }
+  .feeright{
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    font-size: small;
+    
+    }
+    .ng-select .ng-select-container:hover{
+      background-color: rgb(42, 17, 141);
+    }
+    ::ng-deep .mat-form-field {
+      .mat-input-element {
+          color: rgb(8, 8, 8);
+          font-size: large;
+          font-family: "Roboto", sans-serif;
+      }
+      .mat-form-field-label {
+          color: rgb(10, 10, 10);
+          font-family: "Roboto", sans-serif;
+          font-size: large;
+      }
+      .mat-form-field-underline {
+          background-color: rgb(4, 32, 59);
+      }
+      .mat-form-field-ripple {
+          background-color: slategray;
+      }
+      .mat-form-field-required-marker {
+          color: rgb(190, 21, 9);
+      }
+    
+    }
+    .custom {
+      font-size: 20px!important;
+    }
+    ::ng-deep datepicker-value-example .mat-form-field-label{
+      color:#43b2ee;
+    }
+    ::ng-deep .mat-tab-list .mat-tab-labels {
+      color:rgb(246, 13, 13);
+      background-image: linear-gradient(to bottom right, rgb(8, 2, 68), rgb(10, 39, 168));
+      font-weight: bolder;
+      }
+    ::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
+      color:rgb(7, 7, 7);
+      background-color: rgb(246, 249, 246);
+      font-weight: bolder;
+      } 
+    ::ng-deep .mat-datepicker-toggle{
+      color:#43b2ee;
+    }
+    ::ng-deep .mat-form-field-underline{
+    background: #43b2ee;
+    }
+    ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar {
+      background-color: #fec61f !important;
+    }
+    mat-form-field{
+      margin-bottom: -1em
+    }
+      
+      mat-form-field{
+        margin-bottom: -1em
+      }
+      ::ng-deep .mat-form-field {
+        .mat-input-element {
+            color: rgb(8, 8, 8);
+            font-size: medium;
+        }
+        .mat-form-field-label {
+            color: rgb(10, 10, 10);
+            
+            font-size: medium;
+        }
+        .mat-form-field-underline {
+            background-color: rgb(4, 32, 59);
+        }
+        .mat-form-field-ripple {
+            background-color: slategray;
+        }
+        .mat-form-field-required-marker {
+            color: rgb(190, 21, 9);
+        }
+      
+        
+      }
+ 

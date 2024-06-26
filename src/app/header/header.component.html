@@ -1,0 +1,149 @@
+
+<!-- <nav class="navbar navbar-expand-lg navbar-dark" style="background-image: linear-gradient(to bottom right, rgb(8, 2, 68), rgb(7, 32, 146)); color: rgb(255, 252, 252);" *ngIf="commonService.isHeaderVisible()"> -->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgb(52, 52, 53); color:white; font-weight: bolder; border-bottom: 3px dotted rgb(243, 240, 240);" *ngIf="commonService.isHeaderVisible()">
+  <div class="container-fluid">
+    <button (click)="toggleSlidebar()" mat-icon-button style="color:rgb(251, 250, 250) ;"><mat-icon>menu</mat-icon></button>
+    <!-- <button *ngIf="authService.isAuthenticated()" mat-button class="rounded-circle" [matMenuTriggerFor]="test1">
+                <div class="rounded-circle" style="width: 56px; height: 55px; border: #e8c50e solid">
+                  <img  class="rounded-circle" style="width: 50px; height: 50px" [src]="imageSrc" (error)="imageSrc = defaultPicture">
+                </div>
+    </button> -->
+    <!-- <mat-menu #test1="matMenu">
+      <input type="file" (change)="onChange($event)" name="filename">
+    </mat-menu>
+    <div>{{authService.getUserName()}}</div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button> -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+         <li class="nav-item">
+          <a class="nav-link active" aria-current="page" style="color:rgb(253, 251, 251) ;" > &nbsp; Home</a>
+        </li> 
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/aboutUs']" style="color:rgb(253, 251, 251) ;"> &nbsp; About Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" style="color:rgb(253, 251, 251) ;"> &nbsp; Product</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" style="color:rgb(253, 251, 251) ;"> &nbsp; Contact us</a>
+        </li>
+       <!--  <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:rgb(253, 251, 251) ;">
+            <mat-icon>label_important</mat-icon> &nbsp; Special
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" routerLink="/BijoyaRegistration" >বিজুরসভা</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#"><mat-icon>list</mat-icon> &nbsp; Something else here</a></li>
+          </ul>
+        </li> -->
+       <!--  <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:rgb(253, 251, 251) ;">
+            <mat-icon>spa</mat-icon> &nbsp; Master
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" [routerLink]="['/student']" ><mat-icon>list</mat-icon>Student</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" [routerLink]="['/course']"><mat-icon>list</mat-icon> Course</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" [routerLink]="['/StudentCourseRegistration']"><mat-icon>list</mat-icon> Student To Course</a></li>
+          </ul>
+        </li> -->
+      <!--   <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:rgb(253, 251, 251) ;">
+            <mat-icon>spa</mat-icon> &nbsp; Transaction
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" [routerLink]="['/FeesCharge']" ><mat-icon>list</mat-icon>Fees Charge</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" [routerLink]="['/FeesDiscount']"><mat-icon>list</mat-icon> Fees Discount</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" [routerLink]="['/FeesReceived']"><mat-icon>list</mat-icon> Fees Received</a></li>
+          </ul>
+        </li> -->
+      </ul> 
+    </div>
+    <!--    for login-->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="btn btn-primary" [routerLink]="['/demo']" *ngIf="authService.isNotAuthenticated()">Free Demo</a> &nbsp; &nbsp;
+    <a class="btn btn-primary" [routerLink]="['/StudentRegistration']" *ngIf="authService.isNotAuthenticated()">Student Registration</a>
+      <div *ngIf="authService.isNotAuthenticated()" class="mr-10">
+        <a class="dropdown-item" [routerLink]="['/login']" style="color: dodgerblue;">
+         <mat-icon>power_settings_new</mat-icon>
+        </a>
+  
+  <!--      <ul class="navbar-nav me-auto mb-2 mb-lg-0">-->
+  <!--        <li class="nav-item dropdown">-->
+  <!--          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
+  <!--            <mat-icon>power_settings_new</mat-icon>-->
+  <!--          </a>-->
+  <!--          <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">-->
+  <!--            <li><a class="dropdown-item" [routerLink]="['/login']">-->
+  <!--              <mat-icon aria-hidden="false">login</mat-icon> Login-->
+  <!--            </a></li>-->
+  
+  <!--          </ul>-->
+  <!--        </li>-->
+  <!--      </ul>-->
+      </div>
+  
+      <!--    for logout-->
+      <div *ngIf="authService.isAuthenticated()">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ml-10">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:rgb(253, 251, 251) ;">
+              <mat-icon>power_settings_new</mat-icon>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
+              <form [formGroup]="teacherEbookPaperFormGroup">
+                <li>
+                  <div class="col-sm-3" style="display: none;">
+                    <input class="form-control" type="text" value=""
+                        formControlName="organisationId">
+                </div>
+                </li>
+                <li>
+                  <div class="col-sm-3" style="display: none;">
+                    <input class="form-control" type="text" value=""
+                        formControlName="ledgerId">
+                </div>
+                </li>
+            </form>
+              <li>
+                <a class="dropdown-item" [routerLink]="" (click)="logOutCurrentUser()">
+                  <fa-icon [icon]="faSignOutAlt"></fa-icon> Logout
+                </a>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" [routerLink]="" (click)="logOutFromAll()">
+                Logout All
+              </a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>&nbsp;
+    <button *ngIf="authService.isAuthenticated()" mat-button class="rounded-circle" [matMenuTriggerFor]="test1">
+      <div class="rounded-circle" style="width: 56px; height: 55px; border: #e8c50e solid">
+        <img  class="rounded-circle" style="width: 50px; height: 50px" [src]="imageSrc" (error)="imageSrc = defaultPicture">
+      </div>
+  </button>
+  <mat-menu #test1="matMenu">
+    <input type="file" (change)="onChange($event)" name="filename">
+  </mat-menu>
+  <div>{{authService.getUserName()}} &nbsp;<span *ngIf="isShowProfile"><a class="btn btn-outline-success" href="#" role="button" rel="My Profile" [routerLink]="['/Profile']"><i class="bi bi-person-circle"></i></a></span></div>
+ 
+
+<!--    <div>-->
+<!--      <form class="d-flex">-->
+<!--        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
+<!--        <button class="btn btn-outline-success" type="submit">Search</button>-->
+<!--      </form>-->
+<!--    </div>-->
+  </div>
+</nav>
+
+

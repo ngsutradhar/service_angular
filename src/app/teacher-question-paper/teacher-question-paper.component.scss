@@ -1,0 +1,54 @@
+.page{
+    color: rgb(12, 12, 12);
+    background: whitesmoke;
+    &__box{
+      min-height: 100px;
+      background: whitesmoke;
+      margin: 0 -3rem;
+      font-size: 24px;
+    }
+    &__content{
+      min-height: 50vh;
+      border-radius: 10px;
+      margin-top: -3rem;
+      background:  rgb(224, 224, 224);
+      border:2px solid black;
+      color: black;
+      font-size: 20px;
+      /* &-data{
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+      } */
+    }
+  }
+  .example-form {
+    min-width: 100%;
+    max-width: 100%;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+  ::ng-deep .mat-form-field {
+    .mat-input-element {
+        color: rgb(8, 8, 8);
+        font-size: medium;
+        font-family: 'Roboto', sans-serif;
+    }
+    .mat-form-field-label {
+        color: rgb(10, 10, 10);
+        font-family: 'Roboto', sans-serif;
+        font-size: medium;
+    }
+    .mat-form-field-underline {
+        background-color: rgb(4, 32, 59);
+    }
+    .mat-form-field-ripple {
+        background-color: slategray;
+    }
+    .mat-form-field-required-marker {
+        color: rgb(190, 21, 9);
+    } 
+  }

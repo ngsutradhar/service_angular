@@ -1,0 +1,91 @@
+<u>
+  <h1 align="center"> Marksheet Entry Form </h1>
+</u>
+<div class="container">
+  <form [formGroup]="marksheetFormGroup">
+    <div class="main-dev" style="background-color: rgb(214, 212, 212);">
+
+
+      <div class="row p-3">
+        <div class="col-sm-5">
+          <ng-select [items]="courseArray" fxFlex="100" bindLabel="full_name" class="custom" bindValue="id"
+            (change)="chooseSubject($event)" appendTo="body" formControlName="course_id"
+            placeholder="select Course / Class Name">
+          </ng-select>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="detail-div" style="background-color: rgb(241, 188, 188);">
+      <div id="student-div">
+
+      </div>
+      <div id="marks-div">
+        <div class="row">
+          <div class="col-sm-6">
+            <table class="table table-hover table-striped">
+
+              <tbody>
+                <!--  <form> -->
+                <ng-container *ngFor="let student of studentsArray; let indexOfelement = index;">
+                  <div style="background-color: aquamarine;">
+                    <tr>
+                      <td>
+                        <h1>{{indexOfelement+1}}&nbsp;{{student.ledger_name}}</h1>
+                      </td>
+                    </tr>
+                    <tr *ngFor="let subject of subjectsArray">
+                      <td>{{subject.subject_id}}</td>
+                      <td>{{subject.subject_full_name}}</td>
+                      <td>
+                        <input type="text" class="form-control" formControlName="marks" placeholder="Enter Marks"
+                          aria-label="Recipient's username" aria-describedby="basic-addon2">
+                      </td>
+                    </tr>
+                  </div>
+                  <button type="button" class="btn btn-success" (click)="onSaveMarks(student)"> Save </button>
+                </ng-container>
+                <!-- </form>  -->
+              </tbody>
+
+
+            </table>
+          </div>
+          <div class="col-sm-6">
+            
+              <pre style="background-color:yellow ; color: black;">
+                <!-- marksheetFormGroup = {{this.organisationFormGroup.value | json}} -->
+                marksheetFormGroup = {{this.marksheetFormGroup.value }}
+               <!-- studentData={{studentData | json}}
+           
+                 test={{studentNameFormGroup.controls['studentName'].errors['required'] | json}}-->
+              </pre>
+            
+          </div>
+        </div>
+        <!-- <div class="row">
+        <div class="col-sm-6">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <th>Name of Subject</th>
+                <th>Enter Marks</th>
+              </thead>
+              <tr>
+                <td>
+                  Math
+                </td>
+                <td>
+                  <input type="text" class="form-control" placeholder="Enter Marks" aria-label="Recipient's username"
+                    aria-describedby="basic-addon2">
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div> -->
+      </div>
+    </div>
+  </form>
+</div>

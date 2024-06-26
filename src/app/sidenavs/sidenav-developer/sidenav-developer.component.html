@@ -1,0 +1,51 @@
+<mat-nav-list>
+  <div class="logo py-4">
+    <img src="assets/Anushka_Logo.png" alt="Company Logo" class="eduvenv"/>
+  </div>
+  <mat-divider></mat-divider>
+  <h2 matSubheader class="mt-2">D &nbsp; E &nbsp;V &nbsp;E&nbsp; L&nbsp; O &nbsp;P&nbsp; E&nbsp; R</h2>
+  <a mat-list-item [routerLink]="['/developer']" routerLinkActive="list-item-active">
+    <mat-icon>home</mat-icon> Home
+  </a>
+  <a mat-list-item [routerLink]="['/developer']" routerLinkActive="list-item-active">
+    <mat-icon>dashboard</mat-icon> Dashboard
+  </a>
+
+  <a mat-list-item (click)="toggleMaster()">
+    <mat-icon>spa</mat-icon> Master
+    <mat-icon class="user-image-icon ml-1">keyboard_arrow_down</mat-icon>
+  </a>
+  <div *ngIf="displayMaster">
+    <a mat-list-item [routerLink]="['/organisation']" routerLinkActive="list-item-active">
+      <mat-icon>child_care</mat-icon>New Organisation
+    </a>
+    <a mat-list-item [routerLink]="['/UserRegistration']" routerLinkActive="list-item-active">
+      <mat-icon>child_care</mat-icon>New User
+    </a>
+  </div>
+
+  <a mat-list-item (click)="toggleChart()">
+    <mat-icon>spa</mat-icon> Charts
+    <mat-icon class="user-image-icon ml-1">keyboard_arrow_down</mat-icon>
+  </a>
+  <div *ngIf="displayChart">
+    <a mat-list-item [routerLink]="['/LineChart']" routerLinkActive="list-item-active">
+      <i class="bi bi-person-check-fill"></i> &nbsp; Line Chart
+    </a>
+    <a mat-list-item [routerLink]="['/BarChart']" routerLinkActive="list-item-active">
+      <i class="bi bi-person-check-fill"></i> &nbsp; Bar Chart
+    </a>
+  </div>
+
+  <a mat-list-item>
+    <mat-icon>edit</mat-icon> Link 4
+  </a>
+  <a mat-list-item>
+    <mat-icon>edit</mat-icon> Link 5
+  </a>
+  <a mat-list-item>
+    <mat-icon>edit</mat-icon> Link 6
+  </a>
+</mat-nav-list>
+
+

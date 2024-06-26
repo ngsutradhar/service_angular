@@ -1,0 +1,281 @@
+
+.page{
+   color: rgb(12, 12, 12);
+   background: whitesmoke;
+   &__box{
+     min-height: 100px;
+     background: whitesmoke;
+     margin: 0 -3rem;
+     font-size: 24px;
+   }
+   &__content{
+     min-height: calc(100vh - 160px);
+     border-radius: 10px;
+     margin-top: -3rem;
+     background:  rgb(159, 159, 162);
+     border:2px solid black;
+     color: black;
+     font-size: 20px;
+     &-data{
+       top: 50%;
+       left: 50%;
+       transform: translate(-50%,-50%);
+     }
+   }
+ }
+ ::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
+   color:rgb(7, 7, 7);
+   background-color: rgb(246, 249, 246);
+   font-weight: bolder;
+   }
+   
+   ::ng-deep .mat-tab-list .mat-tab-labels {
+   color:whitesmoke;
+   background-image: linear-gradient(to bottom right, rgb(8, 2, 68), rgb(10, 39, 168));
+   font-weight: bolder;
+   }
+ ::ng-deep .mat-form-field {
+   .mat-input-element {
+       color: rgb(8, 8, 8);
+       font-size: medium;
+   }
+   .mat-form-field-label {
+       color: rgb(10, 10, 10);
+       
+       font-size: medium;
+   }
+   .mat-form-field-underline {
+       background-color: rgb(4, 32, 59);
+   }
+   .mat-form-field-ripple {
+       background-color: slategray;
+   }
+   .mat-form-field-required-marker {
+       color: rgb(190, 21, 9);
+   }
+ 
+   
+ }
+ 
+ ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar {
+   background-color: #fec61f !important;
+ }
+ ::ng-deep .mat-step-header  {
+   border-radius: 32px;
+   width: 20%;
+   font-weight: 10px;
+   opacity: 1.0;
+   height: 50px;
+   & div.mat-step-label.mat-step-label-active.mat-step-label {
+       color: rgb(3, 3, 3);
+      
+   }
+   
+ } 
+ ::ng-deep .mat-step-header  {
+   border-radius: 32px;
+   width: 20%;
+   font-weight: 10px;
+   opacity: 1.0;
+   height: 50px;
+   & div.mat-step-label.mat-step-label-active.mat-step-label:hover {
+       color: rgb(3, 3, 3);
+      
+   }
+ }
+ ::ng-deep .mat-step-header[aria-selected="true"]  {
+   background-color: #43b2ee;
+   border-radius: 32px;
+   width: 20%;
+   font-weight: 10px;
+   opacity: 1.0;
+   height: 50px;
+   & div.mat-step-label.mat-step-label-active.mat-step-label-selected {
+       color: rgb(254, 253, 253);
+       
+   }
+   
+ } 
+ ::ng-deep .mat-step-header .mat-step-icon {
+   background-color: #43b2ee; 
+  
+   
+ }
+ 
+ ::ng-deep .mat-step-header .mat-step-icon-selected {
+   background-color: #43b2ee; 
+ }
+ mat-form-field{
+   margin-bottom: -1em
+ }
+ 
+ ::ng-deep datepicker-value-example .mat-form-field-label{
+   color:#43b2ee;
+ }
+ 
+ ::ng-deep .mat-datepicker-toggle{
+   color:#43b2ee;
+ }
+ ::ng-deep .mat-form-field-underline{
+ background: #43b2ee;
+ }
+ .mat-stepper-label-position-bottom .mat-stepper-horizontal-line {
+   top: 20px !important;
+   background-color: brown;
+ }
+ .mat-stepper-horizontal-line {
+   margin-top: 8px;
+   background-color: rebeccapurple;
+ }
+ .p-input-icon-left,
+ .p-input-icon-right{
+   float: right;
+ }
+ span .p-input-icon-left input[type="text"]{
+   padding:0px 25px;
+ }
+ :host{
+   color: #1e293b;
+ }
+ table {
+   width: 100%;
+ }
+ 
+ th.mat-sort-header-sorted {
+   color: black;
+ }
+ 
+ .ui-steps .ui-steps-item {
+   width: 25%;
+ }
+ 
+ .ui-steps.steps-custom {
+   margin-bottom: 30px;
+ }
+ 
+ .ui-steps.steps-custom .ui-steps-item .ui-menuitem-link {
+   padding: 0 1em;
+   overflow: visible;
+ }
+ 
+ .ui-steps.steps-custom .ui-steps-item .ui-steps-number {
+   background-color: #0081c2;
+   color: #FFFFFF;
+   display: inline-block;
+   width: 36px;
+   border-radius: 50%;
+   margin-top: -14px;
+   margin-bottom: 10px;
+ }
+ 
+ .ui-steps.steps-custom .ui-steps-item .ui-steps-title {
+   color: #555555;
+ }
+ 
+ .ng-select.custom ::ng-deep .ng-select-container  {
+   min-height: 50px;
+   border-radius: 0;
+ }
+ .p-datatable .p-datatable-tbody > tr > td{
+   padding: 0rem !important;
+ }
+ bg{
+   background-image: linear-gradient(to right, rgba(146, 127, 127, 0.522) , rgba(85, 85, 72, 0.481));
+ }
+ // media querry 
+ @media(max-width:480px){
+   ::ng-deep .mat-step-header  {
+     border-radius: 32px;
+     width: 10%;
+     font-size: smaller !important;
+     opacity: 1.0;
+     height: 30px;
+     & div.mat-step-label.mat-step-label-active.mat-step-label:hover {
+         color: rgb(3, 3, 3); 
+     }
+   }
+   ::ng-deep .mat-step-header[aria-selected="true"]  {
+     background-color: #43b2ee;
+     border-radius: 20px;
+     width: 10%;
+     font-size: smaller !important;
+     opacity: 1.0;
+     height: 30px;
+     & div.mat-step-label.mat-step-label-active.mat-step-label-selected {
+         color: rgb(254, 253, 253);  
+     }
+   } 
+   .tab-div .container .snapshot{
+     width: 100%;
+   }
+   .tab-div .container app-camera{
+     width: 100%;
+   }
+   .camera-div{
+     width: 100%;
+     border: 2px solid black;
+   }
+   .tab-div{
+     width: 100%;
+     font-size: smaller !important;
+   }
+   .tab-div .container{
+     width: 100%;
+     font-size: smaller !important;
+   }
+   .tab-div .container mat-stepper{
+     width: 100%;
+     font-size: smaller !important;
+   }
+   .tab-div .container mat-stepper .form-group{
+     width: 100%;
+     font-size: smaller !important;
+   }
+ }
+ @media(max-width:768px){
+     
+   ::ng-deep .mat-step-header  {
+     border-radius: 32px;
+     width: 10%;
+     font-size: small !important;
+     opacity: 1.0;
+     height: 30px;
+     & div.mat-step-label.mat-step-label-active.mat-step-label:hover {
+         color: rgb(3, 3, 3); 
+     }
+   }
+   ::ng-deep .mat-step-header[aria-selected="true"]  {
+     background-color: #43b2ee;
+     border-radius: 20px;
+     width: 20%;
+     font-size: small !important;
+     opacity: 1.0;
+     height: 30px;
+     & div.mat-step-label.mat-step-label-active.mat-step-label-selected {
+         color: rgb(254, 253, 253);  
+     }
+   } 
+   .tab-div{
+     width: 100%;
+     font-size: small !important;
+   }
+   .tab-div .container .snapshot{
+     width: 100%;
+   }
+   .tab-div .container{
+     width: 100%;
+     font-size: small !important;
+   }
+   .tab-div .container mat-stepper{
+     width: 100%;
+     font-size: small !important;
+   }
+   .tab-div .container mat-stepper .form-group{
+     width: 100%;
+     font-size: small !important;
+   }
+   .tab-div .container mat-stepper .form-group{
+     width: 100%;
+     font-size: small !important;
+   }
+ }

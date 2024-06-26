@@ -1,0 +1,223 @@
+<div class="container-fluid page">
+    <div class="page__box p-3 mt-1 ml-1">Subject Entry Form</div>
+    <div class="page__content shadow p-3 position-relative">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-xs-12 col-sm-12">
+                    <div class="main-div">
+                        <mat-tab-group (selectedIndexChange)="onTabChanged($event)" [(selectedIndex)]="selectedIndex"
+                            animationDuration="200ms"
+                            style="background-image: linear-gradient(to bottom right, rgb(8, 2, 68), rgb(7, 32, 146)); color: aliceblue; padding: 12px; border-radius: 5px; padding:0px;">
+                            <mat-tab>
+                              <ng-template mat-tab-label>
+                                  <mat-icon class="example-tab-icon">list</mat-icon>
+                                  View / Edit Subjects  &nbsp; <span style="height: 20px;width: 20px;border-radius: 50%;background-color: red; border: 1px solid red; font-weight: bolder;"> {{subjectArray.length}}</span>
+                              </ng-template>
+                             <!--  <pre>
+                                  subjectNamearray = {{this.tempSubjectDataObject | json}}
+                                </pre> -->
+                              <div class="card-body">
+                                  <p-table #subjectList [value]="subjectArray" dataKey="id" [paginator]="true"
+                                      [rows]="5" [showCurrentPageReport]="true"
+                                      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                                      [rowsPerPageOptions]="[5,10,25,50]"
+                                      [globalFilterFields]="['id','subject_short_name','subject_full_name']">
+                                      <ng-template pTemplate="caption">
+                                          <div class="flex">
+                                            <p-button type="button" icon="pi pi-plus" label="ADD" class="p-button-outlined" (click)="onClickAdd();"> </p-button>
+                                            <span class="p-input-icon-left ml-auto">
+                                                 <i class="pi pi-search"></i>
+                                                  <input pInputText type="text"
+                                                      (input)="subjectList.filterGlobal(getEventValue($event), 'contains')"
+                                                      placeholder="Search keyword" />
+                                              </span>
+
+                                          </div>
+                                      </ng-template>
+
+                                      <ng-template pTemplate="header">
+                                          <tr>
+                                              <th>ID</th>
+
+                                              <th pSortableColumn="subject_short_name">Short Name <p-sortIcon
+                                                      field="subject_short_name"></p-sortIcon>
+                                              </th>
+                                              <th pSortableColumn="subject_full_name">Subject Full Name <p-sortIcon
+                                                      field="subject_full_name"></p-sortIcon>
+                                              </th>
+                                             
+                                              <th pSortableColumn="edit">Edit <p-sortIcon field="edit"></p-sortIcon>
+                                              </th>
+                                              <th pSortableColumn="delete">Delete <p-sortIcon
+                                                      field="delete"></p-sortIcon>
+                                              </th>
+                                          </tr>
+                                      </ng-template>
+                                      <ng-template pTemplate="body" let-subject let-rowIndex="rowIndex">
+                                          <tr>
+                                              <td>{{rowIndex+1}}</td>
+                                              <td>{{subject.subject_short_name}}</td>
+                                              <td>{{subject.subject_full_name}}</td>
+                                              <td>
+                                                  <p-button type="button" icon="pi pi-pencil" (click)="editSubject(subject)"
+                                                      styleClass="p-button-text">
+                                                  </p-button>
+                                              </td>
+                                              <td>
+                                                  <p-button type="button" icon="pi pi-trash"
+                                                      (click)="deleteSubject(subject)"
+                                                      styleClass="p-button-text"></p-button>
+                                              </td>
+                                          </tr>
+                                      </ng-template>
+                                      <ng-template pTemplate="paginatorleft">
+                                        <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                                        (click)="clear(subjectList)"></button>
+                                      </ng-template>
+                                  </p-table>
+
+
+                              </div>
+                          </mat-tab>
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <mat-icon class="example-tab-icon">trending_up</mat-icon>
+                                    Subject Entry Tab
+                                </ng-template>
+
+                                <!--  ---- 1st Tab setting start---- -->
+                                <!-- Card 1 start-->
+
+
+                                <div class="card">
+                                    <!--Card content-->
+                                    
+                                       
+                                            <div class="card-body">
+                      
+                                                <form [formGroup]="subjectsFormGroup">
+                                                  <div class="row">
+                                                    <div class="col-sm-4">
+                                                      <mat-form-field style="width:100%">
+                                                        <mat-label>Subject Code / Class</mat-label>
+                                                        <input matInput formControlName="subjectCode" placeholder="C0001" required>
+                                                        <div
+                                                          *ngIf="subjectsFormGroup.controls['subjectCode'].errors && subjectsFormGroup.controls['subjectCode'].touched">
+                                                          <mat-error class="text-right"
+                                                            *ngIf="subjectsFormGroup.controls['subjectCode'].errors['required']">
+                                                            Subject Code is required</mat-error>
+                                                        </div>
+                                                      </mat-form-field>
+                                                    </div>
+                                                    <!-- <div class="col-sm-3">
+                                                      <mat-label><span style="color:rgba(11, 141, 37, 0.874)">Last Code: &nbsp;<b> {{lastCourseCode}}</b></span>
+                                                      </mat-label>
+                                                    </div> -->
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-sm-4">
+                                                      <mat-form-field style="width:100%">
+                                                        <mat-label>Short Name</mat-label>
+                                                        <input matInput formControlName="subjectShortName" placeholder="Short Name" required>
+                                                        <!-- <div
+                                                          *ngIf="subjectsFormGroup.controls['shortName'].errors && subjectsFormGroup.controls['shortName'].touched">
+                                                          <mat-error class="text-right"
+                                                            *ngIf="subjectsFormGroup.controls['shortName'].errors['required']">
+                                                            Short Name is required</mat-error>
+                                                        </div> -->
+                                                      </mat-form-field>
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                      <mat-form-field style="width:100%">
+                                                        <input matInput placeholder="Subject Full Name" formControlName="subjectFullName">
+                                                        <div
+                                                          *ngIf="subjectsFormGroup.controls['subjectFullName'].errors && subjectsFormGroup.controls['subjectFullName'].touched">
+                                                          <mat-error class="text-right"
+                                                            *ngIf="subjectsFormGroup.controls['subjectFullName'].errors['required']">
+                                                            Subject Name is required</mat-error>
+                                                        </div>
+                                                      </mat-form-field>
+                                                    </div>
+                        
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-sm-4">
+                                                      <mat-form-field style="width:100%">
+                                                        <mat-label>Duration:</mat-label>
+                                                        <input matInput formControlName="subjectDuration" placeholder="100" required>
+                                                      </mat-form-field>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                      <ng-select [items]="durationTypes" bindLabel="durationName" class="custom"
+                                                        bindValue="durationTypeId" formControlName="durationTypeId" autofocus appendTo="body"
+                                                        placeholder="Duration Type" style="width:100%">
+                                                      </ng-select>
+                                                    </div>
+                                                    <div class="col-sm-4" *ngIf="hiddenInput">
+                                                      <div class="form-group">
+                                                        <mat-form-field class="col-4">
+                                                          <input matInput placeholder="Subject ID" formControlName="subjectId">
+                                                        </mat-form-field>
+                                                      </div>
+                                                    </div>
+                                                    
+                                                  </div>
+                                                 
+                                                  <div class="row">
+                                                    <div class="col-sm-6" style="width:100%">
+                                                      <h3 style="color:black ; font-weight:bolder ;">Description: </h3> 
+                                                     <!-- <h3>Description: &nbsp; Count:&nbsp;{{descriptionLen.length}}/{{this.maxLength}}</h3> -->
+                                                      <textarea class="col-12" formControlName="subjectDescription"  #message 
+                                                        [maxlength]="1000" [style]="{'height':'120px'}">
+                                                    </textarea>
+                                                    <mat-hint align="end" style="color: brown;">{{message.value.length}} /
+                                                        1000</mat-hint>
+                                                    </div>
+                        
+                                                  </div>
+                                                  <div align="right">
+                                                    <button pButton (click)="clearSubject()"
+                                                      class="p-button-rounded p-button-info p-button-outlined">
+                                                      <i class="bi bi-clear" style="font-size: 1rem"> Clear </i>
+                                                    </button>&nbsp;&nbsp;&nbsp;
+                        
+                                                    <button pButton (click)="saveSubject()" [disabled]="!subjectsFormGroup.valid"
+                                                      *ngIf="!isShown" class="p-button-rounded p-button-info">
+                                                      <i class="bi bi-save" style="font-size: 1rem"> Save </i>
+                                                    </button>
+                        
+                                                    <button pButton (click)="updateSubject()" *ngIf="isShown"
+                                                      class="p-button-rounded p-button-info">
+                                                      <i class="bi bi-save" style="font-size: 1rem"> Update </i>
+                                                    </button>
+                                                  </div>
+                                                </form>
+                        
+                        
+                        
+                        
+                                              
+                                              <!--End Card content-->
+                                            </div>
+                                        
+
+                                </div>
+                            </mat-tab>
+                           
+
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+                                    Upcoming Birthday
+                                </ng-template>
+
+                                Content 3
+                            </mat-tab>
+                        </mat-tab-group>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,71 @@
+<div class="head">
+    <div class="headerobjectswrapper">
+
+        <header>Your Online Class</header>
+       
+    </div>
+    <div class="container-fluid" style="background-color: rgb(248, 241, 215);">
+        <div class="container table-responsive py-5">
+          
+                <div class="card-body">
+                  <p-table #studentOnline [value]="studentOnlineClassArray" dataKey="id" [paginator]="true" [rows]="5"
+                    [showCurrentPageReport]="true"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                    [rowsPerPageOptions]="[5,10,25,50]"
+                    [globalFilterFields]="['id','online_class_url','subject_full_name','created_at']">
+                    <ng-template pTemplate="caption">
+                      <div class="flex">
+                        <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                          (click)="clear(studentOnline)"></button>
+                        <span class="p-input-icon-left ml-auto">
+                          <i class="pi pi-search"></i>
+                          <input pInputText type="text"
+                            (input)="studentOnline.filterGlobal(getEventValue($event), 'contains')"
+                            placeholder="Search keyword" />
+                        </span>
+                      </div>
+                    </ng-template>
+
+                    <ng-template pTemplate="header">
+                      <tr>
+                        <th>ID</th>
+                       
+                        <th pSortableColumn="full_name">Course / Class Name <p-sortIcon field="full_name"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="subject_full_name">Subjects <p-sortIcon field="subject_full_name"></p-sortIcon>
+                        </th>
+                        <th>Click Attend Online Class </th>
+                       
+
+                        <th pSortableColumn="created_at">Date & time <p-sortIcon field="created_at"></p-sortIcon>
+                        </th>
+                                               
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-assignment let-rowIndex="rowIndex">
+                      <tr>
+                        <td>{{rowIndex+1}}</td>
+                        <td>{{assignment.full_name}}</td>
+                        <td>{{assignment.subject_full_name}}</td>
+                        <td>
+                            <a mat-raised-button color="accent" href={{assignment.online_class_url}} target="_blank"><i class="bi bi-camera-reels"></i> &nbsp;  &nbsp; Go To Link</a>
+
+                        </td>
+                      
+                        <td>{{assignment.created_at}}</td>
+                       
+                       
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="paginatorleft">
+                      <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+                    </ng-template>
+                  </p-table>
+
+
+                </div>
+              
+        </div>
+        
+    </div>
+</div>

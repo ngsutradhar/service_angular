@@ -1,0 +1,185 @@
+<div class="container-fluid page">
+  <div class="page__box p-3 mt-1 ml-1">Syllabus Entry Form</div>
+  <div class="page__content shadow p-3 position-relative">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-xs-12 col-sm-12">
+          <div class="main-div">
+            <mat-tab-group (selectedIndexChange)="onTabChanged($event)" [(selectedIndex)]="selectedIndex"
+              animationDuration="200ms"
+              style="background-image: linear-gradient(to bottom right, rgb(8, 2, 68), rgb(7, 32, 146)); color: aliceblue; padding: 12px; border-radius: 5px; padding:0px;">
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <mat-icon class="example-tab-icon">trending_up</mat-icon>
+                  Syllabus Entry
+                </ng-template>
+
+                <!--  ---- 1st Tab setting start---- -->
+                <!-- Card 1 start-->
+
+
+                <div class="card">
+                  <!--Card content-->
+                  <div class="card-body">
+
+                    <form [formGroup]="teacherSyllabusFormGroup">
+                      <div class="row">
+                        <div class="col-sm-5">
+                          <ng-select [items]="courseArray" fxFlex="100" bindLabel="full_name" class="custom"
+                            bindValue="id" appendTo="body" formControlName="course_id"
+                            placeholder="select Course / Class Name">
+                          </ng-select>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-5">
+                          <input class="form-control" type="file" id="formFile" (change)="uploadImage($event)"
+                            formControlName="image">
+                        </div>
+                        <div class="col-sm-5" style="display: none;">
+                          <input class="form-control" type="text" value="" formControlName="organisationId">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-8">
+                          <mat-form-field class="example-full-width">
+                            <mat-label>Description</mat-label>
+                            <textarea matInput #message formControlName="syllabusDescription"
+                              placeholder="Ex. Examination will be held from 25th Dec 2023..."
+                              maxlength="1000"></textarea>
+                            <mat-hint align="start" style="color: brown;"><strong>Broadcast Your Syllabus To
+                                Every Student </strong> </mat-hint>
+                            <mat-hint align="end" style="color: brown;">{{message.value.length}} /
+                              1000</mat-hint>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-sm-2">
+                          <button pButton (click)="saveSyllabus()" [disabled]="!teacherSyllabusFormGroup.valid"
+                            class="p-button-rounded p-button-info">
+                            <i class="bi bi-save" style="font-size: 1rem"> Save </i>
+                          </button>
+                        </div>
+                        <!--  <div class="col-sm-2">
+                            <button pButton (click)="onSubmit()" class="p-button-rounded p-button-info">
+                              <i class="bi bi-save" style="font-size: 1rem"> File Save </i>
+                            </button>
+                          </div> -->
+                      </div>
+                    </form>
+
+                  </div>
+                </div>
+              </mat-tab>
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <mat-icon class="example-tab-icon">list</mat-icon>
+                  View Syllabus
+                </ng-template>
+                <div class="card-body">
+                  <p-table #syllabusList [value]="syllabusDataArray" dataKey="id" [paginator]="true" [rows]="5"
+                    [showCurrentPageReport]="true"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                    [rowsPerPageOptions]="[5,10,25,50]"
+                    [globalFilterFields]="['id','news_description','status','created_at']">
+                    <ng-template pTemplate="caption">
+                      <div class="flex">
+                        <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                          (click)="clear(syllabusList)"></button>
+                        <span class="p-input-icon-left ml-auto">
+                          <i class="pi pi-search"></i>
+                          <input pInputText type="text"
+                            (input)="syllabusList.filterGlobal(getEventValue($event), 'contains')"
+                            placeholder="Search keyword" />
+                        </span>
+                      </div>
+                    </ng-template>
+
+                    <ng-template pTemplate="header">
+                      <tr>
+                        <th>ID</th>
+                        <th pSortableColumn="news_description">Syllabus Description <p-sortIcon
+                            field="syllabus_description"></p-sortIcon>
+                        </th>
+                        <th>Download Attechment </th>
+                        <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon>
+                        </th>
+
+                        <th pSortableColumn="created_at">Date & time <p-sortIcon field="created_at"></p-sortIcon>
+                        </th>
+                        <th>
+                          Action
+                        </th>
+                        <th pSortableColumn="edit">Edit <p-sortIcon field="edit"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="delete">Delete <p-sortIcon field="delete"></p-sortIcon>
+                        </th>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-syllabus let-rowIndex="rowIndex">
+                      <tr>
+                        <td>{{rowIndex+1}}</td>
+                        <td>{{syllabus.syllabus_description}}</td>
+                        <td>
+                          <div *ngIf="syllabus.file_url; then thenBlock; else elseBlock"></div>
+                          <p><ng-template #thenBlock>
+                              <span><a href={{defaultPicture}}{{syllabus.file_url}} download="filename" target="_blank" rel="noopener noreferrer"><i
+                                    class="bi bi-download"></i></a></span>
+                            </ng-template></p>
+                          <p><ng-template #elseBlock>
+                            </ng-template></p>
+
+
+                        </td>
+                        <td>{{syllabus.status}}</td>
+                        <td>{{syllabus.created_at}}</td>
+                        <td>
+                          <div *ngIf="syllabus.inforce>0; then thenBlockInforce; else elseBlockInforce"></div>
+                          <p><ng-template #thenBlockInforce>
+                              <!--  <button mat-raised-button color="primary" (click)="onChange(inActiveStatus,news.id)">Active</button>  -->
+                              <button type="button" class="btn btn-success"
+                                (click)="onChange(inActiveStatus,syllabus.id)">Active</button>
+                            </ng-template></p>
+                          <p><ng-template #elseBlockInforce>
+                              <!--  <button mat-raised-button color="warn" (click)="onChange(activeStatus,news.id)">Inactive</button>  -->
+                              <button type="button" class="btn btn-danger"
+                                (click)="onChange(activeStatus,syllabus.id)">Inactive</button>
+                            </ng-template></p>
+                        </td>
+                        <td>
+                          <p-button type="button" icon="pi pi-pencil" (click)="editSyllabus(syllabus)"
+                            styleClass="p-button-text">
+                          </p-button>
+                        </td>
+                        <td>
+                          <p-button type="button" icon="pi pi-trash" (click)="deleteSyllabus(syllabus)"
+                            styleClass="p-button-text"></p-button>
+                        </td>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="paginatorleft">
+                      <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+                    </ng-template>
+                  </p-table>
+
+
+                </div>
+              </mat-tab>
+
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+                  Upcoming Birthday
+                </ng-template>
+
+                <pre style="background-color: yellow; color: black;">
+                    syllabusObject = {{this.syllabusObject | json}}
+                  </pre>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

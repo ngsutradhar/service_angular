@@ -1,0 +1,92 @@
+<mat-nav-list class="sroll-div">
+  <div class="logo py-4">
+    <img src="assets/Anushka_Logo.png" alt="Company Logo" class="eduvenv"/>
+  </div>
+  <mat-divider></mat-divider>
+  <h2 matSubheader>E &nbsp; M &nbsp; P &nbsp; L &nbsp; O &nbsp; Y &nbsp; E &nbsp; E</h2>
+
+  <div>
+    <a mat-list-item [routerLink]="['/StudentUser']"  routerLinkActive="list-item-active">
+      <i class="bi bi-house"></i> &nbsp; Home
+    </a>
+  </div>
+   <div>
+    <a mat-list-item [routerLink]="['/IdentityCard']" routerLinkActive="list-item-active">
+      <i class="bi-card-list"></i> &nbsp; ID Card
+    </a>
+  </div>
+  <div>
+    <a mat-list-item [routerLink]="['/StudentOnlinePayment']"  routerLinkActive="list-item-active">
+      <i class="bi-wallet2"></i> &nbsp; Online Payment
+    </a>
+  </div>
+  <div>
+    <a mat-list-item [routerLink]="['/StudentSyllabus']" routerLinkActive="list-item-active">
+      <i class="bi bi-book"></i> &nbsp; Syllabus
+    </a>
+  </div>
+  <div>
+    <a mat-list-item routerLinkActive="list-item-active">
+      <i class="bi bi-mortarboard-fill"></i> &nbsp; online Exam
+    </a>
+  </div>
+  <div>
+    <a mat-list-item [routerLink]="['/StudentOnlineClass']" routerLinkActive="list-item-active">
+      <i class="bi bi-brush"></i>&nbsp; Online Class
+    </a>
+  </div>
+  <div>
+    <a mat-list-item [routerLink]="['/StudentAssignment']" routerLinkActive="list-item-active">
+      <i class="bi bi-person-workspace"></i> &nbsp; Assignment
+    </a>
+  </div>
+  <div>
+    <a mat-list-item [routerLink]="['/StudentQuestionPaper']" routerLinkActive="list-item-active">
+      <i class="bi bi-question-square-fill"></i> &nbsp; Question Paper
+    </a>
+  </div>
+  <div>
+    <a mat-list-item [routerLink]="['/StudentEbook']" routerLinkActive="list-item-active">
+      <i class="bi bi-journal-bookmark-fill"></i> &nbsp; E-Book
+    </a>
+  </div>
+  <div>
+    <a mat-list-item routerLinkActive="list-item-active">
+      <i class="bi bi-table"></i> &nbsp; Time Table
+    </a>
+  </div>
+  <div>
+    <a mat-list-item routerLinkActive="list-item-active">
+      <i class="bi bi-calendar-date-fill"></i> &nbsp; Calender
+    </a>
+  </div>
+  <div>
+    <a mat-list-item routerLinkActive="list-item-active">
+      <i class="bi bi-mortarboard-fill"></i> &nbsp; Attendance
+    </a>
+  </div>
+  <div>
+    <a mat-list-item [routerLink]="['/StudentAdmitCard']" routerLinkActive="list-item-active">
+      <i class="bi bi-mortarboard-fill"></i> &nbsp; Admit Card
+    </a>
+  </div>
+  <a mat-list-item (click)="toggleDigitalElectronics()">
+    <i class="bi bi-mortarboard-fill"></i> &nbsp; Digital Electronic
+    <mat-icon class="user-image-icon ml-1">keyboard_arrow_down</mat-icon>
+  </a>
+  <div *ngIf="displayDigitalElectronic">
+    <a mat-list-item [routerLink]="['/FlipFlop']"  routerLinkActive="list-item-active">
+      <i class="bi bi-vector-pen"></i> &nbsp; Flip Flop
+    </a>
+  </div>
+
+  <a mat-list-item (click)="toggleJava()">
+    <i class="bi bi-mortarboard-fill"></i> &nbsp; Java Tutorial
+    <mat-icon class="user-image-icon ml-1">keyboard_arrow_down</mat-icon>
+  </a>
+  <div *ngIf="displayJava">
+    <a mat-list-item [routerLink]="['/java']"  routerLinkActive="list-item-active">
+      <i class="bi bi-vector-pen"></i> &nbsp; Java
+    </a>
+  </div>
+</mat-nav-list>

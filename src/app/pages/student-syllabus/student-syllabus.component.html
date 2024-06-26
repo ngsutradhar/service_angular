@@ -1,0 +1,40 @@
+<div class="head">
+  <div class="headerobjectswrapper">
+
+    <header>Your Syllabus</header>
+
+  </div>
+  <div class="container-fluid" style="background-color: rgb(248, 241, 215);">
+      <div class="container table-responsive py-5"> 
+        <table class="table table-bordered table-hover">
+          <thead class="thead-dark">
+            <tr style="background-color: black; color: white;">
+              <th scope="col">#</th>
+              <th scope="col">Syllabus Description</th>
+              <th scope="col">Download File</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of studentSyllabusArray; let indexOfelement = index;">
+              <th scope="row">{{indexOfelement+1}}</th>
+              <td> {{item.syllabus_description }}</td>
+              <td>
+                <div *ngIf="item.file_url; then thenBlock; else elseBlock"></div>
+                         <p><ng-template #thenBlock>
+                            <span style="font-size: xx-large;"><a href={{defaultPicture}}{{item.file_url}} download={{item.file_url} target="_blank"><i class="bi bi-download"></i></a></span>
+                            &nbsp;&nbsp;
+                              <span>{{item.file_url}}</span>
+                            </ng-template></p>
+                          <p><ng-template #elseBlock>
+                            <span>No File Attach</span>
+                            </ng-template></p>
+              </td>
+              
+            </tr>
+          </tbody>
+        </table>
+        </div>
+    </div>
+  
+
+</div>

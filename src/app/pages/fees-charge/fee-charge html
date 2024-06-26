@@ -1,0 +1,311 @@
+
+
+<div class="d-flex flex-column" style="min-height: 100vh;">
+  <div class="p-2 text-center" style="background-color: rgb(56, 56, 60)">Fees Charge</div>
+
+  <div class="p-2 container-fluid rounded d-flex flex-xl-row justify-content-xl-between" [ngClass]="isDeviceXS? 'flex-column': ' flex-row'" >
+    <div [ngClass]="isDeviceXS? 'col-12': 'col-7'" class="container-fluid rounded d-flex flex-xl-row justify-content-xl-between flex-row">
+      <div class="container-fluid">
+        <!-- Tab -------------------------------------- -->
+        <div style="background-color:  rgb(85,85,85);">
+          <mat-tab-group (selectedIndexChange)="onTabChanged($event)" [(selectedIndex)]="selectedIndex"  animationDuration="200ms">
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">trending_up</mat-icon>
+                Entry
+              </ng-template>
+              <!-- start working with Left div (panel) -->
+              <div class="p-3 flex-fill" style="background-color: #a09d9d;;">
+                <form [formGroup]="FeesChargeFormGroup">
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <mat-form-field>
+                        <mat-label>Transaction Date</mat-label>
+                        <input class="col-9" matInput #ref [matDatepicker]="transactionDate"
+                               formControlName="transactionDate">
+                        <mat-datepicker-toggle matSuffix [for]="transactionDate"></mat-datepicker-toggle>
+                        <mat-datepicker #transactionDate></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div  [ngClass]="isDeviceXS? 'column': 'row'">
+                    <div [ngClass]="isDeviceXS? 'col-12': 'col-5'">
+                      <ng-select [items]="studentNameList"  bindLabel="studentName"
+                                 (change)="changeCourseId()" class="custom" bindValue="studentId" appendTo="body"
+                                 formControlName="studentId" placeholder="Student Name">
+                      </ng-select>
+                    </div>
+                    <div [ngClass]="isDeviceXS? 'col-12': 'col-5'">
+                      <ng-select [items]="courseNameList"  bindLabel="full_name" class="custom" bindValue="id"
+                                 appendTo="body" formControlName="studentToCourseId" placeholder="Course Name">
+                      </ng-select>
+                    </div>
+                    <div [ngClass]="isDeviceXS? 'col-12': 'col-2'">
+                      <a (click)="getActiveCourse()"><i class="bi bi-link"></i> &nbsp; Go</a>
+                      <!-- <button type="button" class="btn btn-outline-success btn-space" (click)="getActiveCourse();">Go >></button> -->
+                    </div>
+                  </div>
+
+                  <!-- if div active table display -->
+
+
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <ng-select [items]="feesNameList" fxFlex="100" bindLabel="ledger_name" class="custom" bindValue="id"
+                                 appendTo="body" formControlName="ledgerId" placeholder="Fees Name">
+                      </ng-select>
+                    </div>
+                    <div class="col-sm-4">
+                      <mat-form-field>
+                        <mat-label>Fee Amount</mat-label>
+                        <input matInput formControlName="amount" placeholder="Fee Amount" required>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-sm-3">
+                      <button type="button" class="btn btn-outline-success btn-space" (click)="onAddFees();">Add</button>
+                     <!--  <button pButton>
+                        <i class="bi bi-save" (click)="onAddFees();"> Add </i>
+                      </button> -->
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-8">
+                    <textarea [rows]="2" [cols]="100" matInput autoResize="autoResize" formControlName="comment"
+                              placeholder="Description"></textarea>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group" *ngIf="hiddenInput">
+                        <mat-form-field>
+                          <input matInput placeholder="Transaction ID" formControlName="transactionId">
+                        </mat-form-field>
+
+                      </div>
+                    </div>
+
+                  </div>
+                </form>
+                <table class="table table-striped">
+                  <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col" style="display: none;">Ledger id</th>
+                    <th scope="col">Fee Name</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let item of tempFeesArray; let indexOfelement=index;">
+                    <th scope="row">{{indexOfelement+1}}</th>
+                    <th scope="row" style="display: none;">{{item.ledgerId}}</th>
+                    <td>{{item.feesName}}</td>
+                    <td align="right">{{item.amount | currency:'INR'}}</td>
+                    <td><button type="button" class="btn btn-success"
+                                (click)="onDelete(indexOfelement);">Remove</button></td>
+                  </tr>
+                  <tr class="table table-striped" style="background-color:rgb(168, 160, 160) ;">
+                    <th colspan="2">Grand Total</th>
+
+                    <td align="right">{{totalAmount | currency:'INR'}}</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  </tbody>
+                </table>
+
+                <p class="text-right">
+                  <button type="button" class="btn btn-outline-warning btn-space"
+                          (click)="clearFeesReceived();">Clear</button>
+                  <button type="button" class="btn btn-outline-danger btn-space" *ngIf="isShown"
+                          [disabled]="!FeesChargeFormGroup.valid || FeesChargeFormGroup.value.id"
+                          (click)="onUpdate();">Update</button>
+                  <button type="button" class="btn btn-outline-success btn-space"
+                          [disabled]="!FeesChargeFormGroup.valid || FeesChargeFormGroup.value.id" *ngIf="!isShown"
+                          (click)="onSave();"><i class="fas fa-save"></i>&nbsp; Save</button>
+                  <button type="button" class="btn btn-outline-danger" *ngIf="isCashReceived"
+                          (click)="onCashReceived();">Received Cash</button>
+
+                </p>
+                <!--  <fieldset class="border p-2"> -->
+                <fieldset class="border p-2" *ngIf="isCashReceived">
+                  <legend>Bank Details</legend>
+                  <form [formGroup]="BankReceivedFormGroup">
+                    <div class="d-flex flex-row bd-highlight mb-3" style="width:1000px; height:100px;">
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <mat-form-field style="width:100%">
+                            <mat-label>Account No</mat-label>
+                            <input matInput formControlName="accountNo" placeholder="Account Nummber" required>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-sm-3">
+                          <mat-form-field style="width:100%">
+                            <mat-label>IFSC No</mat-label>
+                            <input matInput formControlName="ifscNo" placeholder="IFSC No" required>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-sm-3">
+                          <mat-form-field style="width:100%">
+                            <mat-label>Branch Name</mat-label>
+                            <input matInput formControlName="branch" placeholder="Branch Name" required>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-sm-3">
+                          <div class="p-2 col-2 bd-highlight">
+                            <button type="button" class="btn btn-outline-danger"
+                                    [disabled]="!BankReceivedFormGroup.valid || BankReceivedFormGroup.value.id"
+                                    (click)="onBankReceived();">Received Bank</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </fieldset>
+
+
+                <p-confirmDialog #cd [style]="{width: '30vw'}" header="Confirmation" icon="pi pi-exclamation-triangle"
+                                 [transitionOptions]="'0.8ms'">
+                  <ng-template pTemplate="header">
+                    <h3>Header Content</h3>
+                  </ng-template>
+                  <ng-template pTemplate="footer">
+                    <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+                    <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
+                  </ng-template>
+                </p-confirmDialog>
+              </div>
+
+            </mat-tab>
+
+
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">list</mat-icon>
+                View List
+              </ng-template>
+              <!-- start working with Right div (panel) -->
+              <div class="p-3 flex-fill" style="width:100% ;">
+
+                <h1>Fees Charge List</h1>
+
+
+
+                <p-table [value]="feesReceivedArray" dataKey="courseName" responsiveLayout="scroll">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th style="width: 3rem"></th>
+                      <th>SL</th>
+                      <th pSortableColumn="studentName">Name <p-sortIcon field="studentName"></p-sortIcon>
+                      </th>
+                      <th>Course</th>
+                      <th pSortableColumn="feesTotal">Total Charged <p-sortIcon field="feesTotal"></p-sortIcon>
+                      </th>
+
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-fees let-expanded="expanded" let-rowIndex="rowIndex">
+                    <tr>
+                      <td>
+                        <button type="button" pButton pRipple [pRowToggler]="fees"
+                                class="p-button-text p-button-rounded p-button-plain"
+                                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                      </td>
+                      <td>{{rowIndex+1}}</td>
+                      <td>{{fees.studentName}}</td>
+                      <td>{{fees.courseName}}</td>
+                      <td>{{fees.feesTotal | currency: 'INR'}}</td>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="rowexpansion" let-fee class="col-12">
+                    <tr>
+                      <td colspan="7">
+                        <div class="p-3">
+                          <!--Inner table-->
+                          <table class="table table-striped">
+                            <thead>
+                            <tr>
+                              <th scope="col">Date</th>
+                              <th scope="col">Transaction Number</th>
+                              <th scope="col">Particulars</th>
+                              <th scope="col">Amount</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let feeDetail of fee.feesDetails">
+                              <td>{{feeDetail.transaction_date | date:'dd/MM/yyyy'}}</td>
+                              <td>{{feeDetail.transaction_number}}</td>
+                              <td>{{feeDetail.ledger_name}}</td>
+                              <td>{{feeDetail.amount | currency: 'INR'}}</td>
+                              <td><button type="button" class="btn btn-success" (click)="editFeesReceived(feeDetail)"><i class="bi bi-pen"></i></button></td>
+                            </tr>
+                            </tbody>
+                          </table>
+                          <!--inner table end-->
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+
+
+
+              </div>
+            </mat-tab>
+
+          </mat-tab-group>
+        </div>
+        <!-- end tab---------------------------------------------- -->
+
+      </div>
+    </div>
+    <div class="col-5" >
+      <div *ngIf="hiddenPopup" style="background-color:white ;">
+        <h1>Fees Charge Details</h1>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col" style="display: none;">TransactionId</th>
+            <th scope="col">Transaction No</th>
+            <th scope="col">Charge Name</th>
+            <th scope="col">Fees</th>
+            <th scope="col">Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of feesChargeDetailsArray; let indexOfelement=index;">
+            <th scope="row">{{indexOfelement+1}}</th>
+            <th scope="row" style="display: none;">{{item.id}}</th>
+            <td>{{item.transaction_number}}</td>
+            <td>{{item.ledger_name}}</td>
+            <td align="right">{{item.amount | currency:'INR'}}</td>
+            <td><button type="button" class="btn btn-success" (click)="editFeesReceived(item)"><i
+              class="bi bi-pen"></i></button> &nbsp;
+            </td>
+          </tr>
+          <tr style="background-color:rgb(168, 160, 160) ;">
+            <th align="right" colspan="3">Grand Total</th>
+
+            <th style="text-align: right;">{{totalFees | currency:'INR'}}</th>
+            <th>&nbsp;</th>
+          </tr>
+          </tbody>
+        </table>
+        <hr style="height:2px;border-width:0;color:rgb(65, 62, 62);background-color:gray">
+      </div>
+    </div>
+  </div>
+  <!--    Footer area-->
+  <div class="mt-auto p-2 text-center" style="background-color: rgb(77, 68, 68)">I am footer, i will stay here</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+

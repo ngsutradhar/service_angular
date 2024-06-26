@@ -1,0 +1,73 @@
+// Debjitcss
+.header{
+    background-color: #383838;
+    padding: .5em 1em;
+    font-size: 1.5em;
+    margin: 0;
+    color: #fff;
+  }
+  .feeleft{
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    //background-image: linear-gradient(to bottom right, rgb(8, 2, 68), rgb(10, 39, 168)); 
+    background-color: white;
+  
+  }
+  .feeright{
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+    ::ng-deep {
+        $custom-main-color: rgb(5, 5, 5);
+        $custom-label-color: rgb(120, 118, 118);
+     
+        // mat-icon-stepper selected color change
+        .mat-step-header .mat-step-icon-selected, .mat-step-header .mat-step-icon-state-done, .mat-step-header .mat-step-icon-state-edit {
+           background-color: $custom-main-color !important;
+        }
+     
+        // input outline color
+        .mat-form-field-appearance-outline .mat-form-field-outline {
+           color: $custom-main-color !important;
+        }
+        .custom{
+         color: $custom-main-color !important;
+         font-size: medium !important;
+        }
+        // mat-input focused color
+        .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+           color: $custom-main-color !important;
+        }
+     
+        // mat-input error outline color
+        .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick {
+           color: $custom-main-color !important;
+           opacity: 0.8 !important;
+        }
+     
+        // mat-input caret color
+        .mat-input-element {
+           caret-color: $custom-main-color !important;
+        }
+     
+        // mat-input error caret color
+        .mat-form-field-invalid .mat-input-element, .mat-warn .mat-input-element {
+           caret-color: $custom-main-color !important;
+        }
+     
+        // mat-label normal state style
+        .mat-form-field-label {
+           color: $custom-label-color !important;
+           font-size: large !important;
+        }
+     
+        // mat-label focused style
+        .mat-form-field.mat-focused .mat-form-field-label {
+           color: $custom-main-color !important;
+        }
+     
+        // mat-label error style
+        .mat-form-field.mat-form-field-invalid .mat-form-field-label {
+           color: $custom-main-color !important;
+        }
+     }

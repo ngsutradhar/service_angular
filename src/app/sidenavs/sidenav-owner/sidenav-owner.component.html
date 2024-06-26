@@ -1,0 +1,93 @@
+<mat-nav-list>
+  <div class="logo py-4">
+    <img src="assets/Anushka_Logo.png" alt="Company Logo" class="eduvenv" />
+  </div>
+  <mat-divider></mat-divider>
+  <h2 matSubheader>O &nbsp; W &nbsp; N &nbsp; E &nbsp; R</h2>
+  <a mat-list-item routerLink="/owner" routerLinkActive="list-item-active">
+    <mat-icon>home</mat-icon> Home
+  </a>
+  <a mat-list-item routerLink="/owner" routerLinkActive="list-item-active">
+    <mat-icon>dashboard</mat-icon> Dashboard
+  </a>
+  <a mat-list-item routerLink="/changePassword" routerLinkActive="list-item-active">
+    <mat-icon>power_settings_new</mat-icon> Change Password
+  </a>
+  <a mat-list-item (click)="toggleMaster()">
+    <mat-icon>spa</mat-icon> Master
+    <mat-icon class="user-image-icon ml-1">keyboard_arrow_down</mat-icon>
+  </a>
+  <div *ngIf="displayMaster">
+    <a mat-list-item [routerLink]="['/Customer']" routerLinkActive="list-item-active">
+      <i class="bi bi-person-check-fill"></i> &nbsp; Customers
+    </a>
+    <a mat-list-item [routerLink]="['/Employee']" routerLinkActive="list-item-active">
+      <i class="bi bi-person-check-fill"></i> &nbsp; Employee
+    </a>
+    <a mat-list-item [routerLink]="['/Subjects']" routerLinkActive="list-item-active">
+      <i class="bi bi-person-check-fill"></i> &nbsp; Subjects
+    </a>
+
+    <a mat-list-item [routerLink]="['/SubjectToCourse']" routerLinkActive="list-item-active">
+      <i class="bi bi-person-check-fill"></i> &nbsp; Subject To Course
+    </a>
+    <a mat-list-item [routerLink]="['/StudentCourseRegistration']" routerLinkActive="list-item-active">
+      <i class="bi bi-person-check-fill"></i> &nbsp; Student To Course
+    </a>
+    <a mat-list-item [routerLink]="['/TeacherUpdate']" routerLinkActive="list-item-active">
+      <i class="bi bi-person-check-fill"></i> &nbsp; Teacher / Staff
+    </a>
+  </div>
+
+  <a mat-list-item (click)="toggleMaster_transaction()">
+    <mat-icon>spa</mat-icon> Transaction
+    <mat-icon class="user-image-icon ml-1">keyboard_arrow_down</mat-icon>
+  </a>
+  <div *ngIf="displayMaster_1">
+    <a mat-list-item [routerLink]="['/Order']" routerLinkActive="list-item-active">
+      <i class="bi bi-person-check-fill"></i> &nbsp; Order
+    </a>
+    <a mat-list-item [routerLink]="['/FeesDiscount']" routerLinkActive="list-item-active">
+      <i class="bi bi-person-check-fill"></i> &nbsp; Fees Discount
+    </a>
+    <a mat-list-item [routerLink]="['/FeesReceived']" routerLinkActive="list-item-active">
+      <i class="bi bi-person-check-fill"></i> &nbsp; Fees Received
+    </a>
+    <a mat-list-item [routerLink]="['/Advanced']" routerLinkActive="list-item-active">
+      <i class="bi bi-person-check-fill"></i> &nbsp; Advanced Received
+    </a>
+    <a mat-list-item [routerLink]="['/Marksheet']" routerLinkActive="list-item-active">
+      <i class="bi bi-person-check-fill"></i> &nbsp; Marksheet
+    </a>
+  </div>
+  <a mat-list-item (click)="toggleMaster_report()">
+    <mat-icon>spa</mat-icon> Report
+    <mat-icon class="user-image-icon ml-1">keyboard_arrow_down</mat-icon>
+  </a>
+  <div *ngIf="displayReport">
+    <a mat-list-item [routerLink]="['/AllIncomeReport']" routerLinkActive="list-item-active">
+      <i class="bi bi-person-check-fill"></i> &nbsp; All Income Report
+    </a>
+    <a mat-list-item [routerLink]="['/News']" routerLinkActive="list-item-active">
+      <i class="bi bi-person-check-fill"></i> &nbsp; News & Announcements
+    </a>
+  </div>
+
+  <a mat-list-item>
+    <mat-icon>edit</mat-icon> Link 4
+  </a>
+  <a mat-list-item>
+    <mat-icon>edit</mat-icon> Link 5
+  </a>
+
+
+  <div style="background-color:beige ; border-radius: 10px; border: 2px solid red; padding: 5px; color: black;">
+    <i class="bi bi-person-check-fill"></i> Software Developed By: Ace Info Solution
+    <br />
+
+    <i class="bi bi-person-check-fill"></i> Brand Own By: Anushka
+
+  </div>
+
+
+</mat-nav-list>

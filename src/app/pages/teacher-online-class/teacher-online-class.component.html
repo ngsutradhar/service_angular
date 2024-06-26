@@ -1,0 +1,207 @@
+<div class="container-fluid page">
+    <div class="page__box p-3 mt-1 ml-1">Online Class Entry Form</div>
+    <div class="page__content shadow p-3 position-relative">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12">
+                    <div class="main-div"> 
+                        <mat-tab-group (selectedIndexChange)="onTabChanged($event)" [(selectedIndex)]="selectedIndex"
+                            animationDuration="200ms"
+                            style="background-image: linear-gradient(to bottom right, rgb(8, 2, 68), rgb(7, 32, 146)); color: aliceblue; padding: 12px; border-radius: 5px; padding:0px;">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <mat-icon class="example-tab-icon">list</mat-icon>
+                                    View / Edit List
+                                </ng-template>
+                                <div class="card-body">
+                                    <p-table #onlineClass [value]="onlineClassDataArray" dataKey="id" [paginator]="true"
+                                        [rows]="5" [showCurrentPageReport]="true"
+                                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                                        [rowsPerPageOptions]="[5,10,25,50]"
+                                        [globalFilterFields]="['id','online_class_url','subject_full_name','status','created_at']">
+                                        <ng-template pTemplate="caption">
+                                            <div class="flex">
+                                                <p-button type="button" icon="pi pi-plus" label="ADD" class="p-button-outlined" (click)="onClickAdd();"> </p-button>
+                                                <!-- <button pButton label="Clear" class="p-button-outlined"
+                                                    icon="pi pi-filter-slash" (click)="clear(onlineClass)"></button> -->
+                                                <span class="p-input-icon-left ml-auto">
+                                                    <i class="pi pi-search"></i>
+                                                    <input pInputText type="text"
+                                                        (input)="onlineClass.filterGlobal(getEventValue($event), 'contains')"
+                                                        placeholder="Search keyword" />
+                                                </span>
+                                            </div>
+                                        </ng-template>
+  
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th>ID</th>
+                                               <!--  <th pSortableColumn="online_class_url">Online Class URL <p-sortIcon
+                                                        field="online_class_url"></p-sortIcon>
+                                                </th> -->
+                                                <th pSortableColumn="full_name">Course / Class <p-sortIcon
+                                                  field="full_name"></p-sortIcon>
+                                              </th>
+                                                <th pSortableColumn="subject_full_name">Subjects <p-sortIcon
+                                                    field="subject_full_name"></p-sortIcon>
+                                                </th>
+                                                <th>Click Attend Online Class </th>
+                                                <th pSortableColumn="status">Status <p-sortIcon
+                                                        field="status"></p-sortIcon>
+                                                </th>
+  
+                                                <th pSortableColumn="created_at">Date & time <p-sortIcon
+                                                        field="created_at"></p-sortIcon>
+                                                </th>
+                                                <th>
+                                                    Action
+                                                </th>
+                                                <th>Edit 
+                                                </th>
+                                                <th>Delete 
+                                                </th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-assignment let-rowIndex="rowIndex">
+                                            <tr>
+                                                <td>{{rowIndex+1}}</td>
+                                               <!--  <td>{{assignment.online_class_url}}</td> -->
+                                                <td>{{assignment.full_name}}</td>
+                                                <td>{{assignment.subject_full_name}}</td>
+                                                <td>
+                                                    <a mat-raised-button color="accent" href={{assignment.online_class_url}} target="_blank"><i class="bi bi-camera-reels"></i> &nbsp;  &nbsp; Go To Link</a>
+  
+                                                </td>
+                                                <td>{{assignment.status}}</td>
+                                                <td>{{assignment.created_at}}</td>
+                                                <td>
+                                                    <div
+                                                        *ngIf="assignment.inforce>0; then thenBlockInforce; else elseBlockInforce">
+                                                    </div>
+                                                    <p><ng-template #thenBlockInforce>
+                                                            <!--  <button mat-raised-button color="primary" (click)="onChange(inActiveStatus,news.id)">Active</button>  -->
+                                                            <button type="button" class="btn btn-success"
+                                                                (click)="onChange(inActiveStatus,assignment.id)">Active</button>
+                                                        </ng-template></p>
+                                                    <p><ng-template #elseBlockInforce>
+                                                            <!--  <button mat-raised-button color="warn" (click)="onChange(activeStatus,news.id)">Inactive</button>  -->
+                                                            <button type="button" class="btn btn-danger"
+                                                                (click)="onChange(activeStatus,assignment.id)">Inactive</button>
+                                                        </ng-template></p>
+                                                </td>
+                                                <td>
+                                                    <p-button type="button" icon="pi pi-pencil"
+                                                        (click)="editAssignment(assignment)" styleClass="p-button-text">
+                                                    </p-button>
+                                                </td>
+                                                <td>
+                                                    <p-button type="button" icon="pi pi-trash"
+                                                        (click)="deleteAssignment(assignment)"
+                                                        styleClass="p-button-text"></p-button>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="paginatorleft">
+                                            <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                                            (click)="clear(onlineClass)"></button>
+                                          
+                                        </ng-template>
+                                    </p-table>
+  
+  
+                                </div>
+                            </mat-tab>
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <mat-icon class="example-tab-icon">trending_up</mat-icon>
+                                    Online Class Entry
+                                </ng-template>
+                                <div class="card">
+                                    <!--Card content-->
+                                    <div class="card-body">
+                                        <form [formGroup]="teacherOnlineClassFormGroup">
+                                            <div class="row">
+                                                <div class="col-sm-8">
+                                                    <ng-select [items]="courseArray" fxFlex="100" bindLabel="full_name"
+                                                        class="custom" bindValue="id" appendTo="body"
+                                                        (change)="chooseSubject($event)" formControlName="course_id"
+                                                        placeholder="select Course / Class Name">
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-8">
+                                                    <ng-select [items]="subjectArray" fxFlex="100"
+                                                        bindLabel="subject_full_name" class="custom"
+                                                        bindValue="subject_id" appendTo="body"
+                                                        formControlName="subject_id" placeholder="Select Subject ">
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                               <!--  <div class="col-sm-6">
+                                                    <mat-form-field appearance="outline" style="width:100% ;">
+                                                        <mat-label> <i class="bi bi-person-fill"></i> &nbsp;Paste URL</mat-label>
+                                                        <input matInput placeholder="Paste URL" formControlName="pasteUrl"
+                                                            class="custom">
+                                                    </mat-form-field>
+                                                </div> -->
+                                                <div class="col-sm-3" style="display: none;">
+                                                    <input class="form-control" type="text" value=""
+                                                        formControlName="organisationId">
+                                                </div>
+                                                <div class="col-sm-3" style="display: none;">
+                                                    <input class="form-control" type="text" value=""
+                                                        formControlName="userId">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-8">
+                                                    <mat-form-field class="example-full-width">
+                                                        <mat-label>Paste URL</mat-label>
+                                                        <textarea matInput #message
+                                                            formControlName="pasteUrl"
+                                                            placeholder="Google Meet Link.."
+                                                            maxlength="1000"></textarea>
+                                                        <mat-hint align="start" style="color: brown;"><strong>Broadcast
+                                                            Google Meet Link To
+                                                                Every Student </strong> </mat-hint>
+                                                        <mat-hint align="end"
+                                                            style="color: brown;">{{message.value.length}} /
+                                                            1000</mat-hint>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <a mat-raised-button color="accent" href="https://meet.google.com/?hs=197&authuser=0&pli=1" target="_blank"><i class="bi bi-camera-reels"></i> &nbsp;  &nbsp; Create Link</a>
+                                                </div>
+  
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-5">
+                                                    <mat-form-field class="example-full-width">
+                                                        <mat-label>Uploaded By</mat-label>
+                                                        <input matInput placeholder="Your Name"
+                                                            formControlName="uploaded_by" value="">
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <button pButton (click)="saveOnline()"
+                                                        [disabled]="!teacherOnlineClassFormGroup.valid"
+                                                        class="p-button-rounded p-button-info">
+                                                        <i class="bi bi-save" style="font-size: 1rem"> Save </i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </mat-tab>
+                            
+                        </mat-tab-group>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  

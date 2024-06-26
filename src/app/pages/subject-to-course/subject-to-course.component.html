@@ -1,0 +1,96 @@
+<div class="container-fluid page">
+  <div class="page__box">Subject To Course
+
+  </div>
+  <div class="control-div">
+    <form [formGroup]="subjectToCourseFormGroup">
+
+      <div class="row p-3">
+        <div class="col-sm-5">
+          <ng-select [items]="coursesArray" fxFlex="100" bindLabel="full_name" class="custom" bindValue="id"
+            (change)="chooseSubject($event)" appendTo="body" formControlName="course_id"
+            placeholder="select Course / Class Name">
+          </ng-select>
+        </div>
+      </div>
+
+    </form>
+  </div>
+  <div class="container">
+    <div class="row p-3">
+
+      <div class="col-sm-5" *ngIf="isShowReport">
+        <h1><u>Main Subjects Table</u></h1>
+        <form [formGroup]="selectedSubjectFormGroup">
+          <div >
+            <p-table #subjectList [value]="subjectArray" [globalFilterFields]="['subject_full_name']">
+              <ng-template pTemplate="caption">
+                <div class="p-d-flex">
+                  <span class="p-input-icon-left p-ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="subjectList.filterGlobal(getEventValue($event), 'contains')"
+                      placeholder="Search keyword" />
+                  </span>
+                </div>
+              </ng-template>
+              <ng-template pTemplate="header">
+                <tr>
+                  <th pSortableColumn="subject_full_name">Subjects Name <p-sortIcon
+                      field="subject_full_name"></p-sortIcon>
+                  </th>
+                  <th>Action
+                  </th>
+
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-item>
+                <tr>
+                  <td>{{item.subject_full_name}}</td>
+                  <td><button type="button" class="btn btn-success" (click)="onSelectedItem(item)">Active</button></td>
+                </tr>
+              </ng-template>
+
+            </p-table>
+          </div>
+         
+        </form>
+      </div>
+
+      <div class="col-sm-1">
+       &nbsp;
+      </div>
+      <div class="col-sm-5" *ngIf="isSelectedSubjectBoolean">
+        <h1><u>Selected Subjects Table</u></h1>
+         <!--  <pre>
+          subjectName = {{tempItemObj | json}}
+        </pre>
+        <pre>
+          subjectNamearray = {{this.tempSubjectArray | json}}
+        </pre>  -->
+       <table class="table table-striped" style="font-size: medium;">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col" style="display: none;">Subject id</th>
+            <th scope="col">Subject Name</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of tempSubjectArray; let indexOfelement=index;">
+            <th scope="row">{{indexOfelement+1}}</th>
+            <th scope="row" style="display: none;">{{item.subjectId}}</th>
+            <td>{{item.subjectName}}</td>
+            <td><button type="button" class="btn btn-danger" (click)="onDelete(indexOfelement);">Remove</button>
+            </td>
+          </tr>
+
+        </tbody>
+      </table> 
+      <button pButton (click)="onSave();" class="p-button-rounded p-button-info text-right">
+        <i class="bi bi-save" style="font-size: 1rem"> Save </i>
+      </button>
+      </div>
+    </div>
+  </div>
+</div>

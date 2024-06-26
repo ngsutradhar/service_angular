@@ -1,0 +1,113 @@
+<div class="container-fluid page">
+    <div class="header">
+      <div class="row d-flex align-items-center justify-content-between">
+        <div class="col-md-8 dash" style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: xx-large;">&nbsp;&nbsp; <i class="bi bi-speedometer2"></i>&nbsp;Teacher / Staff Portal</div>
+        <div class="col-md-4 comdtl">
+          <span class="comname">{{organisationName}} <br></span>
+          <hr>
+  
+          <i class="bi bi-envelope-fill"></i>&nbsp;<b> Email : </b>{{studentEmail}} <br>
+          <i class="bi bi-telephone-fill"></i>&nbsp;<b> Contact Number :</b> {{studentContact}} &nbsp;<b> Qualification
+            :</b> {{studentQualification}}<br>
+          <i class="bi bi-geo-alt-fill"></i>&nbsp; <b>Address : </b> {{studentAddress}},&nbsp; <b>Pin :</b> {{studentPin}}
+        </div> 
+      </div>
+    </div>
+     <!-- // Main containt -->
+  <div class="flex-container">
+    <div class="item">
+      <i class="bi bi-wallet-fill botic"></i>
+      <p id="item-title">Exam Result</p>
+      <hr class="rule">
+       <button pButton pRipple type="button" label="Active" class="p-button-rounded p-button-success">
+        <i class="bi bi-activity"> </i>
+      </button> 
+    </div>
+    <div class="item">
+      <i class="bi bi-mortarboard-fill botic"></i>
+      <p id="item-title">Online Exam</p>
+      <hr class="rule">
+      <button pButton pRipple type="button" label="Active" class="p-button-rounded p-button-success" >
+        <i class="bi bi-activity"> </i>
+      </button>
+    </div>
+    <div class="item">
+        <i class="bi bi-brush botic" ></i>
+          <p id="item-title">Online Class</p>
+      <hr class="rule">
+      <button pButton pRipple type="button" label="Active" class="p-button-rounded p-button-success" [routerLink]="['/TeacherOnlineClass']">
+        <i class="bi bi-activity"> </i>
+      </button>
+    </div>
+    <div class="item">
+      <i class="bi bi-book botic"></i>
+      <p id="item-title">Syllabus</p>
+      <hr class="rule">
+      <button pButton pRipple type="button" label="Active" class="p-button-rounded p-button-success" [routerLink]="['/TeacherSyllabus']">
+        <i class="bi bi-activity"> </i>
+      </button>
+    </div>
+  </div>
+  <!-- //---------------------End First Div ------------------ -->
+  <div class="flex-container">
+    <div class="item">
+      <i class="bi bi-person-workspace botic"></i>
+      <p id="item-title">Assignmentt</p>
+      <hr class="rule">
+       <button pButton pRipple type="button" label="Active" class="p-button-rounded p-button-success" [routerLink]="['/TeacherAssignment']">
+        <i class="bi bi-activity"> </i>
+      </button> 
+    </div>
+    <div class="item">
+      <i class="bi bi-question-square-fill botic"></i>
+      <p id="item-title">Question Paper</p>
+      <hr class="rule">
+      <button pButton pRipple type="button" label="Active" class="p-button-rounded p-button-success"  [routerLink]="['/TeacherQuestionPaper']">
+        <i class="bi bi-activity"> </i>
+      </button>
+    </div>
+    <div class="item">
+      <i class="bi bi-journal-bookmark-fill botic"></i>
+      <p id="item-title">E-Book</p>
+      <hr class="rule">
+      <button pButton pRipple type="button" label="Active" class="p-button-rounded p-button-success" [routerLink]="['/TeacherEbook']">
+        <i class="bi bi-activity"> </i>
+      </button>
+    </div>
+    <div class="item">
+        <i class="bi bi-table botic"></i>
+      <p id="item-title">Time Table</p>
+      <hr class="rule">
+      <button pButton pRipple type="button" label="Active" class="p-button-rounded p-button-success" >
+        <i class="bi bi-activity"> </i>
+      </button>
+    </div>
+  </div>
+  <!-- //---------------------End Second Div ------------------ -->
+  <div class="flex-container">
+    <div class="item">
+      <i class="bi bi-calendar-date-fill botic"></i>
+      <p id="item-title">Calender</p>
+      <hr class="rule">
+       <button pButton pRipple type="button" label="Active" class="p-button-rounded p-button-success">
+        <i class="bi bi-activity"> </i>
+      </button> 
+    </div>
+    <div class="item">
+      <i class="bi bi-mortarboard-fill botic"></i>
+      <p id="item-title">Attendance</p>
+      <hr class="rule">
+      <button pButton pRipple type="button" label="Active" class="p-button-rounded p-button-success" >
+        <i class="bi bi-activity"> </i>
+      </button>
+    </div>
+    <div class="item">
+      <i class="bi bi-journal-bookmark-fill botic"></i>
+      <p id="item-title">Offline Class / Course</p>
+      <hr class="rule">
+      <button pButton pRipple type="button" label="Active" class="p-button-rounded p-button-success" >
+        <i class="bi bi-journal-bookmark-fill"></i>
+      </button>
+    </div>
+  </div>
+</div>

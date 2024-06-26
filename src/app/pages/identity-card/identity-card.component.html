@@ -1,0 +1,119 @@
+<div class="container-fluid page">
+  <div class="header">
+    <div class="row d-flex align-items-center justify-content-between">
+      <div class="col-md-8 dash"
+        style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: xx-large;">
+        &nbsp;&nbsp; <i class="bi bi-person-circle"></i>&nbsp;Your Identity Card</div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row" id="print-icard">
+      <div class="col-sm-4" style="background-color:rgb(136, 136, 133);border-radius: 25px 5px 25px;">
+        <div class="id-card" style="width: 275px; height: 420px;">
+          <div class="id-card-header">
+            <!-- Text in the middle at the top -->
+            <div class="id-card-text"
+              style="background-color: brown; width: 100%; padding: 10px;border-radius: 25px 5px 25px;">
+              <P style="font-size: large;font-family:sans-serif;letter-spacing: 3px;">{{organisationName}}</P>
+            </div>
+            <h1 class="text-center"
+              style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;color: white; text-shadow: 2px 2px 4px #000000;">{{studentName}}</h1>
+            <!-- ID Card Photo -->
+            <div align="center"><img [src]="imageSrc" (error)="imageSrc = defaultPicture" class="id-card-photo"></div>
+            <!-- ID Card Header -->
+
+          </div>
+          <!-- Rest of the ID card content -->
+          <div class="id-card-info">
+
+            <table border="0" align="center" style="line-height: 20px;">
+              <tr>
+                <th>ID </th>
+                <td>:</td>
+                <td>{{episodeId}}</td>
+              </tr>
+              <tr>
+                <th>Adddress</th>
+                <td>:</td>
+                <td>{{studentAddress}}</td>
+              </tr>
+              <tr>
+                <th>Qulification</th>
+                <td>:</td>
+                <td>{{studentQualification}}</td>
+              </tr>
+              <tr>
+                <th>DOB</th>
+                <td>:</td>
+                <td>{{studentDOB | date}}</td>
+              </tr>
+              <tr>
+                <th>E-mail</th>
+                <td>:</td>
+                <td>{{studentEmail}}</td>
+              </tr>
+              <tr>
+                <th>Contact</th>
+                <td>:</td>
+                <td>{{studentContact}}</td>
+              </tr>
+            </table>
+
+          </div>
+          <div class="yellow-strap" style="border-top: 5px solid brown; color: black;">
+
+
+            <i class="bi bi-geo-alt-fill"></i>&nbsp; <b>Address : </b> {{organisationAddress}},&nbsp; <b>Pin :</b> {{organisationPin}}
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4" style="background-color:rgba(176, 241, 91, 0.897);border-radius: 25px 5px 25px;">
+        <div class="id-card" style="width: 275px; height: 420px;">
+          <div class="id-card-header">
+            <!-- Text in the middle at the top -->
+            <div class="id-card-text"
+              style="background-color: brown; width: 100%; padding: 5px;border-radius: 25px 5px 25px;">
+              <P style="font-size: large;font-family:sans-serif;letter-spacing: 3px;">TERMS AND CONDITIONS</P>
+            </div>
+            <!-- ID Card Header -->
+          </div>
+          <!-- Rest of the ID card content -->
+          <div class="id-card-info" style="line-height: 20px; font-size: small;">
+            <ul>
+              <li>
+                It is mandatory to bring your identity card with you everyday when you come in. Without Identity card,
+                your entry will be refused.
+              </li>
+            </ul>
+            <hr width="100%">
+            <p align="center" style="color: #000000;">
+              <strong><b> Phone: </b></strong> {{organisationContact}} <br>
+              <strong><b> E-Mail: </b></strong> {{organisationEmail}} <br>
+            </p>
+            <hr width="100%">
+            <div>
+              <p align="center" class="date" style="color: #000000;">
+                <strong> Joined Date: </strong> {{studentEntryDate | date}} <br>
+                <strong> Expire Date: </strong>Jan 30, 2025
+              </p>
+              <!-- Company Logo Space -->
+              <p class="company-logo" >
+                <!-- Company Logo -->
+                <img src="assets/img/simplifyist.png" alt="Company Logo" class="eduvenv" />
+              </p>
+            </div>
+           
+          </div>
+          <div class="yellow-strap" style="border-top: 5px solid brown; color: black;">
+            <i class="bi bi-geo-alt-fill"></i>&nbsp; <b>Address : </b> {{organisationAddress}},&nbsp; <b>Pin :</b> {{organisationPin}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="text-right"><button pButton class="p-button-rounded p-button-info p-button-outlined" 
+      printSectionId="print-icard"
+      printTitle="Develop By BAIT" ngxPrint>
+      <i class="bi bi-printer"> </i> Print
+    </button></p>
+  </div>
+</div>

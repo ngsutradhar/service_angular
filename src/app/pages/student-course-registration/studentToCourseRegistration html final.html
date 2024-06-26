@@ -1,0 +1,357 @@
+<div class="container-fluid page">
+  <div class="page__box p-3 mt-1 ml-1">Student To Course Entry Form</div>
+  <div class="page__content shadow p-3 position-relative">
+
+    <!-- Tab -------------------------------------- -->
+    <div class="card-deck row">
+      <div style="background-color:  rgb(90, 90, 94); float: left; width:70% ;">
+        <mat-tab-group (selectedTabChange)="onTabChanged($event)" [(selectedIndex)]="selectedIndex"
+          animationDuration="200ms">
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="example-tab-icon">trending_up</mat-icon>
+              Entry Tab
+            </ng-template>
+            <div class="p-3 flex-fill" style="width:100% ; background-color: white;">
+              <div class="container">
+                <form [formGroup]="studentToCourseFormGroup">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <ng-select [items]="students" fxFlex="100" bindLabel="studentName" class="custom"
+                        bindValue="studentId" appendTo="body" formControlName="ledger_id" placeholder="Student Name"
+                        (change)="changeStudent($event)">
+                      </ng-select>
+                    </div>
+                    <div class="col-sm-6">
+                      <ng-select [items]="courses" fxFlex="100" bindLabel="fullName" class="custom" bindValue="courseId"
+                        (change)="changeFeesModeType($event)" appendTo="body" formControlName="course_id"
+                        placeholder="Course Name">
+                      </ng-select>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <mat-form-field style="width:100%">
+                        <mat-label>Fees</mat-label>
+                        <input matInput formControlName="base_fee" placeholder="Fees" required>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                      <mat-form-field style="width:100%">
+                        <mat-label>Discount Allowed</mat-label>
+                        <input matInput formControlName="discount_allowed" placeholder="Discount" required>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group" *ngIf="hiddenInput">
+                        <mat-form-field class="col-12">
+                          <input matInput placeholder="Student Course ID" formControlName="studentToCourseID">
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <mat-form-field style="width:100%">
+                        <mat-label>Joinig Date</mat-label>
+                        <input class="col-9" matInput #ref [matDatepicker]="joining_date" formControlName="joining_date"
+                          (dateInput)="setJoiningSQL(ref.value)">
+                        <div
+                          *ngIf="studentToCourseFormGroup.controls['joining_date'].errors && studentToCourseFormGroup.controls['joining_date'].touched">
+                          <mat-error class="text-right"
+                            *ngIf="studentToCourseFormGroup.controls['joining_date'].errors['required']">Joinig is
+                            required</mat-error>
+                        </div>
+                        <mat-datepicker-toggle matSuffix [for]="joining_date"></mat-datepicker-toggle>
+                        <mat-datepicker #joining_date></mat-datepicker>
+
+                      </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                      <mat-form-field style="width:100%">
+                        <mat-label>Effective Date</mat-label>
+                        <input class="col-9" matInput #ref [matDatepicker]="effective_date"
+                          formControlName="effective_date" (dateInput)="setEffectiveSQL(ref.value)">
+                        <div
+                          *ngIf="studentToCourseFormGroup.controls['effective_date'].errors && studentToCourseFormGroup.controls['effective_date'].touched">
+                          <mat-error class="text-right"
+                            *ngIf="studentToCourseFormGroup.controls['effective_date'].errors['required']">Effective is
+                            required</mat-error>
+                        </div>
+                        <mat-datepicker-toggle matSuffix [for]="effective_date"></mat-datepicker-toggle>
+                        <mat-datepicker #effective_date></mat-datepicker>
+
+                      </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group" *ngIf="hiddenInput">
+                        <mat-form-field class="col-12">
+                          <input matInput placeholder="Transaction ID" formControlName="transactionMasterID">
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <mat-form-field style="width:100%">
+                        <mat-label>Duration:</mat-label>
+                        <input matInput formControlName="actual_course_duration" placeholder="100" required>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                      <ng-select [items]="durationTypes" bindLabel="durationName" class="custom"
+                        bindValue="durationTypeId" formControlName="duration_type_id" autofocus appendTo="body"
+                        placeholder="Duration Type">
+                      </ng-select>
+                    </div>
+
+                  </div>
+                  <div align="right">
+                    <button pButton (click)="clearStudentToCourse()"
+                      class="p-button-rounded p-button-info p-button-outlined">
+                      <i class="bi bi-clear" style="font-size: 1rem"> Clear </i>
+                    </button>&nbsp;&nbsp;&nbsp;
+
+                    <button pButton [disabled]="!isValidForm()" (click)="saveStudentToCourse()" *ngIf="!isShown"
+                      class="p-button-rounded p-button-info">
+                      <i class="bi bi-save" style="font-size: 1rem"> Save </i>
+                    </button>
+
+                    <button pButton [disabled]="!isValidForm()" (click)="updateStudentToCourse()" *ngIf="isShown"
+                      class="p-button-rounded p-button-info">
+                      <i class="bi bi-save" style="font-size: 1rem"> Update </i>
+                    </button>
+                  </div>
+                </form>
+                <p-confirmDialog #cd [style]="{width: '30vw'}" header="Confirmation" icon="pi pi-exclamation-triangle"
+                  [transitionOptions]="'0.8ms'">
+                  <ng-template pTemplate="header">
+                    <h3>Header Content</h3>
+                  </ng-template>
+                  <ng-template pTemplate="footer">
+                    <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+                    <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
+                  </ng-template>
+                </p-confirmDialog>
+              </div>
+            </div>
+          </mat-tab>
+
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="example-tab-icon">list</mat-icon>
+              View List
+            </ng-template>
+            <div class="p-3 flex-fill" style="width:100% ;">
+
+              <div class="p-2 bd-highlight">
+                <h3 style="color: white;">Student To Course Details</h3>
+                <p-table #StudentTocourse [value]="studentTocourses" [columns]="cols" dataKey="id" [paginator]="true"
+                  [rows]="5" [showCurrentPageReport]="true" responsiveLayout="scroll"
+                  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                  [rowsPerPageOptions]="[5,10,25,50]" styleClass="p-datatable-striped"
+                  [globalFilterFields]="['ledger_name','full_name','base_fee']">
+
+                  <ng-template pTemplate="caption">
+                    <div class="flex">
+                      <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                        (click)="clear(StudentTocourse)"></button>
+                      <span class="p-input-icon-left ml-auto">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text"
+                          (input)="StudentTocourse.filterGlobal(getEventValue($event), 'contains')"
+                          placeholder="Search keyword" />
+                      </span>
+
+                    </div>
+                  </ng-template>
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th>ID</th>
+                      <th pSortableColumn="ledger_id">Student Name <p-sortIcon field="ledger_name"></p-sortIcon>
+                      </th>
+                      <th pSortableColumn="course_id">Course Name <p-sortIcon field="full_name"></p-sortIcon>
+                      </th>
+                      <th pSortableColumn="base_fee">Base Fee <p-sortIcon field="base_fee"></p-sortIcon>
+                      </th>
+                      <th pSortableColumn="edit">Edit <p-sortIcon field="edit"></p-sortIcon>
+                      </th>
+                      <th pSortableColumn="delete">Delete <p-sortIcon field="delete"></p-sortIcon>
+                      </th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-course>
+
+                    <tr>
+                      <td>{{course.id}}</td>
+                      <td>{{course.ledger_name}}</td>
+                      <td>{{course.full_name}}</td>
+                      <td>{{course.base_fee}}</td>
+                      <td>
+                        <p-button type="button" (click)="editStudentToCourse(course)" icon="pi pi-pencil"
+                          styleClass="p-button-text"></p-button>
+                      </td>
+                      <td>
+                        <p-button type="button" (click)="deleteStudentToCourse(course)" icon="pi pi-trash"
+                          styleClass="p-button-text"></p-button>
+                      </td>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="paginatorleft">
+                    <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+                  </ng-template>
+                </p-table>
+              </div>
+
+            </div>
+          </mat-tab>
+
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+              Upcoming Birthday
+            </ng-template>
+
+            Content 3
+            <div style="background-color:yellow ;">
+              <pre>
+              update code = {{tempItemValueObj | json}}
+            </pre>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+      <!-- end tab---------------------------------------------- -->
+      <!-- start working -->
+
+      <div class="col-xs-4 col-sm-4 col-md-4" style="width:30% ; float: right;">
+        <div class="card" style="background-color:rgb(249, 249, 249) ;" *ngIf="isDashboard">
+          <div class="card-body">
+            <h1 class="card-title"
+              style="background-image: linear-gradient(to bottom right, rgb(8, 2, 68), rgb(7, 32, 146)); color: aliceblue; padding: 12px; border-radius: 5px; ">
+              Dash Board</h1>
+            <hr />
+            <div class="container">
+              <table class="table">
+                <thead>
+                  <tr class="table-secondary">
+                    <th scope="col">Total Active Student</th>
+                    <th scope="col">:</th>
+                    <th scope="col" class="text-right">{{totalNoActiveStudent}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="col">Monthly Active Student</th>
+                    <th scope="col">:</th>
+                    <th scope="col" class="text-right">{{totalNoMonthlyActiveStudent}}</th>
+                  </tr>
+                  <tr>
+                    <th scope="col">Full Active Student</th>
+                    <th scope="col">:</th>
+                    <th scope="col" class="text-right">{{totalNoFullCourseActiveStudent}}</th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!--About Course History-->
+        <div class="card" style="background-color:rgb(249, 249, 249) ;" *ngIf="isCourseDetails">
+          <div class="card-body">
+            <h1 class="card-title"
+              style="background-image: linear-gradient(to bottom right, rgb(8, 2, 68), rgb(7, 32, 146)); color: aliceblue; padding: 12px; border-radius: 5px; ">
+              Course Details</h1>
+            <hr />
+            <div class="container" style="font-size:medium ;">
+              <table class="table">
+                <thead>
+                  <tr class="table-secondary">
+                    <th scope="col">Fees Mode Type</th>
+                    <th scope="col">:</th>
+                    <th scope="col">{{fees_mode_type_name}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="col">Course Code</th>
+                    <th scope="col">:</th>
+                    <th scope="col">{{course_code}}</th>
+                  </tr>
+                  <tr>
+                    <th scope="col">Short Name</th>
+                    <th scope="col">:</th>
+                    <th scope="col">{{short_name}}</th>
+                  </tr>
+                  <tr>
+                    <th scope="col">Course Duration</th>
+                    <th scope="col">:</th>
+                    <th scope="col">{{course_duration}}&nbsp; [{{duration_name}}]</th>
+                  </tr>
+                  <tr>
+                    <th scope="col">Description</th>
+                    <th scope="col">:</th>
+                    <th scope="col">{{description}}</th>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!--About Course History-->
+        <div class="card" style="background-color:rgb(249, 249, 249) ;" *ngIf="isStudentDetails">
+          <div class="card-body">
+            <h1 class="card-title"
+              style="background-image: linear-gradient(to bottom right, rgb(8, 2, 68), rgb(7, 32, 146)); color: aliceblue; padding: 12px; border-radius: 5px; ">
+              Student Details</h1>
+            <hr />
+            <div class="container" style="font-size:medium ;">
+              <table class="table">
+                <thead>
+                  <tr class="table-secondary">
+                    <th scope="col">Course Name</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of studentToCourseArray; let indexOfelement=index;">
+                    <td scope="col">{{item.full_name}}</td>
+                    <td scope="col">{{item.effective_date | date: 'dd/MM/yyyy'}}</td>
+                    <td scope="col">{{item.is_completed}}</td>
+                  </tr>
+                  <tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Start working with Left div (panel) -->
+
+      <!-- End working with Left div (panel) -->
+
+      <!-- start working with Right div (panel) -->
+
+      <!-- End working with Right div (panel) -->
+
+    </div>
+    <!-- End working -->
+  </div>
+</div>
+
+<!--<div id="developer-div" *ngIf="true">
+  <pre>
+    students = {{students | json}}
+  </pre>
+  <pre>
+    durationTypes = {{durationTypes | json}}
+  </pre>
+  <pre>
+    courses = {{courses | json}}
+  </pre>
+  <pre>
+    update code = {{studentTocourseData | json}}
+  </pre>
+</div>-->

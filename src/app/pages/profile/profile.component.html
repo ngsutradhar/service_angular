@@ -1,0 +1,110 @@
+<div class="container-fluid page">
+    <div class="header">
+        <div class="row d-flex align-items-center justify-content-between">
+            <div class="col-md-8 dash"
+                style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: xx-large;">
+                &nbsp;&nbsp; <i class="bi bi-person-circle"></i>&nbsp;Your Profile</div>
+        </div>
+    </div>
+    <div class="container-fluid">
+
+        <!-- Card deck -->
+        <div class="card-deck row" >
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <!-- Card -->
+                <div class="card" style="width:650px; height:715px; border: 5px solid #98c1d9; border-radius: 25px 5px 25px;">
+                    <div class="d-flex bd-highlight" style="padding: 10px;">
+                        <div class="p-2 bd-highlight">
+                            <div class="rounded-circle" style="width: 190px; height: 190px; border: 5px solid #e8c50e;  box-shadow: inset 2px 2px 2px 5px rgb(230, 4, 4)">
+                                <img class="rounded-circle" style="width: 180px; height: 180px;" [src]="imageSrc" (error)="imageSrc = defaultPicture">
+                            </div>
+                        </div>
+                        <div class="p-2 w-100 bd-highlight" style="background-color: rgb(43, 168, 226); text-align: center; padding-top: 10px; border-radius: 25px 5px 25px;">
+                          <p style="padding-top: 20px; font-size: 2.5rem; letter-spacing: 3px;line-height: 100%; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif">
+                            {{organisationName}} </p>
+                            <hr>
+                              <i class="bi bi-envelope-fill"></i>&nbsp;<b> Email : </b>{{organisationEmail}} <br>
+                              <i class="bi bi-telephone-fill"></i>&nbsp;<b> Contact Number :</b> {{organisationContact}} &nbsp;<br>
+                              <i class="bi bi-geo-alt-fill"></i>&nbsp; <b>Address : </b> {{organisationAddress}},&nbsp; <b>Pin :</b> {{organisationPin}}
+                          </div>
+                          
+                    </div>
+                   
+                    <div class="d-flex bd-highlight">
+                        <div class="p-2 w-100 bd-highlight" style="background-color: rgba(167, 3, 3, 0.877); border-radius: 50px;">
+                           <p class="text-center" style="font-size: x-large; font-family:'Courier New', Courier, monospace, sans-serif;letter-spacing: 5px; font-weight: bold;"> {{studentName}} </p></div>
+                    </div><br>
+                    <div class="container">
+                        <div class="row">
+                          <div class="col-sm-4" style="background-color:rgb(136, 136, 133);">
+                            <h3><i class="bi bi-geo-alt-fill"></i>&nbsp; Addresss :</h3>
+                          </div>
+                          <div class="col-sm-8" style="background-color:rgb(255, 255, 255); color: black; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+                            <p>{{studentAddress}} &nbsp; <b>City :</b> {{studentCity}} &nbsp;<b>Pin :</b> {{studentPin}}</p>
+                          </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4" style="background-color:rgb(136, 136, 133);">
+                              <h3><i class="bi bi-person-circle"></i>&nbsp;Guardian Name :</h3>
+                            </div>
+                            <div class="col-sm-8" style="background-color:rgb(255, 255, 255); color: black; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+                              <p>{{gurdainName}}</p>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-4" style="background-color:rgb(136, 136, 133);">
+                              <h3><i class="bi bi-envelope-fill"></i>&nbsp;E-mail ID :</h3>
+                            </div>
+                            <div class="col-sm-8" style="background-color:rgb(255, 255, 255); color: black; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+                              <p>{{studentEmail}}</p>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-4" style="background-color:rgb(136, 136, 133);">
+                              <h3><i class="bi bi-telephone-fill"></i>&nbsp;Contact No :</h3>
+                            </div>
+                            <div class="col-sm-8" style="background-color:rgb(255, 255, 255); color: black; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+                              <p>{{studentContact}}</p>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-4" style="background-color:rgb(136, 136, 133);">
+                              <h3><i class="bi bi-mortarboard-fill"></i>&nbsp;Qualification :</h3>
+                            </div>
+                            <div class="col-sm-8" style="background-color:rgb(255, 255, 255); color: black; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+                              <p>{{studentQualification}}</p>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-4" style="background-color:rgb(136, 136, 133);">
+                              <h3><i class="bi bi-calendar-date-fill"></i>&nbsp;Date Of Birth :</h3>
+                            </div>
+                            <div class="col-sm-8" style="background-color:rgb(255, 255, 255); color: black; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+                              <p>{{studentDOB | date}}</p>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-4" style="background-color:rgb(136, 136, 133);">
+                              <h3><i class="bi bi-calendar-date-fill"></i>&nbsp;Entry Date :</h3>
+                            </div>
+                            <div class="col-sm-8" style="background-color:rgb(255, 255, 255); color: black; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+                              <p>{{studentEntryDate | date}}</p>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-4" style="background-color:rgb(136, 136, 133);">
+                              <h3><i class="bi bi-gender-ambiguous"></i>&nbsp;Gender:</h3>
+                            </div>
+                            <div class="col-sm-8" style="background-color:rgb(255, 255, 255); color: black; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+                              <p>{{studentSex}}</p>
+                            </div>
+                          </div>
+                      </div><br>
+                      <div id="footer" style="background-color: maroon; height: 40px; border-top: 5px solid yellow; border-radius: 25px 5px 25px;">
+                        <p class="text-center"> Brand By : <b>Anushka</b></p>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

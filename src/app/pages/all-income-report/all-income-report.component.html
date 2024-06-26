@@ -1,0 +1,103 @@
+<div class="container-fluid page">
+  <div class="page__box">Income Report
+
+  </div>
+  <div class="control-div">
+    <form [formGroup]="allIncomeReportFormGroup">
+
+      <div class="row p-3">
+        <div class="col-sm-3">
+          <mat-form-field style="width:100%;">
+            <mat-label>Start Date</mat-label>
+            <input matInput #refStartDate [matDatepicker]="start_date" formControlName="start_date"
+              (dateInput)="setStartSQL(refStartDate.value)">
+            <div
+              *ngIf="allIncomeReportFormGroup.controls['start_date'].errors && allIncomeReportFormGroup.controls['start_date'].touched">
+              <mat-error class="text-right" *ngIf="allIncomeReportFormGroup.controls['start_date'].errors['required']">
+                Start is
+                required</mat-error>
+            </div>
+            <mat-datepicker-toggle matSuffix [for]="start_date"></mat-datepicker-toggle>
+            <mat-datepicker #start_date></mat-datepicker>
+
+          </mat-form-field>
+        </div>
+        <div class="col-sm-3">
+          <mat-form-field style="width:100%;">
+            <mat-label>End Date</mat-label>
+            <input matInput #refEndDate [matDatepicker]="end_date" formControlName="end_date"
+              (dateInput)="setEndSQL(refEndDate.value)">
+            <div
+              *ngIf="allIncomeReportFormGroup.controls['end_date'].errors && allIncomeReportFormGroup.controls['end_date'].touched">
+              <mat-error class="text-right" *ngIf="allIncomeReportFormGroup.controls['end_date'].errors['required']">End
+                is
+                required</mat-error>
+            </div>
+            <mat-datepicker-toggle matSuffix [for]="end_date"></mat-datepicker-toggle>
+            <mat-datepicker #end_date></mat-datepicker>
+
+          </mat-form-field>
+        </div>
+
+        <div class="col-sm-2">
+          <button type="button" class="btn btn-primary"
+            [disabled]="!allIncomeReportFormGroup.valid || allIncomeReportFormGroup.value.id"
+            (click)="onIncomeReport();">Submit</button>
+
+        </div>
+
+
+      </div>
+      <div class="row p-3">
+
+      </div>
+    </form>
+  </div>
+
+  <div class="page__content" *ngIf="isShowReport">
+    <p-table #allIncomeList [value]="allIncomeListArray"
+      [globalFilterFields]="['student_name','full_name','received_amount','comment','ledger_name']">
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+          <span class="p-input-icon-left p-ml-auto">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" (input)="allIncomeList.filterGlobal(getEventValue($event), 'contains')"
+              placeholder="Search keyword" />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="student_name">Student Name <p-sortIcon field="student_name"></p-sortIcon>
+          </th>
+          <th pSortableColumn="full_name">Course Name <p-sortIcon field="full_name"></p-sortIcon>
+          </th>
+          <th pSortableColumn="transaction_date">Transaction Date <p-sortIcon field="transaction_date"></p-sortIcon>
+          </th>
+          <th pSortableColumn="comment">Purpose <p-sortIcon field="comment"></p-sortIcon>
+          </th>
+          <th pSortableColumn="ledger_name">Transaction Mode <p-sortIcon field="ledger_name"></p-sortIcon>
+          </th>
+          <th pSortableColumn="received_amount">Fees Amount <p-sortIcon field="received_amount"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr>
+          <td>{{item.student_name}}</td>
+          <td>{{item.full_name}}</td>
+          <td>{{item.transaction_date | date: 'dd/MM/yyyy'}}</td>
+          <td>{{item.comment}}</td>
+          <td>{{item.ledger_name}}</td>
+          <td class="text-right">{{item.received_amount | currency : 'INR'}}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <tr>
+          <th colspan="5">Gross Total</th>
+          <th class="text-right">{{totalIncome | currency : 'INR'}}</th>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

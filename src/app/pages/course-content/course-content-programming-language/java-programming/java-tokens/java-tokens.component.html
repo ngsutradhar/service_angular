@@ -1,0 +1,81 @@
+
+<p-toast position="top-center" key="myKey1" (onClose)="onReject()" [baseZIndex]="5000">
+  <ng-template let-message pTemplate="message">
+    <div style="text-align: center">
+      <!-- <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i> -->
+      <h3>{{message.summary}}</h3>
+      <p>{{message.detail}}</p>
+    </div>
+  </ng-template>
+</p-toast>
+
+
+
+<div data-aos="fade-right">
+<!--  <p-accordion (onOpen)="onTabOpen($event)">-->
+  <p-accordion>
+    <p-accordionTab>
+      <ng-template pTemplate="header">
+        <div style="color: #3804a0;">Introduction</div>
+      </ng-template>
+      <ng-template pTemplate="content">
+        <div class="accordion-body">
+          <p-divider align="left">
+            <div class="inline-flex align-items-center">
+              <h2>Java Tokens</h2>
+            </div>
+          </p-divider>
+          <p>
+            In Java, the program contains classes and methods. Further, the methods contain the expressions and statements required to perform a specific operation. These statements and expressions are made up of tokens. In other words, we can say that the expression and statement is a set of tokens. The tokens are the small building blocks of a Java program that are meaningful to the Java
+            compiler. Further, these two components contain variables, constants, and operators.<br>The Java compiler breaks the line of code into text (words) is called Java tokens. These are the smallest element of the Java program
+            . The Java compiler identified these words as tokens.
+          </p>
+            <ol>
+              <li>Keywords </li>
+              <li>Identifiers</li>
+              <li>Separator </li>
+              <li>Operator</li>
+              <li>Literal </li>
+              <li>Comment</li>
+            </ol>
+            <!-- <pre>
+              <b>import</b> java.util.Scanner;
+              public class ReverseNumber {{"{"}}
+                  public static void main(String[] args) {{"{"}}
+                      Scanner sn;
+                      sn=new Scanner(System.in);
+                      System.out.print("Enter a number: ");
+                      int x=sn.nextInt();        
+                      int ans=0;        
+                      do{{"{"}}
+                          int r=x%10;
+                          x=x/10;
+                          ans=ans*10+r;
+                      }while(x>0);
+                      System.out.print("Reverse number is: "+ans);
+                      sn.close();
+                  }
+              }
+              
+            </pre>   -->
+            <div class="code-box"><pre>{{programCode1}}</pre></div>
+            <p>In the above code snippet, public, class, Demo, {{"{"}}, static, void, main, {{"("}}, String, args, {{"["}}, {{"]"}}, {{")"}}, System, ., out, println, javatpoint, etc. are the Java tokens.</p>
+
+          <p-divider align="">
+            <div class="inline-flex align-items-center">
+              <h2>Examples</h2>
+            </div>
+          </p-divider>
+          <p>
+            For example, consider the following code.
+          </p>
+          <pre>
+          </pre>
+          <p><a target="_blank" href="https://github.com/sukantahui/java_for_students/blob/main/fibonacciseries/FibonacciSeries.java">example</a></p>
+
+
+        </div>
+      </ng-template>
+    </p-accordionTab>
+  </p-accordion>
+</div>

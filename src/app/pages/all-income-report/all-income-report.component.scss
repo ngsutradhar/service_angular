@@ -1,0 +1,49 @@
+.page{
+    color: rgb(12, 12, 12);
+    min-height: 100vh;
+  }
+  .page__box{
+    font-size: 2.5em;
+    padding: 10px;
+  }
+  .control-div{
+    margin-top: 2.2%;
+    width: 80%;
+    height: 10vh;
+    background-color: rgb(176, 181, 183);
+    margin-left: 10%;
+    border-radius: 10px;
+  }
+  .page__content{
+    margin-top: 2.2%;
+    width: 80%;
+    height: 100vh;
+    background-color: transparent;
+    margin-left: 10%;
+    border-radius: 10px;
+  }
+  ::ng-deep .mat-form-field {
+    .mat-input-element {
+        color: rgb(8, 8, 8);
+        font-size: medium;
+        font-family: "Roboto", sans-serif;
+    }
+    .mat-form-field-label {
+        color: rgb(10, 10, 10);
+        font-family: "Roboto", sans-serif;
+        font-size: large;
+    }
+  }
+  ::ng-deep datepicker-value-example .mat-form-field-label{
+    color:#210dd4;
+  }
+  
+  ::ng-deep .mat-datepicker-toggle{
+    color:#43b2ee;
+  }
+  ::ng-deep .mat-form-field-underline{
+  background: #43b2ee;
+  }
+  .mat-raised-button {
+    background-color:black;
+}

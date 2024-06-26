@@ -1,0 +1,565 @@
+<div class="container-fluid page">
+  <div class="row d-flex align-items-center justify-content-between">
+    <div class="col-12 header"><i class="bi bi-cash"></i>&nbsp;Advanced Fees Received</div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 mt-3 feeleft">
+      <mat-tab-group (selectedIndexChange)="onTabChanged($event)" [(selectedIndex)]="selectedIndex"
+        animationDuration="200ms" style="width:100% !important; ">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+            All Advanced Received History
+          </ng-template>
+          <p-table #allAdvancedReceivedHistory [value]="allAdvancedReceivedHistoryArray" dataKey="id" [paginator]="true"
+          [rows]="5" [showCurrentPageReport]="true"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          [rowsPerPageOptions]="[5,10,25,50]" [globalFilterFields]="['ledger_name','full_name','transaction_date']">
+
+          <ng-template pTemplate="caption">
+            <div class="flex">
+              <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                (click)="clear(allAdvancedReceivedHistory)"></button>
+              <span class="p-input-icon-left ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text"
+                  (input)="allAdvancedReceivedHistory.filterGlobal(getEventValue($event), 'contains')"
+                  placeholder="Search keyword" />
+              </span>
+
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Print</th>
+              <th>Edit Adv. Received</th>
+              <th pSortableColumn="ledger_name">Student Name <p-sortIcon field="ledger_name"></p-sortIcon>
+              </th>
+              <th pSortableColumn="full_name">Course Name <p-sortIcon field="full_name"></p-sortIcon>
+              </th>
+              <th pSortableColumn="transaction_date">Transaction Date <p-sortIcon field="transaction_date"></p-sortIcon>
+              </th>
+              <th>Description</th>
+              <th>Total Advanced</th>
+              <th>Total Adv. Received</th>
+              <th>Advanced Due</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item>
+
+            <tr>
+              <td><button pButton class="p-button-rounded p-button-info p-button-outlined"
+                  (click)="onClickedAdvancedVoucher(item)">
+                  <i class="bi bi-printer"> </i>
+                </button></td>
+                <td><button pButton class="p-button-rounded p-button-info p-button-outlined"
+                  (click)="onEditAdvancedReceived(item)">
+                  <i class="bi bi-pencil-square"></i>
+                </button></td>
+              <td>{{item.ledger_name}}</td>
+              <td>{{item.full_name}}</td>
+              <td>{{item.transaction_date | date: 'dd/MM/yyyy'}}</td>
+              <td>{{item.comment}}</td>
+              <td>{{item.amount | currency:'INR'}}</td>
+              <td>{{item.advanced_received | currency:'INR'}}</td>
+              <td>{{item.adv_due | currency:'INR'}}</td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="paginatorleft">
+            <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+          </ng-template>
+        </p-table>
+
+          
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">trending_up</mat-icon>
+            Enter Received Advanced
+          </ng-template>
+          <div class="p-3 flex-fill" style="background-color: white">
+            <form [formGroup]="AdvancedFeesReceivedFormGroup">
+              <div class="row">
+                <div class="col-sm-4">
+                  <mat-form-field style="width: 100%;">
+                    <mat-label>Received Date</mat-label>
+                    <input matInput #ref [matDatepicker]="transactionDate" formControlName="transactionDate">
+                    <mat-datepicker-toggle matSuffix [for]="transactionDate">
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #transactionDate></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                  <ng-select [items]="receiptMode" bindLabel="name" bindValue="id" class="custom" appendTo="body"
+                    formControlName="ledgerId" placeholder="Mode Of Receipt">
+                  </ng-select>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-4">
+                  <ng-select [items]="studentNameList" fxFlex="100" bindLabel="studentName" (change)="changeCourseId()" 
+                    class="custom" bindValue="studentId" appendTo="body" formControlName="studentId"
+                    placeholder="Student Name" [readonly]="isReadonly">
+
+                    <ng-template ng-option-tmp let-item="item">
+
+                      {{item.studentName}} ({{item.qualification}})
+                      <!--  <small>Contact: {{item.email}},{{item.phone}}</small> <br />
+                                      <small>Address: {{item.address.street}}, {{item.address.suite}}, {{item.address.city}},
+                                        {{item.address.zipcode}}</small> <br />
+                                      <small>Site: {{item.website}}</small> -->
+
+                    </ng-template>
+
+                  </ng-select>
+                </div>
+                <div class="col-sm-4" *ngIf="advCourseNameBoolean">
+                  <ng-select [items]="courseNameList" fxFlex="100" bindLabel="full_name" class="custom" bindValue="id"
+                    appendTo="body" (change)="getRegisterId($event)" formControlName="studentToCourseId" 
+                    placeholder="Course Name" [readonly]="isReadonly">
+                  </ng-select>
+                </div>
+              </div>
+              <!--   display <table></table> -->
+              <div class="row">
+                <div class="col-sm-8" *ngIf="hiddenTransactionInfo;">
+
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Total Advanced</th>
+                        <th scope="col">Received Advanced</th>
+                        <th scope="col">Advanced Due</th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">{{totalAdvanced | currency:'INR'}}</th>
+                        <th scope="row">{{receivedAdvanced | currency:'INR'}}</th>
+                        <th scope="row">{{advancedDue | currency:'INR'}}</th>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+              <!--end-->
+              <div class="row">
+                <div class="col-sm-4" *ngIf="advAmountBoolean">
+                  <mat-form-field style="width:100%">
+                    <mat-label>Enter Amount</mat-label>
+                    <input matInput formControlName="amount" [(ngModel)]="receivedAmount" 
+                      style="font-size:larger ;color:rgb(186, 11, 11); text-decoration-style: solid;">
+                  </mat-form-field>
+
+                </div>
+                <div class="col-sm-4" *ngIf="advCommentsBoolean">
+                  <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Comments" 
+                    formControlName="comment" rows="2" [(ngModel)]="AdvancedreceivedComments"></textarea>
+                </div>
+              </div>
+              <div class="row p-2">
+                
+                  <div class="col-sm-2" *ngIf="advReceivedHiddenInputBoolean">
+                    <div class="form-group">
+                      <mat-form-field>
+                        <input matInput placeholder="Transaction ID" formControlName="transactionId">
+                      </mat-form-field>
+  
+                    </div>
+                  </div>
+                <div class="col-sm-9 text-right">
+                  <button pButton (click)="clearFeesReceivedAdv();"
+                    class="p-button-rounded p-button-info p-button-outlined">
+                    <i class="bi bi-clear" style="font-size: 1rem"> Clear </i>
+                  </button>&nbsp;&nbsp;&nbsp;
+
+                  <button pButton (click)="onSave();"
+                    *ngIf="(this.AdvancedFeesReceivedFormGroup.valid) && (receivedAmount>0) && (totalAdvanced===0)"
+                    class="p-button-rounded p-button-info p-button-outlined">
+                    <i class="bi bi-save" style="font-size: 1rem"> Save </i>
+                  </button>&nbsp;&nbsp;&nbsp;
+                  
+                  <button pButton (click)="onUpdate();"
+                  *ngIf="(this.AdvancedFeesReceivedFormGroup.valid) && (receivedAmount>0) && (totalAdvanced>0) && (advReceivedTransactionId>0)"
+                  class="p-button-rounded p-button-info p-button-outlined">
+                  <i class="bi bi-save" style="font-size: 1rem"> Update </i>
+                </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">list</mat-icon>
+            Enter Advanced Adjustment
+          </ng-template>
+          <div class="p-3 flex-fill" style="background-color: white">
+            <form [formGroup]="AdvancedAdjustmentFeesReceivedFormGroup">
+              <div class="row">
+                <div class="col-sm-4">
+                  <ng-select [items]="allAdvancedDetailsArray" fxFlex="100" bindLabel="ledger_name" class="custom"
+                    bindValue="id" appendTo="body" (change)="getActiveAdvReceived($event)"
+                    formControlName="referenceReceivedTransactionMasterId" placeholder="Student Name"
+                    [readonly]="isReadonly">
+
+                    <ng-template ng-option-tmp let-item="item">
+
+                      <small> {{item.ledger_name}}| {{item.full_name}} | ({{item.adv_due | currency:'INR'}}) </small>
+
+
+                    </ng-template>
+                  </ng-select>
+                </div>
+                <div class="col-sm-4">
+                  <mat-form-field style="width: 100%;">
+                    <mat-label>Received Adjustment Date</mat-label>
+                    <input matInput #ref_adv [matDatepicker]="adjuestmenTtransactionDate"
+                      formControlName="adjuestmenTtransactionDate">
+                    <mat-datepicker-toggle matSuffix [for]="adjuestmenTtransactionDate">
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #adjuestmenTtransactionDate></mat-datepicker>
+                  </mat-form-field>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-sm-8" *ngIf="hiddenAdvReceived;">
+                 
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th scope="col">Transaction Date</th>
+                          <th scope="col">Course Name</th>
+                          <th scope="col">Description</th>
+                          <th scope="col" class="text-right">Amount</th>
+                          <th scope="col" class="text-right">Received</th>
+                          <th scope="col" class="text-right">Net Due</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td scope="row">{{transactionDateAdv | date: 'dd/MM/yyyy'}}</td>
+                          <td scope="row">{{fullName}}</td>
+                          <td scope="row">{{comment}}</td>
+                          <td scope="row" class="text-right">{{amount | currency:'INR'}}</td>
+                          <td scope="row" class="text-right">{{receivedAdvanced | currency:'INR'}}</td>
+                          <td scope="row" class="text-right">{{advancedDue | currency:'INR'}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <ng-select [items]="studentNameList" fxFlex="100" bindLabel="studentName" *ngIf="studentNameBoolean"
+                    (change)="adjustmentChangeCourseId()" class="custom" bindValue="studentId" appendTo="body"
+                    formControlName="adjustmentStudentId" placeholder="Student Name" [readonly]="isReadonly">
+
+                    <ng-template ng-option-tmp let-item="item">
+
+                      {{item.studentName}} ({{item.qualification}})
+                      <!--  <small>Contact: {{item.email}},{{item.phone}}</small> <br />
+                      <small>Address: {{item.address.street}}, {{item.address.suite}}, {{item.address.city}},
+                        {{item.address.zipcode}}</small> <br />
+                      <small>Site: {{item.website}}</small> -->
+
+                    </ng-template>
+
+                  </ng-select>
+                </div>
+                <div class="col-sm-3">
+                  <ng-select [items]="courseNameList" fxFlex="100" bindLabel="full_name" class="custom" bindValue="id" *ngIf="courseNameBoolean"
+                    appendTo="body" (change)="getAdjustmentTranMasterId()" formControlName="adjustmentStudentToCourseId"
+                    placeholder="Course Name" [readonly]="isReadonly">
+
+                  </ng-select>
+                </div>
+                <div class="col-sm-3">
+                  <ng-select [items]="tranMasterIdArray" fxFlex="100" bindLabel="transaction_number" class="custom" *ngIf="transactionNoBoolean"
+                    (change)="getEachAdjustmentTranMasterDetails($event)" bindValue="id" appendTo="body"
+                    formControlName="transactionMasterId" placeholder="Transaction No" [readonly]="isReadonly">
+
+                    <ng-template ng-option-tmp let-item="item">
+
+                      <small> {{item.ledger_name}}| ({{item.total_due | currency:'INR'}}) | {{item.transaction_number}}
+                      </small>
+
+
+                    </ng-template>
+                  </ng-select>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-sm-4" *ngIf="hiddenEachTranDetails">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Fee Name</th>
+                        <th scope="col">Amount Due</th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">{{courseName}}</th>
+                        <th scope="row">{{totalCurrentDue | currency:'INR'}}</th>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-9 text-right">
+                  <button pButton (click)="clearAdjustmentFeesReceivedAdv();"
+                    class="p-button-rounded p-button-info p-button-outlined">
+                    <i class="bi bi-clear" style="font-size: 1rem"> Clear </i>
+                  </button>&nbsp;&nbsp;&nbsp;
+
+                  <button pButton (click)="onSaveAdjustment();" *ngIf="(this.AdvancedAdjustmentFeesReceivedFormGroup.valid) && 
+                  (studentCourseRegistrationId===adjustmentStudentCourseRegistrationId) && (this.advancedDue>this.totalCurrentDue)"
+                    class="p-button-rounded p-button-info p-button-outlined">
+                    <i class="bi bi-save" style="font-size: 1rem"> Save </i>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+            Advanced Adjustment List
+          </ng-template>
+          <p-table #allAdvReceivedAdjustment [value]="allAdvReceivedAdjustmentArray" dataKey="reference_received_transaction_master_id"
+          [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          [rowsPerPageOptions]="[5,10,25,50]" styleClass="p-datatable-striped"
+          [globalFilterFields]="['ledger_name','full_name','total_amount']">
+          <!-- ----------------------------------- -->
+          <ng-template pTemplate="caption">
+            <div class="flex">
+              <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                (click)="clear(allAdvReceivedAdjustment)"></button>
+              <span class="p-input-icon-left ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text"
+                  (input)="allAdvReceivedAdjustment.filterGlobal(getEventValue($event), 'contains')"
+                  placeholder="Search keyword" />
+              </span>
+
+            </div>
+          </ng-template>
+          <!--  --------------------------------------------- -->
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 2rem"></th>
+              <th>SL</th>
+              <th pSortableColumn="ledger_name">Name <p-sortIcon field="ledger_name"></p-sortIcon>
+              </th>
+              <th>Course</th>
+              <th pSortableColumn="total_amount">Total Received <p-sortIcon field="total_amount">
+                </p-sortIcon>
+              </th>
+              
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-fees let-expanded="expanded" let-rowIndex="rowIndex">
+            <tr>
+              <td>
+                <button type="button" pButton pRipple [pRowToggler]="fees"
+                  class="p-button-text p-button-rounded p-button-plain"
+                  [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+              </td>
+              <td>{{rowIndex+1}}</td>
+              <td>{{fees.ledger_name}}</td>
+              <td>{{fees.full_name}}</td>
+              <td>{{fees.total_amount | currency: 'INR'}}</td>
+             
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="rowexpansion" let-fee class="col-12">
+            <tr>
+              <td colspan="7">
+                <div class="p-3">
+                  <!--Inner table-->
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Date</th>
+                        <!-- <th scope="col">Transaction Number</th> -->
+                        <th scope="col">Particulars</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let feeDetail of fee.adv_fees_received_details ">
+                        <td>{{feeDetail.transaction_date | date:'dd/MM/yyyy'}}</td>
+                        <!--  <td>{{feeDetail.transaction_number}}</td> -->
+                        <td>{{feeDetail.comment}}</td>
+                        <td class="text-right">{{feeDetail.amount | currency: 'INR'}}</td>
+                        <td><button type="button" class="btn btn-danger" (click)="deleteAdvFeesReceivedAdj(feeDetail)"><i class="bi bi-trash"></i></button> &nbsp;
+                         
+                        </td>
+                    </tbody>
+                  </table>
+                  <!--inner table end-->
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+         <pre style="background-color:yellow ;">
+                       save code = {{tranMasterIdArray | json}} 
+                        onSave = {{this.tempReceicedObj | json}}
+                        tempGetActiveCourseObj = {{this.tempGetActiveCourseObj | json}}
+                        tempReceiceAdjustmentdObj = {{this.tempReceiceAdjustmentdObj | json}}
+                       this.AdvancedFeesReceivedFormGroup.valid = {{this.AdvancedFeesReceivedFormGroup.valid }} 
+                       this.AdvancedAdjustmentFeesReceivedFormGroup.valid = {{this.AdvancedAdjustmentFeesReceivedFormGroup.valid }} 
+                      </pre> 
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+            Advanced Receipt Voucher
+          </ng-template>
+
+           <!-------------------------------start Advanced Receipt Voucher ------------------------------------- -->
+           <div class="container" *ngIf="AdvshowReceiptBoolean">
+            <div id="print-AllReceiptBill">
+              
+              <div style="border: 2px dotted rgb(1, 1, 19);">
+                <div class="row">
+                  <!-- <div class="col-2 ">
+                            <img src="assets/img/baitLogo.png" width="100px" alt="AdminLTE Logo" style="opacity: .8">
+                          </div> -->
+                  <div class="col-12" align="center">
+
+                    <p
+                      style="margin-bottom: 0 ;margin-top: 0 ; font-size:x-large; font-family: 'Cooper Black'; font-weight: bolder;">
+                      <!-- Barrackpore Academy Of Information Technology -->{{organisationName}}
+                    </p>
+                    <p style="margin-bottom: 0 ;margin-top: 0 ; font-size: medium;">{{organisationAddress}},
+                      Pin:{{organisationPin}}</p>
+                    <p style="margin-bottom: 0 ;margin-top: 0 ; font-size: medium;">
+                      E-mail: &nbsp;{{organisationEmail}} | Contact: {{organisationContact}}</p>
+
+                    <hr style="height:2px;border-width:0;color:gray;background-color:gray;margin-bottom: 0 ;margin-top: 2px ;">
+                    <h2 class="text-center"><b>Advanced Receipt Voucher</b></h2>
+                  </div>
+
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Student Name</th>
+                        <th scope="col">Course Name</th>
+                        <th scope="col">Adv. Date</th>
+                        <th scope="col">Description</th>
+                        <th scope="col" class="text-right">Total Advanced</th>
+                        <th scope="col" class="text-right">Received</th>
+                        <th scope="col" class="text-right">Net Due</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">{{billing_name}}</th>
+                        <td scope="row">{{full_name}}</td>
+                        <td scope="row">{{advTranDate | date:'dd/MM/yyyy'}}</td>
+                        <td scope="row">{{advComments}}</td>
+                        <td scope="row" class="text-right">{{total_advanced | currency:'INR'}}</td>
+                        <td scope="row" class="text-right">{{received_advanced | currency:'INR'}}</td>
+                        <td scope="row" class="text-right">{{advanced_due | currency:'INR'}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-12 text-center">
+                    <table style="border-collapse: collapse; width: 100%; margin:0 auto;">
+                      <thead>
+                        <tr
+                          style="border-top: 3px dotted rgb(1, 1, 19);border-bottom: 3px dotted rgb(116, 114, 114);background-color:rgb(196, 190, 190);padding: 0.5;">
+                          <th>Sl No</th>
+                          <th>Date</th>
+                          <!-- <th>Receipt No</th> -->
+                          <th>Comments</th>
+                          <th class="text-right">Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let receipt of allAdvancedReceivedHistoryByIdArray; let i = index">
+
+                          <td>{{i+1}}</td>
+                          <td>{{receipt.transaction_date | date:'dd/MM/yyyy'}}</td>
+                          <!-- <td>{{receipt.transaction_number }}</td> -->
+                          <td>{{receipt.comment}}</td>
+                          <td class="text-right">{{receipt.amount | currency: 'INR'}}</td>
+                        </tr>
+
+                      </tbody>
+                      <tfoot>
+
+                        <tr style="background-color: lightgrey; border-top: 1px solid rgb(1, 1, 19);">
+                          <th colspan="2">&nbsp;</th>
+                          <td class="text-right">Grand Total:</td>
+                          <th class="text-right">{{totalRecepitAdvAmount | currency: 'INR'}}</th>
+                          <th>&nbsp;</th>
+                        </tr>
+                        
+                        <tr>
+                          <th>In Words:</th>
+                          <td>:</td>
+                          <th colspan="3" class="text-left">{{rupeeInWords}}</th>
+                        </tr>
+                       
+                      </tfoot>
+                    </table>
+                  </div>
+                </div>
+                <div class="row" style="font-size: small;">
+                  <div class="col-7">
+                    Notice:<p style="margin-bottom: 0 ;margin-top: 0 ; font-style: oblique; font-size: small;">1)
+                      It
+                      is Computer Generated Bill</p>
+                    <p style="margin-bottom: 0 ;margin-top: 0 ;font-style: oblique;">2) Advanced Fees Cannot be
+                      Refund.</p>
+
+                  </div>
+                  <div class="col-3 ">
+                    <p class="text-right">Signature</p>
+                    <p class="text-right">-----------------</p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div mat-dialog-actions>
+              <button class="btn btn-danger" (click)="onClickedClosed()">Close</button>
+              <button class="btn btn-success" printSectionId="print-AllReceiptBill" printTitle="Develop By Ronit"
+                ngxPrint>Print</button>
+
+            </div>
+          </div>
+          <!-------------------------------end show Receipt bill voucher------------------------------------- -->
+        </mat-tab>
+       
+      </mat-tab-group>
+    </div>
+
+  </div>
+</div>

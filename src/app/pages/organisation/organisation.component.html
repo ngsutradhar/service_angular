@@ -1,0 +1,232 @@
+<div class="container-fluid page">
+    <div class="row d-flex align-items-center justify-content-between">
+        <div class="col-12 header"><i class="bi bi-cash"></i>&nbsp; New organisation</div>
+    </div>
+    <div class="row">
+        <div class="col-12 mt-3 feeleft ">
+            <mat-tab-group (selectedIndexChange)="onTabChanged($event)" [(selectedIndex)]="selectedIndex"
+                animationDuration="200ms"
+                style="background-image: linear-gradient(to bottom right, rgb(8, 2, 68), rgb(7, 32, 146)); color: aliceblue; padding: 12px; border-radius: 5px; padding:0px;">
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <mat-icon class="example-tab-icon">trending_up</mat-icon>
+                        Enter Organisation
+                    </ng-template>
+                    <form [formGroup]="organisationFormGroup">
+                        <div style="background-color:white ; padding: 20px;">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <mat-form-field appearance="outline" style="width:100% ;">
+                                        <mat-label> <i class="bi bi-building"></i> &nbsp; Organisation Name</mat-label>
+                                        <input matInput placeholder="Organisation Name"
+                                            formControlName="organisationName" class="custom">
+                                        <div
+                                            *ngIf="organisationFormGroup.controls['organisationName'].errors && organisationFormGroup.controls['organisationName'].touched">
+                                            <mat-error class="text-right"
+                                                *ngIf="organisationFormGroup.controls['organisationName'].errors['required']">
+                                                Organisation Name is
+                                                required</mat-error>
+                                        </div>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <mat-form-field appearance="outline" style="width:100% ;">
+                                        <mat-label><i class="bi bi-geo-alt-fill"></i> &nbsp; Organisation Address
+                                        </mat-label>
+                                        <input matInput placeholder="Organisation Address" formControlName="address"
+                                            class="custom">
+                                        <div
+                                            *ngIf="organisationFormGroup.controls['address'].errors && organisationFormGroup.controls['address'].touched">
+                                            <mat-error class="text-right"
+                                                *ngIf="organisationFormGroup.controls['address'].errors['required']">
+                                                Organisation Address is
+                                                required</mat-error>
+                                        </div>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+
+                                    <ng-select appearance="outline" style="width:100% ;" [items]="stateList"
+                                        bindLabel="stateName" class="custom" bindValue="stateId"
+                                        formControlName="stateId" autofocus appendTo="body" placeholder="State">
+                                    </ng-select>
+
+                                </div>
+                                <div class="col-sm-4">
+                                    <mat-form-field appearance="outline" style="width:100% ;">
+                                        <mat-label>City</mat-label>
+                                        <input matInput placeholder="City" formControlName="city" class="custom">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-4">
+                                    <mat-form-field appearance="outline" style="width:100% ;">
+                                        <mat-label>Pin</mat-label>
+                                        <input matInput placeholder="Pin" formControlName="pin" class="custom">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <mat-form-field appearance="outline" style="width:100% ;">
+                                        <mat-label><i class="bi bi-phone-fill"></i>&nbsp;Contact No</mat-label>
+                                        <input matInput placeholder="Contact No" formControlName="contactNumber"
+                                            class="custom">
+                                        <div
+                                            *ngIf="organisationFormGroup.controls['contactNumber'].errors && organisationFormGroup.controls['contactNumber'].touched">
+                                            <mat-error class="text-right"
+                                                *ngIf="organisationFormGroup.controls['contactNumber'].errors['required']">
+                                                Organisation Contact Number is
+                                                required</mat-error>
+                                        </div>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-6">
+                                    <mat-form-field appearance="outline" style="width:100% ;">
+                                        <mat-label><i class="bi bi-whatsapp"></i>&nbsp; What's App No</mat-label>
+                                        <input matInput placeholder="What's App No" formControlName="whatsappNumber"
+                                            class="custom">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <mat-form-field appearance="outline" style="width:100% ;">
+                                        <mat-label><i class="bi bi-envelope-fill mr-1"></i> &nbsp; Email ID</mat-label>
+                                        <input matInput="email" placeholder="Email ID" formControlName="emailId"
+                                            class="custom">
+                                        <div
+                                            *ngIf="organisationFormGroup.controls['emailId'].errors && organisationFormGroup.controls['emailId'].touched">
+                                            <mat-error class="text-right"
+                                                *ngIf="organisationFormGroup.controls['emailId'].errors['required']">
+                                                Organisation Email is
+                                                required</mat-error>
+                                        </div>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-2">
+                                    <mat-form-field appearance="outline" style="width:100% ;">
+                                        <mat-label><i class="bi bi-cash"></i>&nbsp; Opening Balance</mat-label>
+                                        <input matInput placeholder="Opening Balance" formControlName="openingBalance"
+                                            class="custom">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group" *ngIf="hiddenInput">
+                                        <mat-form-field>
+                                            <input matInput placeholder="organisation ID"
+                                                formControlName="organisationId">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 text-right">
+                                    <button type="button" class="btn btn-success" (click)="onClear();"><i
+                                            class="bi bi-save"></i>&nbsp;Clear</button> &nbsp; 
+                                
+                                    <button *ngIf="(this.organisationFormGroup.valid && !isBtnVisible)" type="button" class="btn btn-info"
+                                        (click)="onSave();"><i class="bi bi-save"></i>&nbsp;
+                                        Save</button>
+                                
+                                    <button *ngIf="(this.organisationFormGroup.valid && isBtnVisible)" type="button"
+                                        class="btn btn-danger" (click)="onUpdate();"><i class="bi bi-save"></i>&nbsp;
+                                        Update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </mat-tab>
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <mat-icon class="example-tab-icon">list</mat-icon>
+                        View Organisation
+                    </ng-template>
+                    <div class="p-2 bd-highlight">
+                        <h3 style="color: white;">Organisation Details</h3>
+                        <p-table #organisation [value]="organisationArray" dataKey="id" [paginator]="true" [rows]="5"
+                            [showCurrentPageReport]="true"
+                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                            [rowsPerPageOptions]="[5,10,25,50]" styleClass="p-datatable-striped"
+                            [globalFilterFields]="['organisation_name','address','contact_number','email_id','whatsapp_number']">
+
+                            <ng-template pTemplate="caption">
+                                <div class="flex">
+                                    <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                                        (click)="clear(organisation)"></button>
+                                    <span class="p-input-icon-left ml-auto">
+                                        <i class="pi pi-search"></i>
+                                        <input pInputText type="text"
+                                            (input)="organisation.filterGlobal(getEventValue($event), 'contains')"
+                                            placeholder="Search keyword" />
+                                    </span>
+
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>ID</th>
+                                    <th pSortableColumn="organisation_name">Organisation Name <p-sortIcon
+                                            field="organisation_name"></p-sortIcon>
+                                    </th>
+                                    <th>Address</th>
+                                    <th>City</th>
+                                    <th>District</th>
+                                    <th>Contact Number</th>
+                                    <th>Whatsapp Number</th>
+                                    <th>Email</th>
+                                    <th colspan="2">Action</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-org>
+
+                                <tr>
+                                    <td>{{org.id}}</td>
+                                    <td>{{org.organisation_name}}</td>
+                                    <td>{{org.address}}</td>
+                                    <td>{{org.city}}</td>
+                                    <td>{{org.district}}</td>
+                                    <td>{{org.contact_number}}</td>
+                                    <td>{{org.whatsapp_number}}</td>
+                                    <td>{{org.email_id}}</td>
+                                    <td>
+                                        <p-button type="button" icon="pi pi-pencil" (click)="onEditOrganisation(org)"
+                                            styleClass="p-button-text"></p-button>
+                                    </td>
+                                    <td>
+                                        <p-button type="button" icon="pi pi-trash" styleClass="p-button-text">
+                                        </p-button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="paginatorleft">
+                                <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </mat-tab>
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+                        Upcoming Birthday
+                    </ng-template>
+
+                    <pre style="background-color:yellow ; color: black;">
+                        organisationFormGroup = {{this.organisationFormGroup.value | json}}
+                        organisationFormGroup.valid = {{this.organisationFormGroup.valid }}
+                       <!-- studentData={{studentData | json}}
+                   
+                         test={{studentNameFormGroup.controls['studentName'].errors['required'] | json}}-->
+                      </pre>
+                </mat-tab>
+            </mat-tab-group>
+
+        </div>
+
+    </div>
+</div>

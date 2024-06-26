@@ -1,0 +1,63 @@
+<mat-nav-list>
+    <div class="logo py-4">
+      <img src="assets/Anushka_Logo.png" alt="Company Logo" class="eduvenv"/>
+    </div>
+    <mat-divider></mat-divider>
+    <h2 matSubheader>
+      T &nbsp; E &nbsp; A &nbsp; C &nbsp; H &nbsp; E &nbsp; R
+    </h2>
+    <a mat-list-item [routerLink]="['/TeacherDashboard']" routerLinkActive="list-item-active">
+      <mat-icon>home</mat-icon> Home
+    </a>
+    
+    <!-- <div>
+      <a mat-list-item (click)="onActivePayment()"  routerLinkActive="list-item-active">
+        <i class="bi bi-mortarboard-fill"></i> &nbsp; Fees Update
+      </a>
+    </div> -->
+    <div>
+      <a mat-list-item [routerLink]="['/TeacherSyllabus']" routerLinkActive="list-item-active">
+        <i class="bi bi-book"></i> &nbsp; Syllabus
+      </a>
+    </div>
+    <div>
+      <a mat-list-item routerLinkActive="list-item-active">
+        <i class="bi bi-mortarboard-fill"></i> &nbsp; Online Exam
+      </a>
+    </div>
+    <div>
+      <a mat-list-item [routerLink]="['/TeacherOnlineClass']" routerLinkActive="list-item-active">
+        <i class="bi bi-brush"></i>&nbsp; Online Class
+      </a>
+    </div>
+    <div>
+      <a mat-list-item  [routerLink]="['/TeacherAssignment']" routerLinkActive="list-item-active">
+        <i class="bi bi-person-workspace"></i> &nbsp; Assignment
+      </a>
+    </div>
+    <div>
+      <a mat-list-item [routerLink]="['/TeacherQuestionPaper']" routerLinkActive="list-item-active">
+        <i class="bi bi-question-square-fill"></i> &nbsp; Question Paper
+      </a>
+    </div>
+    <div>
+      <a mat-list-item [routerLink]="['/TeacherEbook']" routerLinkActive="list-item-active">
+        <i class="bi bi-journal-bookmark-fill"></i> &nbsp; E-Book
+      </a>
+    </div>
+    <div>
+      <a mat-list-item routerLinkActive="list-item-active">
+        <i class="bi bi-table"></i> &nbsp; Time Table
+      </a>
+    </div>
+    <div>
+      <a mat-list-item routerLinkActive="list-item-active">
+        <i class="bi bi-calendar-date-fill"></i> &nbsp; Calender
+      </a>
+    </div>
+    <div>
+      <a mat-list-item routerLinkActive="list-item-active">
+        <i class="bi bi-mortarboard-fill"></i> &nbsp; Attendance
+      </a>
+    </div>
+  </mat-nav-list>
