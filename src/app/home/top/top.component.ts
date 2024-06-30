@@ -7,7 +7,7 @@ import {HttpClient} from "@angular/common/http";
 @Component({
   selector: 'app-top',
   templateUrl: './top.component.html',
-  styleUrls: ['./top.component.scss'],
+  styleUrls: ['./petStyle.css'],
 })
 export class TopComponent implements OnInit {
   arc = 'false';

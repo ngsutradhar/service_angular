@@ -1,33 +1,341 @@
+<div class="FirstHead"></div>
+<!-- navbar -->
+<div class="navbox d-flex">
+  <div class="logo"><img src="/src/assets/img/img/logorem.png" alt="" width="60%" class="logoimg"></div>
+  <div class="navigation">
+    <div class="searchbox">
+      <form class="d-flex" role="search">
+        <input class="form-control searchinput" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn btn-success srchBtn" type="submit">
+          <i class="bi bi-search me-2"></i><span class="srchTxt">Search</span></button>
+      </form>
+    </div>
+    <div class="navmenu">
+      <nav class="navbar navbar-expand-lg navMenuItem">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse navmenubox" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#aboutus">About Us</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  Services
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#surgical">Our Services</a></li>
+                  <li><a class="dropdown-item" href="#petcare">Pest Categories</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="#medicare">Our Clients</a></li>
+                </ul>
+              </li>
 
-<header class="masthead d-flex align-items-center">
- 
-  <div class="container px-4 px-lg-5 text-center">
-        <h1 class="mb-1" data-aos="fade-up"
-        data-aos-duration="3000">
-       
-      <div class="projectHead">
-      {{projectHeading}}
-      </div>
-      <div class="projectContact">
-      {{contact}}
-      </div><hr>
-      <div class="domain">
-        simplifyist.in
-      </div>
-      <div class="domain-sub">
-        Let's Simplify
-      </div>
-    </h1>
-    <!--<h3 class="mb-5"><em>Development Under Progress ...</em></h3>
-     <a class="btn btn-primary btn-xl rounded-circle" href="#">Free Demo</a>
-    <div data-aos="fade-up" data-aos-once="true">
-      the content
-    </div> -->
+              <li class="nav-item">
+                <a class="nav-link" href="#gallery">Certification</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#contact">Contact Us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="http://localhost:4200/#/login">Login</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>
+</div>
+<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="/src/assets/img/img/img1.png" class="d-block w-100" alt="...">
 
+    </div>
+    <div class="carousel-item">
+      <img src="/src/assets/img/img/img2.png" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="/src/assets/img/img/img3.png" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="/src/assets/img/img/img4.png" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="/src/assets/img/img/img5.jpg" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+<div class="row mt-5 d-flex" id="aboutus">
+  <div class="col-12 text-center"><img src="img/AboutUsIcon.png" alt="" class="me-3 AbtresIcon">
+    <span class="catHeader orange">About Us</span>
+  </div>
+</div>
+<!-- slider mobile -->
+<!-- About Us -->
+<div class="row p-4">
+  <div class="col-md-12">
+    <p class="abtTxt">New Remedy Pest Management (NRPM) is an integrated pest management industry leader offering safe
+      and effective pest services in Kolkata. We protect homes and businesses from all types of pests. Any business or
+      house located in or around these areas can avail themselves of our services. We offer professional and friendly
+      pest management service to all our loyal clients. Our latest knowledge and skills provide our clients with the
+      best solutions for their pest control needs. Established in 2007 as an ISO 9001:2015 Certified Organization, &
+      with the help of Bayer, we successfully achieving target till the date by helping various sector people by it’s
+      service. Through the guideline of Bayer, we make the Pest Management Service to you all as a Pest Free Zone
+      through ecofriendly chemical.</p>
+  </div>
+</div>
+<div class="row mt-5 p-2 d-flex align-items-center" id="surgical">
+  <div class="col-md-4 featBlank"></div>
+  <div class="col-md-4 feathead d-flex justify-content-center align-items-center">
+    <img src="/src/assets/img/img/img12.png" alt="" width="12%">
+    <span class="catHeader green ms-2">Our Services</span>
+  </div>
+  <div class="col-md-4 featCat d-flex">
+    <a href=""><img src="/src/assets/img/img/catelog.png" alt="" width="50%"> </a>
+  </div>
+</div>
+<div class="row mt-4 text-center">
+  <div class="col-md-2 col-sm-4">
+    <img src="/src/assets/img/img6.png" alt="" height="50%" width="80%">
+    <p class="itemName text-center capText">Termite Control</p>
+  </div>
+  <div class="col-md-2 col-sm-4">
+    <img src="/src/assets/img/img7.png" alt="" height="50%" width="100%">
+    <p class="itemName text-center capText">Mosquito Control</p>
+  </div>
+  <div class="col-md-2 col-sm-4">
+    <img src="/src/assets/img/img8.png" alt="" height="50%" width="80%">
+    <p class="itemName text-center capText">Wood borer Control</p>
+  </div>
+  <div class="col-md-2 col-sm-4">
+    <img src="/src/assets/img/mg9.png" alt="" height="50%" width="80%">
+    <p class="itemName text-center capText">Bed Bug Control</p>
+  </div>
+  <div class="col-md-2 col-sm-4">
+    <img src="/src/assets/img//img10.png" alt="" height="50%" width="80%">
+    <p class="itemName text-center capText">Rodent Control</p>
+  </div>
+  <div class="col-md-2 col-sm-4">
+    <img src="/src/assets/img/img11.png" alt="" height="50%" width="80%">
+    <p class="itemName text-center capText">Cockroach Control</p>
+  </div>
+</div>
+<!-- Our Services -->
+
+<!-- Pest Categories -->
+<div class="row mt-3" id="petcare">
+  <div class="col-md-12 text-center">
 
   </div>
+</div>
+<div class="row mt-1 p-2">
+  <div class="col-md-4"></div>
+  <div class="col-md-4 text-center">
+    <h4 class="catHeader orange">Pest Categories We Control</h4>
+  </div>
+</div>
+<div class="row mt-4 text-center petcareMain">
+  <div class="col-md-2 col-sm-4">
+    <img src="img/img13.png" alt="" height="50%" width="60%" class="fProdImg">
+    <p class="itemName text-center capText">Bedbug</p>
+  </div>
+  <div class="col-md-2 col-sm-4">
+    <img src="img/img14.png" alt="" height="50%" width="80%" class="fProdImg">
+    <p class="itemName text-center capText">Cockroach</p>
+  </div>
+  <div class="col-md-2 col-sm-4">
+    <img src="img/img15.png" alt="" height="50%" width="80%" class="fProdImg">
+    <p class="itemName text-center capText">Spider</p>
+  </div>
+  <div class="col-md-2 col-sm-4">
+    <img src="img/img16.png" alt="" height="50%" width="80%" class="fProdImg">
+    <p class="itemName text-center capText">Mosquito</p>
+  </div>
+  <div class="col-md-2 col-sm-4">
+    <img src="img/img17.png" alt="" height="50%" width="80%" class="fProdImg">
+    <p class="itemName text-center capText">Rodent</p>
+  </div>
+  <div class="col-md-2 col-sm-4">
+    <img src="img/img18.png" alt="" height="50%" width="80%" class="fProdImg">
+    <p class="itemName text-center capText">Ant</p>
+  </div>
+</div>
+<!-- Pest Categories -->
+<!-- Pest Categories 2 -->
+<div class="row mt-3" id="petcare">
+  <div class="col-md-12 text-center">
 
+  </div>
+</div>
+<div class="row mt-4 text-center petcareMain">
+  <div class="col-md-2 col-sm-4">
+    <img src="img/img19.png" alt="" height="50%" width="80%" class="fProdImg">
+    <p class="itemName text-center capText">Silverfish</p>
+  </div>
+  <div class="col-md-2 col-sm-4">
+    <img src="img/img20.png" alt="" height="50%" width="80%" class="fProdImg">
+    <p class="itemName text-center capText">Scorpion</p>
+  </div>
+  <div class="col-md-2 col-sm-4">
+    <img src="img/img21.png" alt="" height="50%" width="80%" class="fProdImg">
+    <p class="itemName text-center capText">Housefly</p>
+  </div>
+  <div class="col-md-2 col-sm-4">
+    <img src="img/img22.png" alt="" height="50%" width="80%" class="fProdImg">
+    <p class="itemName text-center capText">Hornets</p>
+  </div>
+  <div class="col-md-2 col-sm-4">
+    <img src="img/img23.png" alt="" height="50%" width="80%" class="fProdImg">
+    <p class="itemName text-center capText">Termite</p>
+  </div>
+  <div class="col-md-2 col-sm-4">
+    <img src="img/img24.png" alt="" height="50%" width="80%" class="fProdImg">
+    <p class="itemName text-center capText">Snake</p>
+  </div>
+</div>
+<!-- Pest Categories 2 -->
+<!-- Clients -->
+<div class="row mt-5 p-2 d-flex align-items-center" id="medicare">
+  <div class="col-md-4 featBlank"></div>
+  <div class="col-md-4 feathead d-flex justify-content-center align-items-center">
+    <img src="img/img25.png" alt="" width="20%">
+    <span class="catHeader blue ms-2"> Our Clients </span>
+  </div>
+</div>
 
+<div class="row mt-4 text-center">
+  <div class="col-md-2">
+    <img src="img/img26.jpg" alt="" width="80%" class="fProdImg">
+    <p class="itemName text-center capText">Haldirams</p>
+  </div>
+  <div class="col-md-2">
+    <img src="img/img27.jpg" alt="" width="80%" class="fProdImg">
+    <p class="itemName text-center capText">Arsalan</p>
+  </div>
+  <div class="col-md-2">
+    <img src="img/img28.jpeg" alt="" width="80%" class="fProdImg">
+    <p class="itemName text-center capText">Swissotel</p>
+  </div>
+  <div class="col-md-2">
+    <img src="img/img29.jpg" alt="" width="80%" class="fProdImg">
+    <p class="itemName text-center capText">Renaissance</p>
+  </div>
+  <div class="col-md-2">
+    <img src="img/img30.jpg" alt="" width="80%" class="fProdImg">
+    <p class="itemName text-center capText">Bisk Farm</p>
+  </div>
+  <div class="col-md-2">
+    <img src="img/img31.jpg" alt="" width="80%" class="fProdImg">
+    <p class="itemName text-center capText">Centuryply</p>
+  </div>
+</div>
+<!-- Clients -->
+<!-- Certification -->
+  <div class="row mt-5 d-flex" id="gallery">
+    <div class="col-12 text-center"><img src="img/mediaIcon.png" alt="" width="3%" class="me-3 AbtresIcon">
+      <span class="catHeader blue">Accrediation and Certification</span>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-md-4 col-sm-12 text-center p-4">
+      <div class="card">
+        <img src="img/img32.jpg" class="card-img-top" alt="..." height="50%" width="80%">
+        <div class="card-body">
+          <p> We are register as Micro Industries under MSME -an Govt of India Society Under ministry of Micro, Small
+            &amp; Medium Enterprises GOVERNMENT OF INDIA </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-12 text-center p-4">
+      <div class="card">
+        <img src="img/img33.png" class="card-img-top" alt="..." height="50%" width="80%">
+        <div class="card-body">
+          <p>We are part of ‘Bayer Network of pest management professionals’ under BAYER CROP SCIENCE, GERMANY</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-12 text-center p-4">
+      <div class="card">
+        <img src="img/img34.png" class="card-img-top" alt="..." height="50%" width="80%">
+        <div class="card-body">
+          <p>Our Company is ISO Certified organization that works with eco friendly technics and equipmenents. </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Certification -->
+   <!-- contactus -->
+  <div class="row mt-5 d-flex" id="contact">
+    <div class="col-12 text-center"><img src="img/contactIcon.png" alt="" width="7%" class="me-3 contIcon">
+      <span class="catHeader orange">Contact Us</span>
+    </div>
+  </div>
+  <div class="row mt-4 text-center">
+    <div class="col-md-6 col-sm-12 map">
+      <div class="mapouter">
+        <div class="gmap_canvas"><iframe class="gmap_iframe" width="100%" frameborder="0" scrolling="no"
+            marginheight="0" marginwidth="0"
+            src="https://maps.google.com/maps?width=600&amp;height=300&amp;hl=en&amp;q=76/H(307), New Remedy Pest Management, 17/D/91, Nehru Colony, Dakshindari, Kolkata, South Dumdum, West Bengal 700048&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe><a
+            href="https://embed-googlemap.com">google map embed</a></div>
+        <style>
+          .mapouter {
+            position: relative;
+            text-align: right;
+            width: 100%;
+            height: 309px;
+          }
 
-</header>
+          .gmap_canvas {
+            overflow: hidden;
+            background: none !important;
+            width: 100%;
+            height: 300px;
+          }
 
+          .gmap_iframe {
+            height: 300px !important;
+          }
+        </style>
+      </div>
+    </div>
+    <div class="col-md-6 col-sm-12 conDtls">
+      <div class="context">
+        <h4><b>Our Business Address:</b></h4>
+        <h6 class="textcol">Corporate Office <br>5th Floor,RDB Boulevard, BP Block, Sector 5, Bidhannagar, Pin - 700091,
+          West Bengal</h6><br>
+        <h4><b>Mail Us:</b></h4>
+        <h5 class="textcol"><a href="www.gmail.com">info@newremedypest.com</a></h5>
+        <h4><b>Call Us:</b></h4>
+        <h5 class="textcol"><a href="#">+91 9830246246 | 9433028955 | 9831423559</a></h5>
+        <h4><b>Our Timings:</b></h4>
+        <h5 class="textcol">Mon to Sat, 9a.m to 6p.m</h5>
+      </div>
+    </div>
+  </div>
+  <!-- contactus -->
+
+  <!-- Foot -->
+  <div class="row mt-3 text-center d-flex">
+    <div class="col-12 footer">All Rights reserved @ We Design</div>
+  </div>
+  <!-- Foot -->

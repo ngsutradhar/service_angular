@@ -1,0 +1,276 @@
+$mainFont: Roboto;
+$myFontSize1: 20px;
+$myFontSize2: 24px;
+$myFontSize3: 18px;
+$myFontSize4: 16px;
+$myFontSize5: 32px;
+$bgcolor1:#24a289;
+$textColor1:#080808;
+$textColor2:#270693;
+$textColor3:#fff;
+
+body{
+    font-family: $mainFont;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    background: #e8fffa;
+    background-image: url("img/bg1.jpg");
+}
+.orange{
+    color:#ff9700;
+  }
+  .green{
+    color:#04b704;
+  }
+  .blue{
+    color:#118ef3;
+  }
+  .black{
+    color: #000;
+  }
+  .capText{
+    color: $textColor2;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .AbtresIcon{
+    width: 3% !important;
+}
+  @media screen and (max-width: 996px) {
+    .AbtresIcon{
+        width: 5% !important;
+    }
+  }
+  @media screen and (max-width: 550px) {
+    .AbtresIcon{
+        width: 9% !important;
+    }
+  }
+
+
+// navigation
+.CaptionText{
+    color: $textColor2;
+    font-family: $mainFont;
+    font-size: $myFontSize1;
+}
+.FirstHead{
+    height: 30px;
+    width: 100%;
+    background-color: $bgcolor1;
+}
+.logo{
+    width: 30%;
+    padding: 10px 50px;
+}
+.navigation{
+    width: 70%;
+    padding: 10px 50px 0px 0px;
+}
+.navmenubox{
+    margin-top: 1%;
+}
+.nav-item{
+    margin-right: 2%;
+    width: 30%;
+    text-align: center;
+    font-size: 18px;
+    color: $textColor1;
+    font-weight:400;
+}
+.nav-item:hover{
+    font-weight: 700;
+    border-bottom:3px solid $bgcolor1 ;
+}
+@media screen and (max-width: 996px) {
+    .nav-item{
+        text-align: left;
+    }
+    .nav-item:hover{
+        border-bottom:none;
+    }
+    .logoimg{
+        width: 50%;
+    }
+    .srchBtn {
+        max-width: 20%;
+    }
+    .logoimg{
+        width: 100%;
+    }
+    .srchTxt{
+        display: none;
+    }
+  }
+  @media screen and (max-width: 400px) {
+    .logoimg{
+        width: 310%;
+    }
+  }
+.navbar-nav{
+    width: 100%;
+}
+.searchinput{
+    border:1px solid $textColor1;
+    border-radius: 0;
+}
+.searchbox{
+    width: 100%;
+}
+.srchBtn{
+    width: 20%;
+    border-radius: 0;
+    background: $bgcolor1;
+}
+.srchBtn:hover{
+    background: #18856f;
+}
+// navigation
+// Slider
+// .carousel-inner-mobile{
+//     display: none;
+// }
+// @media screen and (max-width: 576px) {
+//     .carousel-inner-mobile{
+//         display: block;
+//     }
+//     .carousel-inner{
+//         display: none;
+//     }
+//   }
+
+// Slider
+// PetCare
+@media screen and (max-width: 996px) {
+    .catlogImg{
+        width: 50%;
+    }
+  }
+// PetCare
+// featureProduct
+@media screen and (max-width: 768px) {
+    .fPrdctIcon{
+        width: 6%;
+    }
+    .featCat{
+        justify-content: center !important;
+        margin-top: 10px;
+    }
+  }
+  .featCat{
+    justify-content: end;
+  }
+  .featuredPrdctHead{
+    margin-left: 615px;
+  } 
+  .fProdImg{
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: 3px solid #b6c4c2;
+  }
+
+// featureProduct
+
+// aboutus
+.comMeaSig{
+    width: 35%;
+    margin: 0px auto;
+    background: rgb(255,255,255);
+    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(174,245,83,1) 100%);
+    padding: 16px;
+    border-radius: 50px;
+    margin-bottom: 10px;
+}
+@media screen and (max-width: 768px) {
+    .comMeaSig{
+        width: 80% !important;
+    }
+  }
+.abtTxt{
+    text-align: justify;
+    font-size: 16px;
+}
+.aboutBody1{
+    color: $textColor1;
+    font-size: 16px;
+    text-align: justify;
+}
+.mission{
+    color: rgb(89, 89, 255);
+    font-weight: 600;
+    font-size: 20px;
+}
+.vision{
+    color: rgb(255, 111, 0);
+    font-weight: 600;
+    font-size: 20px;
+}
+.goals{
+    color: rgb(3, 155, 0);
+    font-weight: 600;
+    font-size: 20px;
+}
+.missionBody{
+    font-size: 18px;
+}
+.catHeader{
+    font-size: 28px;
+    font-weight: 600;
+    border-radius: 50px;
+}
+// aboutus
+// medgal
+.med1{
+    height: 400px;
+    width: 30%;
+    background: red;
+}
+.medGalBtn{
+    border-radius: 0px;
+    background: $bgcolor1;
+    border:none
+}
+.medGalBtn:hover{
+    background: #18856f;
+}
+// medgal
+// ContactUs
+.mapouter{
+    border: 5px solid $bgcolor1;
+    margin-left: 20px;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+@media screen and (max-width: 996px) {
+    .map{
+        width: 98%;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .context{
+        text-align: center;
+    }
+    .contIcon{
+        width: 17%;
+    }
+  }
+.conDtls{
+text-align: start;
+}
+.context{
+    margin-left: 20px;
+}
+.textcol{
+    color: $textColor2;
+    margin-bottom: 20px;
+}
+// ContactUs
+// Footer
+.footer{
+    background: #2b7dd8;
+    color: #fff;
+    padding: 6px;
+    font-size: 16px;
+}
+// footer
