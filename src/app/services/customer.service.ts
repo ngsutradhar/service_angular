@@ -112,16 +112,33 @@ export class CustomerService {
   fetchAllCustomer($orgID:any){
     this.teacherList=[];
     return this.http.get<any>(this.commonService.getAPI() + '/getAllCustomerList/'+ $orgID)
-   .pipe(catchError(this.errorService.serverError), tap(((response: {success: number, data: Student[]}) => {
+   .pipe(catchError(this.errorService.serverError), tap(((response: {success: number, data: any[]}) => {
      this.teacherList=response.data;
      this.studentSubject.next([...this.teacherList]);
    })));
 }
+fetchAllItemToService($orgID:any){
+  this.teacherList=[];
+  return this.http.get<any>(this.commonService.getAPI() + '/getAllItemToServiceList/'+ $orgID)
+.pipe(catchError(this.errorService.serverError), tap(((response: {success: number, data: any[]}) => {
+  this.teacherList=response.data;
+  this.studentSubject.next([...this.teacherList]);
+})));
+}
+
+  fetchAllItem($orgID:any){
+      this.teacherList=[];
+      return this.http.get<any>(this.commonService.getAPI() + '/getAllItemList/'+ $orgID)
+    .pipe(catchError(this.errorService.serverError), tap(((response: {success: number, data: any[]}) => {
+      this.teacherList=response.data;
+      this.studentSubject.next([...this.teacherList]);
+    })));
+  }
 
   fetchAllWorkType($orgID:any){
     this.teacherList=[];
     return this.http.get<any>(this.commonService.getAPI() + '/getAllWorkType/'+ $orgID)
-    .pipe(catchError(this.errorService.serverError), tap(((response: {success: number, data: Student[]}) => {
+    .pipe(catchError(this.errorService.serverError), tap(((response: {success: number, data: any[]}) => {
     this.teacherList=response.data;
     this.studentSubject.next([...this.teacherList]);
   })));
@@ -171,6 +188,17 @@ fetchTeacherProfile($ledgerID:any){
   getStudentUpdateListener(){
     return this.studentSubject.asObservable();
   }
+  updateEmployeeRegistration(studentData:any){
+    this.studentList=[];
+    return this.http.post<any>(this.commonService.getAPI() + '/updateEmployee', studentData)
+    .pipe(catchError(this.errorService.serverError), tap(response => {
+      console.log('at service',response);
+      if (response.status === true){
+        this.studentList.unshift(response.data);
+        this.studentSubject.next([...this.studentList]);
+      }
+    }))
+  }
 
   saveEmployeeRegistration(studentData:any){
     this.studentList=[];
@@ -186,6 +214,39 @@ fetchTeacherProfile($ledgerID:any){
   saveCustomerRegistration(studentData:any){
     this.studentList=[];
     return this.http.post<any>(this.commonService.getAPI() + '/saveCustomer', studentData)
+    .pipe(catchError(this.errorService.serverError), tap(response => {
+      console.log('at service',response);
+      if (response.status === true){
+        this.studentList.unshift(response.data);
+        this.studentSubject.next([...this.studentList]);
+      }
+    }))
+  }
+  updateCustomerRegistration(studentData:any){
+    this.studentList=[];
+    return this.http.post<any>(this.commonService.getAPI() + '/updateCustomer', studentData)
+    .pipe(catchError(this.errorService.serverError), tap(response => {
+      console.log('at service',response);
+      if (response.status === true){
+        this.studentList.unshift(response.data);
+        this.studentSubject.next([...this.studentList]);
+      }
+    }))
+  }
+  saveItemToService(itemData:any){
+    this.studentList=[];
+    return this.http.post<any>(this.commonService.getAPI() + '/saveItemToService', itemData)
+    .pipe(catchError(this.errorService.serverError), tap(response => {
+      console.log('at service',response);
+      if (response.status === true){
+        this.studentList.unshift(response.data);
+        this.studentSubject.next([...this.studentList]);
+      }
+    }))
+  }
+  saveItem(itemData:any){
+    this.studentList=[];
+    return this.http.post<any>(this.commonService.getAPI() + '/saveItem', itemData)
     .pipe(catchError(this.errorService.serverError), tap(response => {
       console.log('at service',response);
       if (response.status === true){

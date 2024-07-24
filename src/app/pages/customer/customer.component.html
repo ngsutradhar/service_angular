@@ -10,69 +10,73 @@
                 <mat-tab>
                     <ng-template mat-tab-label>
                         <mat-icon class="example-tab-icon">trending_up</mat-icon>
-                        View Customers &nbsp; <span style="height: 20px;width: 20px;border-radius: 50%;background-color: red; border: 1px solid red; font-weight: bolder;"> {{customerList.length}}</span>
+                        View Customers &nbsp; <span
+                            style="height: 20px;width: 20px;border-radius: 50%;background-color: red; border: 1px solid red; font-weight: bolder;">
+                            {{customerList.length}}</span>
                     </ng-template>
                     <p-table #customers [value]="customerList" dataKey="id" [paginator]="true" [rows]="5"
-                    [showCurrentPageReport]="true"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                    [rowsPerPageOptions]="[5,10,25,50]" styleClass="p-datatable-gridlines"
-                    [globalFilterFields]="['id','customer_category_name','customer_name']">
-                    <ng-template pTemplate="caption">
-                        <div class="flex">
-                            <p-button type="button" icon="pi pi-plus" label="ADD" class="p-button-outlined" (click)="onClickAdd();"> </p-button>
-                            <span class="p-input-icon-left ml-auto">
-                                <i class="pi pi-search"></i>
-                                <input pInputText type="text"
-                                    (input)="customers.filterGlobal(getEventValue($event), 'contains')"
-                                    placeholder="Search keyword" />
-                            </span>
-    
-                        </div>
-                    </ng-template>
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th>ID</th>
-                            <th pSortableColumn="customer_category_name">Customer Category <p-sortIcon field="customer_category_name"></p-sortIcon>
-                            </th>
-                            <th pSortableColumn="customer_name">Name <p-sortIcon field="customer_name"></p-sortIcon>
-                            </th>
-                           
-                            <th pSortableColumn="address">Address <p-sortIcon field="address"></p-sortIcon>
-                            </th>
-                            <th>WhatsApp No </th>
-                            <th pSortableColumn="edit">Edit <p-sortIcon field="edit"></p-sortIcon>
-                            </th>
-                            <th pSortableColumn="delete">Delete <p-sortIcon field="delete"></p-sortIcon>
-                            </th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-customer>
-                        <tr>
-                            <td>{{customer.id}}</td>
-                            <td>{{customer.customer_category_name}}</td>
-                            <td>{{customer.customer_name}}</td>
-                            <td>{{customer.address}}</td>
-                            <td>{{customer.whatsapp_number}}</td>
-                            <td>
-                                 <p-button type="button" (click)="editTeacher(customer)" icon="pi pi-pencil"
-                                    styleClass="p-button-text">
-                                </p-button> 
-                            </td>
-                            <td>
-                               <p-button type="button" (click)="deleteTeacher(customer)" icon="pi pi-trash"
-                                    styleClass="p-button-text">
-                                </p-button> 
-                            </td>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="paginatorleft">
-                        <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
-                        (click)="clear(customers)"></button>
-                        
-                    </ng-template>
-                </p-table>
+                        [showCurrentPageReport]="true"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                        [rowsPerPageOptions]="[5,10,25,50]" styleClass="p-datatable-gridlines"
+                        [globalFilterFields]="['id','customer_category_name','customer_name']">
+                        <ng-template pTemplate="caption">
+                            <div class="flex">
+                                <p-button type="button" icon="pi pi-plus" label="ADD" class="p-button-outlined"
+                                    (click)="onClickAdd();"> </p-button>
+                                <span class="p-input-icon-left ml-auto">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text"
+                                        (input)="customers.filterGlobal(getEventValue($event), 'contains')"
+                                        placeholder="Search keyword" />
+                                </span>
+
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>ID</th>
+                                <th pSortableColumn="customer_category_name">Customer Category <p-sortIcon
+                                        field="customer_category_name"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="customer_name">Name <p-sortIcon field="customer_name"></p-sortIcon>
+                                </th>
+
+                                <th pSortableColumn="address">Address <p-sortIcon field="address"></p-sortIcon>
+                                </th>
+                                <th>WhatsApp No </th>
+                                <th pSortableColumn="edit">Edit <p-sortIcon field="edit"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="delete">Delete <p-sortIcon field="delete"></p-sortIcon>
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-customer>
+                            <tr>
+                                <td>{{customer.id}}</td>
+                                <td>{{customer.customer_category_name}}</td>
+                                <td>{{customer.customer_name}}</td>
+                                <td>{{customer.address}}</td>
+                                <td>{{customer.whatsapp_number}}</td>
+                                <td>
+                                    <p-button type="button" (click)="editCustomer(customer)" icon="pi pi-pencil"
+                                        styleClass="p-button-text">
+                                    </p-button>
+                                </td>
+                                <td>
+                                    <p-button type="button" (click)="deleteTeacher(customer)" icon="pi pi-trash"
+                                        styleClass="p-button-text">
+                                    </p-button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="paginatorleft">
+                            <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                                (click)="clear(customers)"></button>
+
+                        </ng-template>
+                    </p-table>
                 </mat-tab>
-              
+
                 <mat-tab>
                     <ng-template mat-tab-label>
                         <mat-icon class="example-tab-icon">trending_up</mat-icon>
@@ -84,7 +88,8 @@
                                 <div class="row">
                                     <div class="col-sm-8">
                                         <mat-form-field appearance="outline" style="width:100% ;">
-                                            <mat-label> <i class="bi bi-person-fill"></i> &nbsp; Customer Name</mat-label>
+                                            <mat-label> <i class="bi bi-person-fill"></i> &nbsp; Customer
+                                                Name</mat-label>
                                             <input matInput placeholder="Customer Name" formControlName="customerName"
                                                 class="custom">
                                             <div
@@ -131,7 +136,7 @@
                                                 ID</mat-label>
                                             <input matInput="email" placeholder="Email ID" formControlName="emailId"
                                                 class="custom">
-                                           
+
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -178,23 +183,36 @@
                                         </mat-form-field>
                                     </div>
                                 </div>
-                               
-                                <div class="text-right">
-                                    <button *ngIf="(this.customerRegistrationFormGroup.valid) " type="button"
-                                        class="btn btn-success" (click)="onSave();"><i
-                                            class="bi bi-save"></i>&nbsp;
-                                        Save</button>&nbsp;&nbsp;
-                                    <button type="button" class="btn btn-info" (click)="onClear();">&nbsp;
-                                        Clear</button>
+
+                                <div class="row">
+                                    <div class="col-sm-6 text-right" >
+                                        <mat-form-field appearance="outline" style="width:100% ;display: none;">
+                                            <mat-label>customer ID</mat-label>
+                                            <input matInput placeholder="id" formControlName="customerId"
+                                                class="custom">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-sm-6 text-right">
+                                        <button *ngIf="isShown" type="button" class="btn btn-primary"
+                                            (click)="onUpdate();"><i class="bi bi-save"></i>&nbsp;
+                                            Update</button>&nbsp;&nbsp;
+
+                                        <button *ngIf="(this.customerRegistrationFormGroup.valid) && !isShown"
+                                            type="button" class="btn btn-success" (click)="onSave();"><i
+                                                class="bi bi-save"></i>&nbsp;
+                                            Save</button>&nbsp;&nbsp;
+                                        <button type="button" class="btn btn-info" (click)="onClear();">&nbsp;
+                                            Clear</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </form>
                 </mat-tab>
             </mat-tab-group>
-                    <!--  <pre style="background-color:yellow ; color: black;">
-                userFormGroup = {{this.customerRegistrationFormGroup.value | json}}
-            </pre> -->
+            <pre style="background-color:yellow ; color: black;">
+                userFormGroup = {{(this.customerRegistrationFormGroup.valid) | json}}
+            </pre>
         </div>
     </div>
 </div>

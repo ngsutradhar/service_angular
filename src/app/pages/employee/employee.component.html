@@ -54,7 +54,7 @@
                             <td>{{employee.address}}</td>
                             <td>{{employee.whatsapp_number}}</td>
                             <td>
-                                 <p-button type="button" (click)="editTeacher(employee)" icon="pi pi-pencil"
+                                 <p-button type="button" (click)="editEmployee(employee)" icon="pi pi-pencil"
                                     styleClass="p-button-text">
                                 </p-button> 
                             </td>
@@ -103,10 +103,10 @@
                                                 <option value="1">Owner</option>
                                                 <option value="2">Manager</option>
                                                 <option value="3">Agent</option>
-                                                <option value="3">Supervisor</option>
-                                                <option value="3">Accountant</option>
-                                                <option value="3">Office Staff</option>
-                                                <option value="3">Worker</option>
+                                                <option value="4">Supervisor</option>
+                                                <option value="5">Accountant</option>
+                                                <option value="6">Office Staff</option>
+                                                <option value="7">Worker</option>
                                             </select>
                                         </mat-form-field>
                                     </div>
@@ -256,15 +256,35 @@
                                         </mat-form-field>
                                     </div>
                                 </div>
-                               
-                                <div class="text-right">
+                                <div class="row">
+                                    <div class="col-sm-6 text-right" >
+                                        <mat-form-field appearance="outline" style="width:100% ;display: none;">
+                                            <mat-label>employee ID</mat-label>
+                                            <input matInput placeholder="id" formControlName="employeeId"
+                                                class="custom">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-sm-6 text-right">
+                                        <button *ngIf="isShown" type="button" class="btn btn-primary"
+                                            (click)="onUpdate();"><i class="bi bi-save"></i>&nbsp;
+                                            Update</button>&nbsp;&nbsp;
+
+                                        <button *ngIf="(this.employeeRegistrationFormGroup.valid) && !isShown"
+                                            type="button" class="btn btn-success" (click)="onSave();"><i
+                                                class="bi bi-save"></i>&nbsp;
+                                            Save</button>&nbsp;&nbsp;
+                                        <button type="button" class="btn btn-info" (click)="onClear();">&nbsp;
+                                            Clear</button>
+                                    </div>
+                                </div>
+                             <!--    <div class="text-right">
                                     <button *ngIf="(this.employeeRegistrationFormGroup.valid) " type="button"
                                         class="btn btn-success" (click)="onSave();"><i
                                             class="bi bi-save"></i>&nbsp;
                                         Save</button>&nbsp;&nbsp;
                                     <button type="button" class="btn btn-info" (click)="onClear();">&nbsp;
                                         Clear</button>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </form>

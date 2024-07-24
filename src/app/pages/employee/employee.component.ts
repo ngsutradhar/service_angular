@@ -20,6 +20,7 @@ export class EmployeeComponent implements OnInit {
   studentList:any[]=[];
   employeeList:any[]=[];
   showDiv:boolean=false;
+  isShown:boolean=false;
   showDivStudentExists:boolean=false;
   organisationName: string = '';
   address: string = '';
@@ -36,7 +37,7 @@ export class EmployeeComponent implements OnInit {
   UserID:any;
   organisationId:number=0;
   studentData: {
-    studentId?: any;
+    employeeId?: any;
     episodeId?: string;
     employeeName?: string;
     billingName?: string;
@@ -88,9 +89,7 @@ export class EmployeeComponent implements OnInit {
   onClickAdd(){
     this.selectedIndex = 1;
   }
-  editTeacher(data:any){
-
-  }
+  
   deleteTeacher(data:any){
 
   }
@@ -103,6 +102,26 @@ export class EmployeeComponent implements OnInit {
     this.contactNumber = data.contact_number;;
     this.emailId = data.email_id;
     this.organisationPin = data.pin;
+  }
+  editEmployee(customerData:any){
+    console.log("customer Details:",customerData);
+    this.selectedIndex = 1;
+    this.isShown=true;
+    this.employeeRegistrationFormGroup.patchValue({ employeeId: customerData.id });
+    this.employeeRegistrationFormGroup.patchValue({ employeeName: customerData.employee_name });
+    this.employeeRegistrationFormGroup.patchValue({ employeeCategoryId: customerData.employee_category_named });
+    this.employeeRegistrationFormGroup.patchValue({ address: customerData.address });
+    this.employeeRegistrationFormGroup.patchValue({ emailId: customerData.email_id });
+    this.employeeRegistrationFormGroup.patchValue({ guardianName: customerData.city }); 
+    this.employeeRegistrationFormGroup.patchValue({ qualification: customerData.city }); 
+    this.employeeRegistrationFormGroup.patchValue({ whatsappNumber: customerData.whatsapp_number });
+    this.employeeRegistrationFormGroup.patchValue({ contactNumber: customerData.contact_number });
+    this.employeeRegistrationFormGroup.patchValue({ stateId: customerData.state_id });
+    this.employeeRegistrationFormGroup.patchValue({ pin: customerData.pin });
+    this.employeeRegistrationFormGroup.patchValue({ district: customerData.district });
+    this.employeeRegistrationFormGroup.patchValue({ sex: customerData.city }); 
+    this.employeeRegistrationFormGroup.patchValue({ doj: customerData.city }); 
+    this.employeeRegistrationFormGroup.patchValue({ dob: customerData.city }); 
   }
   ngOnInit(): void {
     const now = new Date();
@@ -122,7 +141,8 @@ export class EmployeeComponent implements OnInit {
       contactNumber: new FormControl(null,[Validators.required, Validators.maxLength(10), Validators.minLength(10)]),
       whatsappNumber:new FormControl(null,[Validators.required, Validators.maxLength(10), Validators.minLength(10)]),
       emailId: new FormControl(null), 
-      stateId: new FormControl(20)
+      stateId: new FormControl(20),
+      employeeId: new FormControl(0)
     })
   }
  getStateList(){
@@ -162,7 +182,73 @@ export class EmployeeComponent implements OnInit {
       contactNumber: new FormControl(null,[Validators.required, Validators.maxLength(10), Validators.minLength(10)]),
       whatsappNumber:new FormControl(null,[Validators.required, Validators.maxLength(10), Validators.minLength(10)]),
       emailId: new FormControl(null), 
-      stateId: new FormControl(20)
+      stateId: new FormControl(20),
+      employeeId: new FormControl(0)
+    })
+  }
+  onUpdate(){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Update This Record...?',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Save it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.studentData.employeeId = this.employeeRegistrationFormGroup.value.employeeId;
+        this.studentData.employeeName = this.employeeRegistrationFormGroup.value.employeeName;
+        this.studentData.employeeCategoryId = this.employeeRegistrationFormGroup.value.employeeCategoryId;
+        this.studentData.address = this.employeeRegistrationFormGroup.value.address;
+        this.studentData.city = this.employeeRegistrationFormGroup.value.city;
+        this.studentData.district = this.employeeRegistrationFormGroup.value.district;
+        this.studentData.stateId = this.employeeRegistrationFormGroup.value.stateId;
+        this.studentData.pin = this.employeeRegistrationFormGroup.value.pin;
+        this.studentData.dob = formatDate(this.employeeRegistrationFormGroup.value.dob, 'yyyy-MM-dd', 'en');
+        this.studentData.doj = formatDate(this.employeeRegistrationFormGroup.value.doj, 'yyyy-MM-dd', 'en');
+        this.studentData.sex = this.employeeRegistrationFormGroup.value.sex;
+        this.studentData.qualification = this.employeeRegistrationFormGroup.value.qualification;
+        this.studentData.guardianName = this.employeeRegistrationFormGroup.value.guardianName;
+        this.studentData.contactNumber = this.employeeRegistrationFormGroup.value.contactNumber;
+        this.studentData.whatsappNumber = this.employeeRegistrationFormGroup.value.whatsappNumber;
+        this.studentData.emailId = this.employeeRegistrationFormGroup.value.emailId;
+        this.studentData.organisationId = this.organisationId;
+
+        this.customerService.saveEmployeeRegistration(this.studentData).subscribe(response => {
+          if (response.success === 1) {
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Employee has been saved',
+              showConfirmButton: false,
+              timer: 1500
+            });
+            this.onClear();
+            console.log("Return employee data:", response.data);
+            this.selectedIndex=0;
+            this.getAllemployee(this.organisationId);
+            //this.studentToCourseFormGroup.patchValue({ ledger_id: response.data.studentId });
+          }
+
+        }, (error) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: error,
+            footer: '<a href>Why do I have this issue?</a>',
+            timer: 0
+          });
+        });
+
+        // For more information about handling dismissals please visit
+        // https://sweetalert2.github.io/#handling-dismissals
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'Your imaginary file is safe :)',
+          'error'
+        )
+      }
     })
   }
   onSave() {

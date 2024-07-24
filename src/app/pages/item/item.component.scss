@@ -1,0 +1,108 @@
+.header{
+    background-color: rgb(248, 241, 215);
+    color: rgb(184, 7, 7) !important;
+     padding: .5em 1em;
+     font-size: 1.5em;
+     margin: 0;
+     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; 
+     font-size: xx-large;
+   }
+   ::ng-deep {
+    $custom-main-color: rgb(5, 5, 5);
+    $custom-label-color: rgb(120, 118, 118);
+ 
+    // mat-icon-stepper selected color change
+    .mat-step-header .mat-step-icon-selected, .mat-step-header .mat-step-icon-state-done, .mat-step-header .mat-step-icon-state-edit {
+       background-color: $custom-main-color !important;
+    }
+ 
+    // input outline color
+    .mat-form-field-appearance-outline .mat-form-field-outline {
+       color: $custom-main-color !important;
+    }
+    .custom{
+     color: $custom-main-color !important;
+     font-size: medium !important;
+    }
+    // mat-input focused color
+    .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+       color: $custom-main-color !important;
+    }
+ 
+    // mat-input error outline color
+    .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick {
+       color: $custom-main-color !important;
+       opacity: 0.8 !important;
+    }
+ 
+    // mat-input caret color
+    .mat-input-element {
+       caret-color: $custom-main-color !important;
+    }
+ 
+    // mat-input error caret color
+    .mat-form-field-invalid .mat-input-element, .mat-warn .mat-input-element {
+       caret-color: $custom-main-color !important;
+    }
+ 
+    // mat-label normal state style
+    .mat-form-field-label {
+       color: $custom-label-color !important;
+       font-size: large !important;
+    }
+ 
+    // mat-label focused style
+    .mat-form-field.mat-focused .mat-form-field-label {
+       color: $custom-main-color !important;
+    }
+ 
+    // mat-label error style
+    .mat-form-field.mat-form-field-invalid .mat-form-field-label {
+       color: $custom-main-color !important;
+    }
+    ::ng-deep .mat-form-field {
+      .mat-input-element {
+          color: rgb(8, 8, 8);
+          font-size: medium;
+      }
+      .mat-form-field-label {
+          color: rgb(10, 10, 10);
+          
+          font-size: medium;
+      }
+      .mat-form-field-underline {
+          background-color: rgb(4, 32, 59);
+      }
+      .mat-form-field-ripple {
+          background-color: slategray;
+      }
+      .mat-form-field-required-marker {
+          color: rgb(190, 21, 9);
+      }
+    
+      
+    }
+    ::ng-deep datepicker-value-example .mat-form-field-label{
+      color:#43b2ee;
+    }
+    
+    ::ng-deep .mat-datepicker-toggle{
+      color:#43b2ee;
+    }
+    ::ng-deep .mat-form-field-underline{
+    background: #43b2ee;
+    }
+    .organisation-details{
+      font-size: medium;
+      background-color: rgba(240, 228, 121, 0.11);
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .comname{
+      font-size: 2em;
+      font-weight: 800;
+      letter-spacing: .1em;
+      color: #100998;
+    }
+ }

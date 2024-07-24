@@ -31,12 +31,13 @@ export class CustomerComponent implements OnInit {
   qualification:any;
   emailId: string = '';
   organisationPin: string = '';
-    emailMobileNoCheckNgModel:string='';
+  emailMobileNoCheckNgModel:string='';
   successMessage:number=0;
+  isShown:boolean=false;
   UserID:any;
   organisationId:number=0;
   studentData: {
-    studentId?: any;
+    customerId?: any;
     episodeId?: string;
     customerName?: string;
     billingName?: string;
@@ -84,9 +85,6 @@ export class CustomerComponent implements OnInit {
   onClickAdd(){
     this.selectedIndex = 1;
   }
-  editTeacher(data:any){
-
-  }
   deleteTeacher(data:any){
 
   }
@@ -113,8 +111,26 @@ export class CustomerComponent implements OnInit {
       contactNumber: new FormControl(null,[Validators.required, Validators.maxLength(10), Validators.minLength(10)]),
       whatsappNumber:new FormControl(null,[Validators.required, Validators.maxLength(10), Validators.minLength(10)]),
       emailId: new FormControl(null), 
-      stateId: new FormControl(20)
+      stateId: new FormControl(20),
+      customerId: new FormControl(0)
     })
+  }
+  editCustomer(customerData:any){
+    console.log("customer Details:",customerData);
+    this.selectedIndex = 1;
+    this.isShown=true;
+    this.customerRegistrationFormGroup.patchValue({ customerId: customerData.id });
+    this.customerRegistrationFormGroup.patchValue({ customerName: customerData.customer_name });
+    this.customerRegistrationFormGroup.patchValue({ customerCategoryId: customerData.customer_category_id });
+    this.customerRegistrationFormGroup.patchValue({ address: customerData.address });
+    this.customerRegistrationFormGroup.patchValue({ emailId: customerData.email_id });
+    this.customerRegistrationFormGroup.patchValue({ whatsappNumber: customerData.whatsapp_number });
+    this.customerRegistrationFormGroup.patchValue({ contactNumber: customerData.contact_number });
+    this.customerRegistrationFormGroup.patchValue({ stateId: customerData.state_id });
+    this.customerRegistrationFormGroup.patchValue({ pin: customerData.pin });
+    this.customerRegistrationFormGroup.patchValue({ district: customerData.district });
+    this.customerRegistrationFormGroup.patchValue({ city: customerData.city });
+
   }
  getStateList(){
     this.customerService.fetchAllStates().subscribe(response => {
@@ -136,6 +152,7 @@ export class CustomerComponent implements OnInit {
     })
   }
   onClear(){
+    this.isShown = false;
     const now = new Date();
     let val = formatDate(now, 'yyyy-MM-dd', 'en');
     this.customerRegistrationFormGroup = new FormGroup({
@@ -149,8 +166,69 @@ export class CustomerComponent implements OnInit {
       contactNumber: new FormControl(null,[Validators.required, Validators.maxLength(10), Validators.minLength(10)]),
       whatsappNumber: new FormControl(null),
       emailId: new FormControl(null), 
-      stateId: new FormControl(20)
+      stateId: new FormControl(20),
+      customerId: new FormControl(0)
       
+    })
+  }
+  onUpdate(){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Update This Record...?',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Update it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.studentData.customerId = this.customerRegistrationFormGroup.value.customerId;
+        this.studentData.customerName = this.customerRegistrationFormGroup.value.customerName;
+        this.studentData.customerCategoryId = this.customerRegistrationFormGroup.value.customerCategoryId;
+        this.studentData.address = this.customerRegistrationFormGroup.value.address;
+        this.studentData.city = this.customerRegistrationFormGroup.value.city;
+        this.studentData.district = this.customerRegistrationFormGroup.value.district;
+        this.studentData.stateId = this.customerRegistrationFormGroup.value.stateId;
+        this.studentData.pin = this.customerRegistrationFormGroup.value.pin;
+        this.studentData.contactNumber = this.customerRegistrationFormGroup.value.contactNumber;
+        this.studentData.whatsappNumber = this.customerRegistrationFormGroup.value.whatsappNumber;
+        this.studentData.emailId = this.customerRegistrationFormGroup.value.emailId;
+        this.studentData.organisationId = this.organisationId;
+
+        this.customerService.updateCustomerRegistration(this.studentData).subscribe(response => {
+          if (response.success === 1) {
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Customer has been Updated',
+              showConfirmButton: false,
+              timer: 1500
+            });
+            this.onClear();
+            console.log("Return Customer data:", response.data);
+            this.selectedIndex=0;
+            this.getAllCustomer(this.organisationId);
+            //this.studentToCourseFormGroup.patchValue({ ledger_id: response.data.studentId });
+          }
+
+        }, (error) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: error,
+            footer: '<a href>Why do I have this issue?</a>',
+            timer: 0
+          });
+        });
+
+        // For more information about handling dismissals please visit
+        // https://sweetalert2.github.io/#handling-dismissals
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'Your imaginary file is safe :)',
+          'error'
+        )
+      }
     })
   }
   onSave() {

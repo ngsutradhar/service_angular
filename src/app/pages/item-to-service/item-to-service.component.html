@@ -1,0 +1,149 @@
+<div class="container-fluid page">
+    <div class="row d-flex align-items-center justify-content-between">
+        <div class="col-12 header"><i class="bi bi-cash"></i>&nbsp; Item To Service Entry</div>
+    </div>
+    <div class="row">
+        <div class="col-12 mt-3 feeleft ">
+            <mat-tab-group (selectedTabChange)="onTabChanged($event)" [(selectedIndex)]="selectedIndex"
+                animationDuration="200ms"
+                style="background-image: linear-gradient(to bottom right, rgb(8, 2, 68), rgb(7, 32, 146)); color: aliceblue; padding: 12px; border-radius: 5px; padding:0px;">
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <mat-icon class="example-tab-icon">trending_up</mat-icon>
+                        View Item To Service &nbsp; <span
+                            style="height: 20px;width: 20px;border-radius: 50%;background-color: red; border: 1px solid red; font-weight: bolder;">
+                            {{ItemList.length}}</span>
+                    </ng-template>
+                    <p-table #itemToService [value]="itemToServiceList" dataKey="id" [paginator]="true" [rows]="5"
+                        [showCurrentPageReport]="true"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                        [rowsPerPageOptions]="[5,10,25,50]" styleClass="p-datatable-gridlines"
+                        [globalFilterFields]="['id','item_name','work_type_name']">
+                        <ng-template pTemplate="caption">
+                            <div class="flex">
+                                <p-button type="button" icon="pi pi-plus" label="ADD" class="p-button-outlined"
+                                    (click)="onClickAdd();"> </p-button>
+                                <span class="p-input-icon-left ml-auto">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text"
+                                        (input)="itemToService.filterGlobal(getEventValue($event), 'contains')"
+                                        placeholder="Search keyword" />
+                                </span>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>ID</th>
+                                <th pSortableColumn="work_type_name">Service Name <p-sortIcon
+                                    field="work_type_name"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="item_name">Item Name <p-sortIcon field="item_name"></p-sortIcon>
+                                </th>
+
+                                <th pSortableColumn="technical_name">Technical Name <p-sortIcon
+                                        field="technical_name"></p-sortIcon>
+                                </th>
+                               
+                                <th>Description</th>
+                                <th pSortableColumn="edit">Edit <p-sortIcon field="edit"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="delete">Delete <p-sortIcon field="delete"></p-sortIcon>
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-item>
+                            <tr>
+                                <td>{{item.id}}</td>
+                                <td>{{item.work_type_name}}</td>
+                                <td>{{item.item_name}}</td>
+                                <td>{{item.technical_name}}</td>
+                                <td>{{item.item_to_service_description}}</td>
+                                <td>
+                                    <p-button type="button" (click)="editTeacher(item)" icon="pi pi-pencil"
+                                        styleClass="p-button-text">
+                                    </p-button>
+                                </td>
+                                <td>
+                                    <p-button type="button" (click)="deleteTeacher(item)" icon="pi pi-trash"
+                                        styleClass="p-button-text">
+                                    </p-button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="paginatorleft">
+                            <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                                (click)="clear(itemToService)"></button>
+
+                        </ng-template>
+                    </p-table>
+                </mat-tab>
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <mat-icon class="example-tab-icon">trending_up</mat-icon>
+                        Item To Service Entry
+                    </ng-template>
+                    <form [formGroup]="itemToServceFormGroup">
+                        <div style="background-color:whitesmoke; padding: 20px;">
+                            <div class="" style="background-color:white">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        
+                                            <ng-select [items]="workTypeList" bindLabel="work_type_name" class="custom"
+                                                bindValue="id" formControlName="workTypeId" autofocus appendTo="body"
+                                                placeholder="Service Name">
+                                            </ng-select>
+                                        
+                                    </div>
+
+                                </div>
+                                <!-- //--------------- -->
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        
+                                                <ng-select [items]="ItemList" bindLabel="item_name" class="custom"
+                                                    bindValue="id" formControlName="itemId" autofocus appendTo="body"
+                                                    placeholder="Item Name">
+                                                    <ng-template ng-option-tmp let-item="item">
+                     
+                                                         {{item.item_name}} &nbsp;|Technical Name: ({{item.technical_name }}) 
+                                                        
+                                   
+                                                       </ng-template>
+                                                </ng-select>
+                                           
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            <mat-form-field style="width:100% ;">
+                                                <mat-label><i class="bi bi-geo-alt-fill"></i> &nbsp; Description
+                                                </mat-label>
+                                                <input matInput placeholder="Description" formControlName="description">
+
+                                            </mat-form-field>
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <div class="text-right">
+                                        <button *ngIf="(this.itemToServceFormGroup.valid) " type="button"
+                                            class="btn btn-success" (click)="onSave();"><i class="bi bi-save"></i>&nbsp;
+                                            Save</button>&nbsp;&nbsp;
+                                        <button type="button" class="btn btn-info" (click)="onClear();">&nbsp;
+                                            Clear</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </mat-tab>
+            </mat-tab-group>
+            <!--  <pre style="background-color:yellow ; color: black;">
+                userFormGroup = {{this.itemToServceFormGroup.value | json}}
+            </pre> -->
+        </div>
+    </div>
+</div>

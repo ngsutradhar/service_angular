@@ -213,6 +213,12 @@ const routes: Routes = [
 
   { path: 'Order', loadChildren: () => import('./pages/order/order.module').then(m => m.OrderModule) },
 
+  { path: 'Item', loadChildren: () => import('./pages/item/item.module').then(m => m.ItemModule) },
+
+  { path: 'ItemToService', loadChildren: () => import('./pages/item-to-service/item-to-service.module').then(m => m.ItemToServiceModule) },
+
+  { path: 'Equipment', loadChildren: () => import('./pages/equipment/equipment.module').then(m => m.EquipmentModule) },
+
 
 
   // { path: 'JavaHome', loadChildren: () => import('./pages/course-content/java/java-home/java-home.module').then(m => m.JavaHomeModule) },

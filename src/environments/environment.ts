@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  BASE_API_URL: '/service_2024/service_api/public/api',
-  BASE_PUBLIC_URL: '/service_2024/service_api/public',
+  BASE_API_URL: '/service/service_api/public/api',
+  BASE_PUBLIC_URL: '/service/service_api/public',
 };
 
 /*
