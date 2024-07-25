@@ -36,8 +36,9 @@ export class ItemComponent implements OnInit {
   successMessage:number=0;
   UserID:any;
   organisationId:number=0;
+  isShown:boolean=false;
   studentData: {
-    studentId?: any;
+    itemId?: any;
     technicalName?: string;
     itemName?: string;
     description?: string;
@@ -92,7 +93,71 @@ export class ItemComponent implements OnInit {
     this.itemFormGroup = new FormGroup({
       itemName: new FormControl(null,[Validators.required, Validators.maxLength(100), Validators.minLength(4)]),
       technicalName: new FormControl(null,[Validators.required, Validators.maxLength(255), Validators.minLength(4)]),
-      description: new FormControl(null)
+      description: new FormControl(null),
+      itemId: new FormControl(0)
+    })
+  }
+  editItem(ItemData:any){
+    console.log("Item Details:",ItemData);
+    this.selectedIndex = 1;
+    this.isShown=true;
+    this.itemFormGroup.patchValue({ itemId: ItemData.id });
+    this.itemFormGroup.patchValue({ itemName: ItemData.item_name });
+    this.itemFormGroup.patchValue({ technicalName: ItemData.technical_name });
+    this.itemFormGroup.patchValue({ description: ItemData.item_description });
+  }
+  onUpdate(){
+     //console.log("jhjkhj");
+     Swal.fire({
+      title: 'Are you sure?',
+      text: 'Update This Record...?',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Update it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if(result.isConfirmed) {
+        this.studentData.itemId = this.itemFormGroup.value.itemId;
+        this.studentData.itemName = this.itemFormGroup.value.itemName;
+        this.studentData.technicalName = this.itemFormGroup.value.technicalName;
+        this.studentData.description = this.itemFormGroup.value.description;
+        this.studentData.organisationId = this.organisationId;
+
+        this.customerService.updateItem(this.studentData).subscribe(response => {
+          if (response.success === 1) {
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Item has been Updated',
+              showConfirmButton: false,
+              timer: 1500
+            });
+            this.onClear();
+            console.log("Return Customer data:", response.data);
+            this.selectedIndex=0;
+            this.getAllItem(this.organisationId);
+            //this.studentToCourseFormGroup.patchValue({ ledger_id: response.data.studentId });
+          }
+
+        }, (error) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: error,
+            footer: '<a href>Why do I have this issue?</a>',
+            timer: 0
+          });
+        });
+
+        // For more information about handling dismissals please visit
+        // https://sweetalert2.github.io/#handling-dismissals
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'Your imaginary file is safe :)',
+          'error'
+        )
+      }
     })
   }
  getStateList(){
@@ -115,10 +180,12 @@ export class ItemComponent implements OnInit {
     })
   }
   onClear(){
+    this.isShown=false;
     this.itemFormGroup = new FormGroup({
       itemName: new FormControl(null,[Validators.required, Validators.maxLength(100), Validators.minLength(4)]),
       technicalName: new FormControl(null,[Validators.required, Validators.maxLength(255), Validators.minLength(4)]),
-      description: new FormControl(null)
+      description: new FormControl(null),
+      itemId: new FormControl(0)
     })
   }
   onSave() {

@@ -109,19 +109,20 @@ export class EmployeeComponent implements OnInit {
     this.isShown=true;
     this.employeeRegistrationFormGroup.patchValue({ employeeId: customerData.id });
     this.employeeRegistrationFormGroup.patchValue({ employeeName: customerData.employee_name });
-    this.employeeRegistrationFormGroup.patchValue({ employeeCategoryId: customerData.employee_category_named });
+    this.employeeRegistrationFormGroup.patchValue({ employeeCategoryId: customerData.employee_category_id });
     this.employeeRegistrationFormGroup.patchValue({ address: customerData.address });
     this.employeeRegistrationFormGroup.patchValue({ emailId: customerData.email_id });
-    this.employeeRegistrationFormGroup.patchValue({ guardianName: customerData.city }); 
-    this.employeeRegistrationFormGroup.patchValue({ qualification: customerData.city }); 
+    this.employeeRegistrationFormGroup.patchValue({ guardianName: customerData.guardian_name }); 
+    this.employeeRegistrationFormGroup.patchValue({ qualification: customerData.qualification }); 
     this.employeeRegistrationFormGroup.patchValue({ whatsappNumber: customerData.whatsapp_number });
     this.employeeRegistrationFormGroup.patchValue({ contactNumber: customerData.contact_number });
     this.employeeRegistrationFormGroup.patchValue({ stateId: customerData.state_id });
     this.employeeRegistrationFormGroup.patchValue({ pin: customerData.pin });
     this.employeeRegistrationFormGroup.patchValue({ district: customerData.district });
-    this.employeeRegistrationFormGroup.patchValue({ sex: customerData.city }); 
-    this.employeeRegistrationFormGroup.patchValue({ doj: customerData.city }); 
-    this.employeeRegistrationFormGroup.patchValue({ dob: customerData.city }); 
+    this.employeeRegistrationFormGroup.patchValue({ sex: customerData.sex }); 
+    this.employeeRegistrationFormGroup.patchValue({ doj: customerData.doj }); 
+    this.employeeRegistrationFormGroup.patchValue({ dob: customerData.dob }); 
+    this.employeeRegistrationFormGroup.patchValue({ city: customerData.city }); 
   }
   ngOnInit(): void {
     const now = new Date();
@@ -165,6 +166,7 @@ export class EmployeeComponent implements OnInit {
     })
   }
   onClear(){
+    this.isShown=false;
     const now = new Date();
     let val = formatDate(now, 'yyyy-MM-dd', 'en');
     this.employeeRegistrationFormGroup = new FormGroup({
@@ -214,7 +216,7 @@ export class EmployeeComponent implements OnInit {
         this.studentData.emailId = this.employeeRegistrationFormGroup.value.emailId;
         this.studentData.organisationId = this.organisationId;
 
-        this.customerService.saveEmployeeRegistration(this.studentData).subscribe(response => {
+        this.customerService.updateEmployeeRegistration(this.studentData).subscribe(response => {
           if (response.success === 1) {
             Swal.fire({
               position: 'top-end',

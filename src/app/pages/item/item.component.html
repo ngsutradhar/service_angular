@@ -51,7 +51,7 @@
                             <td>{{item.technical_name}}</td>
                             <td>{{item.item_description}}</td>
                             <td>
-                                 <p-button type="button" (click)="editTeacher(item)" icon="pi pi-pencil"
+                                 <p-button type="button" (click)="editItem(item)" icon="pi pi-pencil"
                                     styleClass="p-button-text">
                                 </p-button> 
                             </td>
@@ -130,19 +130,36 @@
                                             </div>
                                         </mat-form-field>
                                     </div>
-                                    
                                 </div>
-                              
-                              
-                               
-                                <div class="text-right">
+                                <div class="row">
+                                    <div class="col-sm-6 text-right" >
+                                        <mat-form-field appearance="outline" style="width:100% ; display: none;">
+                                            <mat-label>Item ID</mat-label>
+                                            <input matInput placeholder="id" formControlName="itemId"
+                                                class="custom">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-sm-6 text-right">
+                                        <button *ngIf="isShown" type="button" class="btn btn-primary"
+                                            (click)="onUpdate();"><i class="bi bi-save"></i>&nbsp;
+                                            Update</button>&nbsp;&nbsp;
+
+                                        <button *ngIf="(this.itemFormGroup.valid) && !isShown"
+                                            type="button" class="btn btn-success" (click)="onSave();"><i
+                                                class="bi bi-save"></i>&nbsp;
+                                            Save</button>&nbsp;&nbsp;
+                                        <button type="button" class="btn btn-info" (click)="onClear();">&nbsp;
+                                            Clear</button>
+                                    </div>
+                                </div>
+                               <!--  <div class="text-right">
                                     <button *ngIf="(this.itemFormGroup.valid) " type="button"
                                         class="btn btn-success" (click)="onSave();"><i
                                             class="bi bi-save"></i>&nbsp;
                                         Save</button>&nbsp;&nbsp;
                                     <button type="button" class="btn btn-info" (click)="onClear();">&nbsp;
                                         Clear</button>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </form>

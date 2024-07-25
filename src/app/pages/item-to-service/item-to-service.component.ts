@@ -23,6 +23,7 @@ export class ItemToServiceComponent implements OnInit {
   workTypeList:any[]=[];
   itemToServiceList:any[]=[];
   showDiv:boolean=false;
+  isShown:boolean=false;
   showDivStudentExists:boolean=false;
   organisationName: string = '';
   address: string = '';
@@ -39,6 +40,7 @@ export class ItemToServiceComponent implements OnInit {
   UserID:any;
   organisationId:number=0;
   studentData: {
+    itemToServiceId?:any;
     workTypeId?: any;
     itemId?: any;
     description?: string;
@@ -78,6 +80,68 @@ export class ItemToServiceComponent implements OnInit {
   deleteTeacher(data:any){
 
   }
+  onUpdate(){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Update This Record...?',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Update it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if(result.isConfirmed) {
+        this.studentData.itemToServiceId = this.itemToServceFormGroup.value.itemToServiceId;
+        this.studentData.workTypeId = this.itemToServceFormGroup.value.workTypeId;
+        this.studentData.itemId = this.itemToServceFormGroup.value.itemId;
+        this.studentData.description = this.itemToServceFormGroup.value.description;
+        this.studentData.organisationId = this.organisationId;
+
+        this.customerService.updateItemToService(this.studentData).subscribe(response => {
+          if (response.success === 1) {
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Item To Services has been saved',
+              showConfirmButton: false,
+              timer: 1500
+            });
+            this.onClear();
+            console.log("Return Customer data:", response.data);
+            this.selectedIndex=0;
+            this.getAllItemToService(this.organisationId);
+            //this.studentToCourseFormGroup.patchValue({ ledger_id: response.data.studentId });
+          }
+
+        }, (error) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: error,
+            footer: '<a href>Why do I have this issue?</a>',
+            timer: 0
+          });
+        });
+
+        // For more information about handling dismissals please visit
+        // https://sweetalert2.github.io/#handling-dismissals
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'Your imaginary file is safe :)',
+          'error'
+        )
+      }
+    })
+  }
+  editItem(ItemData:any){
+    console.log("ItemToService Details:",ItemData);
+    this.selectedIndex = 1;
+    this.isShown=true;
+    this.itemToServceFormGroup.patchValue({ itemToServiceId: ItemData.id });
+    this.itemToServceFormGroup.patchValue({ itemId: ItemData.item_id });
+    this.itemToServceFormGroup.patchValue({ workTypeId: ItemData.work_type_id});
+    this.itemToServceFormGroup.patchValue({ description: ItemData.item_to_service_description });
+  }
   showDivClick(data:any){
     this.showDiv=true;
     console.log("data:", data);
@@ -94,7 +158,8 @@ export class ItemToServiceComponent implements OnInit {
     this.itemToServceFormGroup = new FormGroup({
       workTypeId: new FormControl(null,[Validators.required]),
       itemId: new FormControl(null,[Validators.required]),
-      description: new FormControl(null)
+      description: new FormControl(null),
+      itemToServiceId: new FormControl(0)
     })
   }
  getStateList(){
@@ -129,10 +194,12 @@ export class ItemToServiceComponent implements OnInit {
     })
   }
   onClear(){
+    this.isShown=false;
     this.itemToServceFormGroup = new FormGroup({
-      itemName: new FormControl(null,[Validators.required, Validators.maxLength(100), Validators.minLength(4)]),
-      technicalName: new FormControl(null,[Validators.required, Validators.maxLength(255), Validators.minLength(4)]),
-      description: new FormControl(null)
+      workTypeId: new FormControl(null,[Validators.required]),
+      itemId: new FormControl(null,[Validators.required]),
+      description: new FormControl(null),
+      itemToServiceId: new FormControl(0)
     })
   }
   onSave() {

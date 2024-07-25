@@ -233,9 +233,31 @@ fetchTeacherProfile($ledgerID:any){
       }
     }))
   }
+  updateItemToService(itemData:any){
+    this.studentList=[];
+    return this.http.post<any>(this.commonService.getAPI() + '/updateItemToService', itemData)
+    .pipe(catchError(this.errorService.serverError), tap(response => {
+      console.log('at service',response);
+      if (response.status === true){
+        this.studentList.unshift(response.data);
+        this.studentSubject.next([...this.studentList]);
+      }
+    }))
+  }
   saveItemToService(itemData:any){
     this.studentList=[];
     return this.http.post<any>(this.commonService.getAPI() + '/saveItemToService', itemData)
+    .pipe(catchError(this.errorService.serverError), tap(response => {
+      console.log('at service',response);
+      if (response.status === true){
+        this.studentList.unshift(response.data);
+        this.studentSubject.next([...this.studentList]);
+      }
+    }))
+  }
+  updateItem(itemData:any){
+    this.studentList=[];
+    return this.http.post<any>(this.commonService.getAPI() + '/updateItem', itemData)
     .pipe(catchError(this.errorService.serverError), tap(response => {
       console.log('at service',response);
       if (response.status === true){
