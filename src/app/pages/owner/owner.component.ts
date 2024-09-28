@@ -93,6 +93,7 @@ export class OwnerComponent implements OnInit {
     effective_date?: string;
   } = {};
 
+  orderCompletedArray:any[]=[];
   studentToCourseFormGroup: FormGroup | any;
   tempGetActiveCourseObj!: object;
   allIncomeArray: any = [];
@@ -197,6 +198,7 @@ export class OwnerComponent implements OnInit {
       console.log("user localUserID:", (this.UserID));
       console.log("user organisationId:", (this.organisationId));
     }
+    this.getOrderCompletedList(this.organisationId);
     this.getAllIncome(this.organisationId);
     this.getTotalCourse(this.organisationId);
     this.getTotalActiveStudent(this.organisationId);
@@ -260,6 +262,13 @@ export class OwnerComponent implements OnInit {
   }
   setJoiningSQL(value: string) {
     this.studentToCourseFormGroup.patchValue({ joining_date: this.commonService.getSQLDate(value) });
+  }
+  getOrderCompletedList($orgID:any){
+    this.studentService.fetchOrderCompletedDetails($orgID).subscribe(response => {
+      this.orderCompletedArray=response.data;
+      //this.employeeName=this.orderPendingArray[0].employee_name;
+      console.log("orderCompletedArray:",this.orderCompletedArray);
+    })
   }
   saveStudentToCourse() {
     //alert("Testing");

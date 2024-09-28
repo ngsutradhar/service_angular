@@ -54,7 +54,23 @@ export class StudentService {
  }
   constructor(private commonService: CommonService, private errorService: ErrorService, private http: HttpClient) { }
 
-  
+  fetchOrderCompletedDetails($orgID:any){
+    this.orderList=[];
+    return this.http.get<any>(this.commonService.getAPI() + '/getEmployeeOrderServiceCompleted/'+ $orgID)
+   .pipe(catchError(this.errorService.serverError), tap(((response: {success: number, data: Student[]}) => {
+     this.orderList=response.data;
+     this.studentSubject.next([...this.orderList]);
+   })));
+  }
+  updateOrderCompleted($ordID:any){
+    this.studentList=[];
+    return this.http.get<any>(this.commonService.getAPI() + '/updateOrderCompleted/'+ $ordID)
+    .pipe(catchError(this.errorService.serverError), tap(((response: {success: number, data: Student[]}) => {
+      this.success=response.success;
+      this.studentList=response.data;
+      //this.studentSubject.next([...this.studentList]);
+    })));
+  }
   fetchOrderPendingDetails($orgID:any,$id:any){
     this.orderList=[];
     return this.http.get<any>(this.commonService.getAPI() + '/getEmployeeOrderServicePending/'+ $orgID + '/'+$id)

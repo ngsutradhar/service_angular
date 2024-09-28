@@ -17,6 +17,7 @@ import { Md5 } from 'ts-md5';
 import { AuthService } from 'src/app/services/auth.service';
 import { OrganisationService } from 'src/app/services/organisation.service';
 import { StudentService } from 'src/app/services/student.service';
+import { CustomerService } from 'src/app/services/customer.service';
 
 @Component({
   selector: 'app-change-password',
@@ -32,6 +33,7 @@ export class ChangePasswordComponent implements OnInit {
   organisationContact:string='';
   organisationEmail:string='';
   organizationArray: any = [];
+  employeeList:any[]=[]
   comfirmPasswordBoolean: boolean=false;
   isBtnVisible:boolean=false;
   studentRegisterData!: object;
@@ -52,7 +54,7 @@ export class ChangePasswordComponent implements OnInit {
   studentUserFormGroup!: FormGroup;
   changePasswordData:object | undefined;
   studentComfirmPasswordBoolean: boolean=false;
-  constructor( private reportService: ReportService
+  constructor(private customerService: CustomerService, private reportService: ReportService
     , private commonService: CommonService
     , private courseService: CourseService
     , private studentToCourseService: StudentToCourseService
@@ -70,7 +72,7 @@ const user = localStorage.getItem('user');
     console.log("user localUserID:",(this.UserID));
     console.log("user organisationId:",(this.organisationId));
     }
-    this.getAllStudentName(this.organisationId);
+    this.getAllEmployee(this.organisationId);
     this.getAllUserType();
  }
 
@@ -94,13 +96,13 @@ const user = localStorage.getItem('user');
        this.studentUserFormGroup = new FormGroup({
         org_id: new FormControl(0,[Validators.required]),
         //id: new FormControl(),
-        student_id: new FormControl(null, [Validators.required]),
-        student_name: new FormControl(null, [Validators.required, Validators.maxLength(100), Validators.minLength(4)]),
-        student_password: new FormControl(null, [Validators.required, Validators.maxLength(255), Validators.minLength(4)]),
-        student_confirm_password: new FormControl(null, [Validators.required, Validators.maxLength(255), Validators.minLength(4)]),
-        student_mobile1: new FormControl(null, [Validators.required, Validators.maxLength(255), Validators.minLength(4)]),
-        student_user_type_id: new FormControl(8, [Validators.required]),
-        student_email: new FormControl(null, [Validators.required, Validators.email])
+        employee_id: new FormControl(null, [Validators.required]),
+        employee_name: new FormControl(null, [Validators.required, Validators.maxLength(100), Validators.minLength(4)]),
+        employee_password: new FormControl(null, [Validators.required, Validators.maxLength(255), Validators.minLength(4)]),
+        employee_confirm_password: new FormControl(null, [Validators.required, Validators.maxLength(255), Validators.minLength(4)]),
+        employee_mobile1: new FormControl(null, [Validators.required, Validators.maxLength(255), Validators.minLength(4)]),
+        employee_user_type_id: new FormControl(8, [Validators.required]),
+        employee_email: new FormControl(null, [Validators.required, Validators.email])
       });
   }
 
@@ -111,12 +113,18 @@ const user = localStorage.getItem('user');
       confirm_password: new FormControl(null, [Validators.required, Validators.maxLength(255), Validators.minLength(4)]),
     })
   }
-  getAllStudentName($orgID:any) {
+/*   getAllStudentName($orgID:any) {
     this.studentService.fetchAllStudentByOrdID($orgID).subscribe(response => {
       this.studentNameArray = response.data;
       console.log("studentNameArray:", this.studentNameArray);
     })
-  }
+  } */
+    getAllEmployee($orgID:any){
+      this.customerService.fetchAllEmployee($orgID).subscribe(response => {
+        this.employeeList = response.data;
+        console.log("employeeList list:", this.employeeList);
+      })
+    }
   changeStudentInfo(data: any) {
     this.studentInfoBoolean = true;
     console.log("Student data:", data);
@@ -127,16 +135,16 @@ const user = localStorage.getItem('user');
     this.contactNumber = data.whatsapp_number;;
     this.emailId = data.email_id;
     this.organisationPin = data.pin; 
-    if(this.isStudent>0){
-      this.studentUserFormGroup.patchValue({ student_user_type_id: 8 });
+   /*  if(this.isStudent>0){
+      this.studentUserFormGroup.patchValue({ employee_user_type_id: 8 });
       this.resultString='Student';
     }else{
-      this.studentUserFormGroup.patchValue({ student_user_type_id: 7 });
+      this.studentUserFormGroup.patchValue({ employee_user_type_id: 7 });
       this.resultString='Teacher';
-    }
-    this.studentUserFormGroup.patchValue({ student_name: data.ledger_name });
-    this.studentUserFormGroup.patchValue({ student_email: data.email_id });
-    this.studentUserFormGroup.patchValue({ student_mobile1: data.whatsapp_number });
+    } */
+    this.studentUserFormGroup.patchValue({ employee_name: data.employee_name });
+    this.studentUserFormGroup.patchValue({ employee_email: data.email_id });
+    this.studentUserFormGroup.patchValue({ employee_mobile1: data.whatsapp_number });
     
     this.studentUserFormGroup.patchValue({ org_id: data.organisation_id });
   }
@@ -145,7 +153,7 @@ const user = localStorage.getItem('user');
     console.log(event)
   }
   onStudentBlur(event:any): void {
-    this.password = this.studentUserFormGroup.get('student_password')?.value;
+    this.password = this.studentUserFormGroup.get('employee_password')?.value;
     console.log('student confirm password:',event.target.value);
     console.log('password:',this.password);
     if(this.password===event.target.value){
@@ -188,15 +196,15 @@ const user = localStorage.getItem('user');
   } */
   onStudentSave(){
     const md5 = new Md5();
-    const passwordMd5 = md5.appendStr(this.studentUserFormGroup.value.student_password).end();
+    const passwordMd5 = md5.appendStr(this.studentUserFormGroup.value.employee_password).end();
     this.studentRegisterData={
-      ledger_id:this.studentUserFormGroup.value.student_id,
+      employee_id:this.studentUserFormGroup.value.employee_id,
       organisation_id: this.studentUserFormGroup.value.org_id,
-      user_name: this.studentUserFormGroup.value.student_name,
+      user_name: this.studentUserFormGroup.value.employee_name,
       password: passwordMd5,
-      mobile1: this.studentUserFormGroup.value.student_mobile1,
-      user_type_id: this.studentUserFormGroup.value.student_user_type_id,
-      email: this.studentUserFormGroup.value.student_email
+      mobile1: this.studentUserFormGroup.value.employee_mobile1,
+      user_type_id: this.studentUserFormGroup.value.employee_user_type_id,
+      email: this.studentUserFormGroup.value.employee_email
     }
      Swal.fire({
       title: 'Are you sure?',
@@ -251,13 +259,13 @@ const user = localStorage.getItem('user');
     this.studentUserFormGroup = new FormGroup({
       org_id: new FormControl(0,[Validators.required]),
       //id: new FormControl(),
-      student_id: new FormControl(null, [Validators.required]),
-      student_name: new FormControl(null, [Validators.required, Validators.maxLength(100), Validators.minLength(4)]),
-      student_password: new FormControl(null, [Validators.required, Validators.maxLength(255), Validators.minLength(4)]),
-      student_confirm_password: new FormControl(null, [Validators.required, Validators.maxLength(255), Validators.minLength(4)]),
-      student_mobile1: new FormControl(null, [Validators.required, Validators.maxLength(255), Validators.minLength(4)]),
-      student_user_type_id: new FormControl(8, [Validators.required]),
-      student_email: new FormControl(null, [Validators.required, Validators.email])
+      employee_id: new FormControl(null, [Validators.required]),
+      employee_name: new FormControl(null, [Validators.required, Validators.maxLength(100), Validators.minLength(4)]),
+      employee_password: new FormControl(null, [Validators.required, Validators.maxLength(255), Validators.minLength(4)]),
+      employee_confirm_password: new FormControl(null, [Validators.required, Validators.maxLength(255), Validators.minLength(4)]),
+      employee_mobile1: new FormControl(null, [Validators.required, Validators.maxLength(255), Validators.minLength(4)]),
+      employee_user_type_id: new FormControl(8, [Validators.required]),
+      employee_email: new FormControl(null, [Validators.required, Validators.email])
     });
   }
   onUpdatePassword() {

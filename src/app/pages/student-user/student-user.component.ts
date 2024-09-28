@@ -85,6 +85,7 @@ export class StudentUserComponent implements OnInit {
   allBillReceiptArray: any = [];
   tranMasterIdArray:any=[]
   orderPendingArray:any[]=[];
+  orderCompletedArray:any[]=[];
   marchantIdArray: any = [];
   organisationAddress:string='';
   organisationPin:string='';
@@ -107,6 +108,7 @@ export class StudentUserComponent implements OnInit {
   transactionYear:any;
   autoGenerateId:number=0;
 
+  employeeName:string='';
   whatsapp_number: string = '';
   billing_name: string = '';
   full_name: any;
@@ -224,10 +226,17 @@ export class StudentUserComponent implements OnInit {
       console.log("studentNewsArray:",this.studentNewsArray);
     })
   }
-
+  getOrderCompletedList($orgID:any){
+    this.studentService.fetchOrderCompletedDetails($orgID).subscribe(response => {
+      this.orderCompletedArray=response.data;
+      //this.employeeName=this.orderPendingArray[0].employee_name;
+      console.log("orderCompletedArray:",this.orderCompletedArray);
+    })
+  }
   getOrderPendingList($orgID:any,$id:any){
     this.studentService.fetchOrderPendingDetails($orgID,$id).subscribe(response => {
       this.orderPendingArray=response.data;
+      this.employeeName=this.orderPendingArray[0].employee_name;
       console.log("orderPendingArray:",this.orderPendingArray);
     })
   }
@@ -242,9 +251,55 @@ export class StudentUserComponent implements OnInit {
  
  
  
-  onClickedPaymentVoucher(stuToCourseId: any){
+  onClickedCompletedOrder(data: any){
+   console.log("order details:",data.order_details_id);
+   /* this.studentService.updateOrderCompleted(data.order_details_id).subscribe(response => {
+      this.orderCompletedArray=response.data;
+      console.log("orderCompletedArray:",this.orderCompletedArray);
+    }) */
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Completed This Job...?',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Save it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.isConfirmed) {
+       
+        this.studentService.updateOrderCompleted(data.order_details_id).subscribe(response => {
+          if (response.success === 1) {
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Job has been Competed',
+              showConfirmButton: false,
+              timer: 1500
+            });
+           this.getOrderPendingList(this.organisationId,this.employeeId);
+          }
 
-    this.totalRecepitAmount = 0;
+        }, (error) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: error,
+            footer: '<a href>Why do I have this issue?</a>',
+            timer: 0
+          });
+        });
+
+        // For more information about handling dismissals please visit
+        // https://sweetalert2.github.io/#handling-dismissals
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'Your imaginary file is safe :)',
+          'error'
+        )
+      }
+    })
+   /*  this.totalRecepitAmount = 0;
     this.rupeeInWords = '';
     this.showReceipt = true;
     this.selectedIndex = 2;
@@ -269,7 +324,7 @@ export class StudentUserComponent implements OnInit {
         this.totalRecepitAmount = Number(this.totalRecepitAmount) + Number(val.temp_total_received);
       }
       this.rupeeInWords = toWords.convert(this.totalRecepitAmount);
-    })
+    }) */
   }
   onClickedClosed() {
     this.selectedIndex = 1;
